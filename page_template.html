@@ -112,6 +112,14 @@ a{color:var(--teal)}hr{border:0;border-top:1px solid var(--line);margin:0}
 </section>
 <hr>
 
+<section class="band" id="zone">
+  <h2>Where does the zone end?</h2>
+  <p>Every map tends to pull the final zone toward some areas more than others, and once the first rings close, the options shrink fast. Pick a map to see where final zones have ended. Then click where ring 1 is centred, and where ring 2 is, to see where games that started the same way finished.</p>
+  <div class="how"><strong>How to read it.</strong> The shading shows where the last ring closed in past games: darker means more often. The list gives the chance the zone ends at each landing spot. Red dots are Championship teams' usual landing spots, so you can see who's already sitting in the likely zone. "ALGS games only" uses just this year's pro games, which is fewer games but pure pro play.</div>
+  <div id="zw"></div>
+</section>
+<hr>
+
 <section class="band" id="whatif">
   <h2>Play with the odds</h2>
   <p class="mute">Drag the sliders and watch the chances change. Each time you move one, we play out the final day 3,000 times with the top 20 teams and count who wins.</p>
@@ -241,7 +249,7 @@ a{color:var(--teal)}hr{border:0;border-top:1px solid var(--line);margin:0}
       <ul id="fixes"></ul>
 
       <h3>What it doesn't know</h3>
-      <ul><li>The real Champs groups, format and map order, which haven't been announced. We use the Split 2 Playoffs format and map order.</li><li>Whether teams will move landing spots for Champs.</li><li>Players who haven't played an official game together yet: their history only counts through their old teams.</li><li id="dk-scrims"></li></ul>
+      <ul><li>The real Champs groups, format and map order, which haven't been announced. We use the Split 2 Playoffs format and map order.</li><li>Whether teams will move landing spots for Champs.</li><li>Ring 3 and later: the zone map uses rings 1 and 2, which settle most of the question.</li><li>Players who haven't played an official game together yet: their history only counts through their old teams.</li><li id="dk-scrims"></li></ul>
     </div>
   </div>
   <details><summary>How it works, and where the numbers come from</summary>
@@ -250,11 +258,12 @@ a{color:var(--teal)}hr{border:0;border-top:1px solid var(--line);margin:0}
     <p class="small"><strong>Landing spots and match point.</strong> The model also learns how much worse teams do when they share a landing spot with another team in that game, and how teams play once they're on match point. Learning the match-point effect separately keeps it from distorting the ratings.</p>
     <p class="small"><strong>The odds.</strong> We play out the whole Championship 8,000 times: groups, the elimination rounds, then the match-point final, using each team's ranking plus a realistic amount of luck. A team's chance is simply how often it won. Groups are drawn at random, since the real ones aren't out yet.</p>
     <p class="small"><strong>Checks.</strong> Every game's results and every team's totals match the stats site, including the site's own season totals for all <span id="c-tot"></span> team-and-event records. We also checked the maths behind the odds with a set of automatic tests.</p>
-    <p class="small"><strong>Sources</strong> (24 Nov 2026): apexlegendsstatus.com for official games (2025 Champs final; this year's Pro League in all four regions for both splits; both Playoffs; the Last Chance Qualifier finals) and for team, player, legend, gun and drop-spot stats. Eternal Esports Club for scrims. Team names are as those sites show them. Two names are treated as one team only when the totals or the exact same three players prove it.</p>
+    <p class="small"><strong>Sources</strong> (24–25 Nov 2026): placement.gg's public ring archive for where zones ended; apexlegendsstatus.com for official games (2025 Champs final; this year's Pro League in all four regions for both splits; both Playoffs; the Last Chance Qualifier finals) and for team, player, legend, gun and drop-spot stats. Eternal Esports Club for scrims. Team names are as those sites show them. Two names are treated as one team only when the totals or the exact same three players prove it.</p>
   </details>
 </section>
 <div id="tip" role="tooltip"></div>
 
+<script>__ZONE_JS__</script>
 <script>
 {
 const D = __DATA__;
@@ -395,6 +404,8 @@ function drawCard(){
   const notes = [styleText(s)];
   cp.forEach(c => notes.push(`<strong>${esc(c.map)}</strong>: lands at ${esc(c.spot)}, also the usual spot of ${list(c.with_.map(esc))}.`));
   if (Math.abs(cost) >= 0.002) notes.push(`If nobody moves, those overlaps ${cost < 0 ? 'cost' : 'add'} about ${(100 * Math.abs(cost)).toFixed(1)} points of title chance${cost > 0 ? ' (its rivals lose more from theirs)' : ''}.`);
+  { const zs = Object.entries(D.zone.maps).map(([mp, z]) => { const r = z.teams[n]; return r ? [mp, r.spot, r.share, 1 / z.outlines.length] : null; }).filter(Boolean).sort((a, b) => (b[2] / b[3]) - (a[2] / a[3]));
+    if (zs.length) { const [mp, sp, sh, avg] = zs[0]; notes.push(`Zone luck: the final zone has ended at its ${esc(mp)} spot (${esc(sp)}) in ${pct(sh, 1)} of recorded games, ${sh > 1.4 * avg ? 'well above' : sh < 0.6 * avg ? 'well below' : 'about'} the ${pct(avg, 1)} an average spot gets.`); } }
   if (t.no_lan) notes.push('Has no LAN record, so its rating has a small first-LAN deduction.');
   $('#tc-notes').innerHTML = notes.map(x => `<li>${x}</li>`).join('');
   const tm = D.team_maps[n] || {};
@@ -427,6 +438,9 @@ $('#sp-map').onchange = drawSpots; drawSpots();
   const lo = CB.all.p5[0], hi = CB.all.p5[4], wl = CB.all.pw[0], wh = CB.all.pw[4];
   $('#cb-text').textContent = `The pattern holds. For the teams we gave the best chance of a top-5 finish (${pct(hi.said)} on average), it happened ${pct(hi.happened)} of the time, against ${pct(lo.happened)} for the teams we rated least likely. Single-game wins are much harder to call: even our "most likely" fifth wins only about ${pct(wh.happened)} of games, against ${pct(wl.happened)} for the least likely. That is why Apex titles are so open.` + (wh.happened - wh.said > 2 * wh.se ? ` If anything, the model is a little too cautious about the favourites: they won ${pct(wh.happened, 1)} of games when we said ${pct(wh.said, 1)}.` : '');
 }
+
+// ---- zone map ----
+ZoneWidget(document.getElementById('zw'), D.zone, {teams: D.zone_teams});
 
 // ---- trust ----
 const tmx = Math.max(...B.thirds.map(t => t.actual_ppg));

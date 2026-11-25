@@ -60,7 +60,7 @@ a{color:var(--bar)}
   <p class="mute small">ALGS Year 6 Championship · Sapporo · Jan 28–31, 2027 · model ratings from <span id="h-games"></span> games, data to __DATE__</p>
   <h1>Champs broadcast desk</h1>
   <nav role="tablist">
-    <button role="tab" data-t="live">Live tracker</button><button role="tab" data-t="field">The field (40)</button><button role="tab" data-t="groups">Groups &amp; bracket</button><button role="tab" data-t="compare">Compare</button><button role="tab" data-t="meta">Legends &amp; guns</button><button role="tab" data-t="missed">Missed LAN</button>
+    <button role="tab" data-t="live">Live tracker</button><button role="tab" data-t="field">The field (40)</button><button role="tab" data-t="groups">Groups &amp; bracket</button><button role="tab" data-t="compare">Compare</button><button role="tab" data-t="zone">Zone</button><button role="tab" data-t="meta">Legends &amp; guns</button><button role="tab" data-t="missed">Missed LAN</button>
   </nav>
 </header>
 
@@ -118,6 +118,12 @@ a{color:var(--bar)}
   <div id="cmp"></div>
 </section>
 
+<section id="zone">
+  <h2>Where will the zone end?</h2>
+  <p class="mute">Pick the map, then click where ring 1 is centred (or choose the nearest landing spot), then ring 2. The list shows where games that started that way finished, and which Champs teams usually land there. Shading = where final zones ended (darker = more often). Built from <span id="z-n"></span> recorded games on current ring settings (placement.gg).</p>
+  <div id="zw"></div>
+</section>
+
 <section id="meta">
   <h2>Legend picks and team comps</h2>
   <p class="mute">Share of team-games in which each legend was played. "Wins" is how often a team using it won the game; 5% is par in a 20-team lobby.</p>
@@ -147,6 +153,7 @@ a{color:var(--bar)}
 <p class="mute small" style="padding-bottom:28px">How the rating works: it is the points per game we expect from a team in a Championship lobby, worked out from each game's full finishing order across Year 5 Champs finals, Year 6 Playoffs, Split 2 Pro League and LCQ finals. Teams with thin records are pulled toward the average for their region, and teams with no LAN record are marked down. A gap of half a point per game is small. Part of each rating follows the players, so roster moves count, and teams that usually share a landing spot with another team in the lobby get a penalty on that map. Names are as listed on apexlegendsstatus.com. Scoring: 12/9/7/5/4/3/3/2/2/2/1×5 placement points, +1 per kill.</p>
 </div>
 
+<script>__ZONE_JS__</script>
 <script>
 {
 const D = __DATA__;
@@ -161,7 +168,7 @@ const ord = n => n + (['th','st','nd','rd'][(n % 100 - 20) % 10] || ['th','st','
 $('#h-games').textContent = D.meta.games;
 
 // ---------- tabs ----------
-const tabs = ['live', 'field', 'groups', 'compare', 'meta', 'missed'];
+const tabs = ['live', 'field', 'groups', 'compare', 'zone', 'meta', 'missed'];
 function show(t){ if (!tabs.includes(t)) t = 'live';
   tabs.forEach(x => { $('#' + x).classList.toggle('on', x === t); $(`nav [data-t=${x}]`).setAttribute('aria-selected', x === t); }); }
 document.querySelectorAll('nav button').forEach(b => b.onclick = () => { location.hash = b.dataset.t; show(b.dataset.t); });
@@ -443,6 +450,9 @@ renderGroups();
 $('#m-reg').onchange = renderMissed; $('#m-min').onchange = renderMissed;
 
 renderAll(); renderField(); renderCmp(); renderMissed();
+{ const zw = ZoneWidget(document.getElementById('zw'), D.zone, {teams: Object.fromEntries(F.map(t => [t.team, t.spots || {}]))});
+  $('#z-n').textContent = Object.values(D.zone.maps).reduce((a, m) => a + m.n, 0).toLocaleString();
+  $('#nmap').addEventListener('change', e => zw.setMap(e.target.value)); }
 }
 </script>
 </body></html>

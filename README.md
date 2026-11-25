@@ -40,3 +40,10 @@ more often than their rating says). `features.py` builds those columns. `backtes
 made predictions worse and are shown as information only. Champs landing spots: `data/deep/champs_drops.txt`
 (`scrape/als_champs_drops.js`). Rosters/drops per stage: `scrape/als_rosters_drops.js`.
 The broadcast desk's live tracker updates ratings from games entered during the event and applies shared-spot penalties by map.
+
+## Zone map (25 Nov 2026)
+`rings.py` + `zone_widget.js`: where final zones end on each Champs map and where they're likely to end once ring 1 / ring 2
+are known (kernel-weighted past games). Data: placement.gg's public ring archive (`data/rings/ring_sequences.txt`, built with
+`scrape/placement_rings.js`; 6,042 games on current ring settings, ~420 tagged ALGS Year 6) on the frame of the
+apexlegendsstatus.com landing-spot outlines (`data/rings/poi_outlines.txt`). Held-out check in `out/rings_check.json`:
+after ring 2 the likeliest spot is right 63-82% of the time and the top three 97-99%. Credit placement.gg on anything public.

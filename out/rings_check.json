@@ -1,0 +1,58 @@
+{
+ "E-District": {
+  "n": 790,
+  "top1": 0.778,
+  "top1_said": 0.764,
+  "top1_base": 0.162,
+  "top3": 0.984,
+  "top3_base": 0.385,
+  "err": 0.055,
+  "err_r2": 0.074,
+  "err_avg": 0.257,
+  "r1_top1": 0.39,
+  "r1_top3": 0.724,
+  "r1_top1_said": 0.305
+ },
+ "Storm Point": {
+  "n": 660,
+  "top1": 0.82,
+  "top1_said": 0.745,
+  "top1_base": 0.111,
+  "top3": 0.995,
+  "top3_base": 0.288,
+  "err": 0.047,
+  "err_r2": 0.084,
+  "err_avg": 0.282,
+  "r1_top1": 0.374,
+  "r1_top3": 0.702,
+  "r1_top1_said": 0.285
+ },
+ "World's Edge": {
+  "n": 319,
+  "top1": 0.671,
+  "top1_said": 0.704,
+  "top1_base": 0.16,
+  "top3": 0.972,
+  "top3_base": 0.345,
+  "err": 0.051,
+  "err_r2": 0.069,
+  "err_avg": 0.264,
+  "r1_top1": 0.439,
+  "r1_top3": 0.749,
+  "r1_top1_said": 0.364
+ },
+ "Olympus": {
+  "n": 246,
+  "top1": 0.626,
+  "top1_said": 0.621,
+  "top1_base": 0.154,
+  "top3": 0.967,
+  "top3_base": 0.354,
+  "err": 0.058,
+  "err_r2": 0.071,
+  "err_avg": 0.255,
+  "r1_top1": 0.5,
+  "r1_top3": 0.829,
+  "r1_top1_said": 0.42
+ }
+}

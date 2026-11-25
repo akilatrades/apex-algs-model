@@ -89,4 +89,20 @@ check("v3 fit sits at the optimum of its objective (checked by an independent ca
 check("v3 with players/maps/effects switched off equals the v2 fit", (lambda F0: max(abs(F0["team"][i] - (lambda f: f[t])(M.fit_pl(small, sigma=0.3, groups={u: "g" for u in tm}))) for i, t in enumerate(tm)) < 2e-3)(
       M3.fit(P, sig_team=0.3, fit_beta=(False, False))))
 
+
+# 6. zone data
+import rings as RG
+ZM = RG.load(); ZP = RG.outlines()
+check("ring data decodes to the expected number of games per map", all(len(m["end"]) == n for m, n in zip(ZM.values(), [2370, 1980, 956, 736])))
+check("every final zone sits inside its ring 2, and every ring 2 inside its ring 1",
+      all((np.hypot(*(m["end"] - m["r2"]).T) <= m["radii"][1] + 0.01).all() and (np.hypot(*(m["r2"] - m["r1"]).T) <= m["radii"][0] + 0.02).all() for m in ZM.values()))
+def _in_frac(n, pts):
+    return np.mean([any(RG.inside(p, poly) for _, poly in ZP[n]) for p in pts[::6]])
+gaps = []
+for n, m in ZM.items():
+    e = m["end"]; good = _in_frac(n, e)
+    worst = max(_in_frac(n, np.stack([e[:, 0], 1 - e[:, 1]], 1)), _in_frac(n, np.stack([1 - e[:, 0], e[:, 1]], 1)), _in_frac(n, e + [0.05, 0.05]))
+    gaps.append(good - worst)
+check("map alignment: more final zones fall inside landing-spot outlines than with the map flipped or shifted", min(gaps) > 0.03, f"smallest margin {min(gaps):.1%}")
+
 print("\nALL MATHS CHECKS PASS" if ok else "\nSOME CHECKS FAILED")

@@ -49,8 +49,9 @@ for m in missed:
     for k in ["players", "hist", "fin", "tl", "maps", "sw", "mp", "bu", "cp", "spots", "plain"]: m.pop(k)
 data = dict(field=F, missed=missed, h2h=h2h, kb=R["kill_base"], pts=R["place_pts"], champions=champions, legends=R["legends"], comps=R["comps"], guns=R["guns"], poi=R["poi"],
             meta=dict(games=R["meta"]["n_games"], avg=R["meta"]["avg_power"], fetched=R["meta"]["fetched"], pps=R["meta"]["pts_per_strength"]),
+            zone=__import__("rings").page_data(),
             v3=dict(clash=R["v3"]["clash"], pts_clash=R["v3"]["pts_clash"], rot=R["v3"]["rot"], rot_groups=R["v3"]["rot_groups"]), mp_all=R["mp_all"])
 js = json.dumps(data, separators=(",", ":")).replace("</", "<\\/")
-Path("out/broadcast.html").write_text(Path("broadcast_template.html").read_text().replace("__DATA__", js).replace("__DATE__", datetime.date.today().strftime("%-d %b %Y")))
+Path("out/broadcast.html").write_text(Path("broadcast_template.html").read_text().replace("__ZONE_JS__", Path("zone_widget.js").read_text()).replace("__DATA__", js).replace("__DATE__", datetime.date.today().strftime("%-d %b %Y")))
 print("field", len(F), "missed", len(missed), "bytes", len(js))
 print([(m["team"], round(m["pow"], 2), m["lcq"]) for m in missed[:8]])

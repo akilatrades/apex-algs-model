@@ -1,0 +1,211 @@
+@PL1_NA|1.5|https://apexlegendsstatus.com/algs/Y6-Split1/Pro-League/NA/
+#Day1/AvB|SSSEEE
+Full XI|bedpca|d56039|73
+Stallions|traago|00ca70|57
+NinjasinPyjamas|aspbsk|d10g02|54
+Team Falcons|qiifeb|167288|52
+EBOYS|jbrlqh|4d310d|48
+Team Vision|casqic|370163|48
+AG GLOBAL|ilcoad|022074|43
+Unreal Nightmare|dcmhhm|260843|41
+Team Liquid|oftcps|290731|33
+Zest Fest|fnednf|305213|31
+Sentinels|loktbg|1010a1|28
+Geekay Esports|stbefj|004201|25
+VexX Gaming|hkfiri|751110|25
+STRONGFISH|gdqjdp|020422|25
+Source Gaming|eqlsmt|606120|21
+Nice Guys|njogte|103213|21
+Free Thinkers|pmhmlr|036300|17
+Forged Wolves|kggkkq|322100|17
+HuntKennyWave|rhjnjn|010231|15
+HbM|mpnrol|000011|6
+#Day2/AvC|OOOSSS
+NinjasinPyjamas|bdkdna|542908|61
+Sentinels|ggaofb|414325|50
+STRONGFISH|qkcadc|013652|49
+NRG|cpjgam|1033e0|46
+FFS|eefcqn|456813|46
+Team Liquid|fihegd|b20077|46
+DKF|assbko|800a10|42
+World Wide|hbihlg|480137|42
+Crazy Thieves|jntfce|330245|34
+Forged Wolves|saliip|191004|32
+Headglytch|icnljf|052323|31
+ShopifyRebellion|phesbl|050061|28
+Free Thinkers|lorpss|963500|25
+DINOS|mjmnri|135404|24
+Stallions|rfdjth|035003|23
+Team Vision|nqgqmj|206043|22
+Source Gaming|krbror|00a000|21
+Buckle Boys|omotpk|075012|19
+GAMBLERS|tlpmhq|040262|18
+Full XI|dtqket|100120|14
+#Day3/BvC|EEEOOO
+DINOS|bjfnah|f122i8|75
+World Wide|cgbade|527b55|75
+Buckle Boys|afjbnl|d01b00|53
+NRG|ipadsj|00d432|43
+AG GLOBAL|hacsfk|0a5030|43
+FFS|tbnckb|050236|43
+Headglytch|sdhgcf|044544|41
+Geekay Esports|gldkra|035009|39
+HbM|qkqmbc|042483|39
+Crazy Thieves|fhiemo|054603|31
+DKF|ksphhd|800336|30
+Zest Fest|otefoi|901116|29
+Team Falcons|limlem|280052|27
+GAMBLERS|pcriqg|1a0002|25
+Nice Guys|drkqip|320341|21
+ShopifyRebellion|jeopjs|025230|21
+Unreal Nightmare|nngjln|105010|16
+HuntKennyWave|emlogq|221000|15
+EBOYS|mqtttt|030012|7
+VexX Gaming|rosrpr|000010|2
+#Day4/AvB|OOOSSS
+Stallions|bimeqa|g64208|64
+Nice Guys|ejalob|71d218|61
+Team Falcons|kaofik|1h1532|49
+Forged Wolves|cbfjhp|664721|49
+Team Vision|hqkbah|4014d0|48
+Unreal Nightmare|iksacc|000781|45
+NinjasinPyjamas|nhgibe|334266|45
+Geekay Esports|fchkgd|734013|39
+Full XI|meehtm|0c3303|33
+Team Liquid|qoqdff|013393|31
+Source Gaming|sfcplj|115008|28
+Free Thinkers|drjmks|602830|28
+HuntKennyWave|aprsml|401035|27
+HbM|tmbndn|005212|27
+Sentinels|ottcei|100730|25
+VexX Gaming|rdnrjg|062013|23
+AG GLOBAL|jsdtro|205001|16
+STRONGFISH|pgigpq|001203|14
+EBOYS|gnlqst|122400|14
+Zest Fest|llponr|230000|9
+#Day5/AvC|EEEOOO
+Team Vision|qaiaie|3b4e21|67
+FFS|csjcao|500881|51
+ShopifyRebellion|fcalkr|4c7030|50
+Sentinels|ldbgdj|039530|45
+Buckle Boys|ehdmnb|912306|43
+Crazy Thieves|neciff|009804|41
+Team Liquid|apstmd|841042|37
+NinjasinPyjamas|simeha|031318|37
+Free Thinkers|djtrtc|81002b|36
+World Wide|rqkdbg|124182|36
+DKF|grobji|003536|34
+NRG|bbpqql|830003|33
+DINOS|olfhlq|05b120|27
+Headglytch|hgloen|310064|26
+Source Gaming|iorfct|200180|24
+GAMBLERS|pthngm|102066|22
+Full XI|kkeksk|031302|17
+STRONGFISH|mfgsps|125000|15
+Forged Wolves|jmqpop|532000|14
+Stallions|tnnjrh|020302|13
+#Day6/BvC|SSSEEE
+DINOS|albsta|b7d108|74
+AG GLOBAL|dajgct|3h2480|63
+GAMBLERS|lraceh|106564|48
+VexX Gaming|rddidb|066316|48
+ShopifyRebellion|emcdnf|566801|47
+DKF|ophoac|0000a9|42
+Geekay Esports|shnbjg|010c61|37
+Team Falcons|cqmjbo|302461|36
+HuntKennyWave|kckeke|731202|33
+Crazy Thieves|gesamp|210504|32
+Zest Fest|nnglij|609142|32
+Unreal Nightmare|hbinls|024720|30
+FFS|ikfqom|524243|28
+Buckle Boys|bjpmqr|902121|27
+Nice Guys|qfetpn|092004|23
+World Wide|fglkhq|230070|22
+NRG|jsrpgd|102006|19
+Headglytch|ptohri|004316|19
+EBOYS|titrfl|000022|10
+HbM|moqfsk|000103|10
+#Day7/AvB|EEEOOO
+Unreal Nightmare|bkcocd|847193|62
+Sentinels|keamtb|276008|50
+NinjasinPyjamas|mareje|1a1607|48
+Team Falcons|drmhbc|403394|47
+Team Vision|tfsima|10333f|43
+Source Gaming|fohbel|711540|38
+Geekay Esports|nmkasf|400806|36
+Nice Guys|jjbfkq|043813|36
+HbM|hpgpat|207180|35
+Team Liquid|ccndls|034520|35
+Zest Fest|etlcgk|301680|34
+AG GLOBAL|gbjrdp|435300|34
+VexX Gaming|alolig|630010|30
+EBOYS|qheghn|033613|28
+Forged Wolves|isinfj|100267|26
+Stallions|pdfsoh|364000|24
+STRONGFISH|sndjqm|524013|24
+Full XI|ogtqni|490000|20
+Free Thinkers|rqqtrr|004052|11
+HuntKennyWave|lipkpo|012100|9
+#Day8/AvC|SSSEEE
+FFS|gddaas|9237c0|70
+Team Liquid|nparfa|51d085|60
+NRG|bbpdbb|620254|60
+DKF|afgojc|53100d|50
+Sentinels|eaeimn|3b4034|49
+Stallions|ockhsk|6a2a00|40
+ShopifyRebellion|qhhglf|06d802|40
+DINOS|tnfndd|0132f3|39
+Forged Wolves|cmijel|722261|37
+NinjasinPyjamas|kljepi|404913|31
+STRONGFISH|sebfto|045201|29
+Crazy Thieves|iocpoq|613023|26
+Buckle Boys|lqlmce|401133|26
+Team Vision|fksckm|030511|23
+Headglytch|hgokqj|440121|21
+Full XI|jjrbrt|101500|20
+World Wide|drnlip|522110|20
+Source Gaming|pttthh|220015|14
+GAMBLERS|rimqng|032002|14
+Free Thinkers|msqsgr|113310|13
+#Day9/BvC|OOOSSS
+ShopifyRebellion|maccal|0d69b0|79
+Headglytch|jbbakq|19d900|65
+DKF|dlebbc|873245|64
+Team Falcons|bdlglm|861ca5|62
+World Wide|ejdmjs|a26170|40
+FFS|gcnoqr|6a5411|39
+AG GLOBAL|cfmjnd|054308|39
+Geekay Esports|lggima|113118|37
+HuntKennyWave|akotef|700042|34
+NRG|qhafse|038100|33
+Crazy Thieves|seidtg|024705|32
+VexX Gaming|hrthch|300780|31
+HbM|pmfeob|013402|28
+EBOYS|ishkrj|303125|21
+Unreal Nightmare|noqnfk|500053|20
+DINOS|tqjsdn|001063|18
+Buckle Boys|fipqio|302021|16
+Zest Fest|knklpp|100233|13
+GAMBLERS|rprrhi|002015|12
+Nice Guys|otspgt|010101|7
+#Finals/Finals|SOEEOSSO
+NinjasinPyjamas|enstadpa|4110bc1j|83
+Team Vision|acmacjns|78178632|84
+AG GLOBAL|tabbbhkm|17b7a031|83
+Team Liquid|lpaekcat|038303d0|67
+ShopifyRebellion|gekfmgcd|39940334|62
+Team Falcons|phrdgfmb|10387119|53
+FFS|bfocfpop|91034072|50
+Geekay Esports|mgdrrben|25210723|45
+Unreal Nightmare|cijslrff|c2110036|43
+Sentinels|fdhqenqg|51613011|36
+Crazy Thieves|smcpoase|00002800|35
+Full XI|qotjskdo|50060552|33
+DKF|itngnobh|30000172|32
+DINOS|kbqlilrk|28030210|31
+Stallions|ojiipqlc|03052023|30
+Nice Guys|dsfnjshq|40533020|30
+Headglytch|hremdetj|00222104|29
+World Wide|jlghhijl|04214210|29
+Buckle Boys|rkpotmii|13000013|15
+NRG|nqlkqtgr|01210000|10

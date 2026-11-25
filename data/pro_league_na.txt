@@ -1,0 +1,211 @@
+# Y6 Split 2 Pro League NA (apexlegendsstatus.com, fetched 2026-11-24). Order 2.5 = between Y6S1 Playoffs and Y6S2 Playoffs.
+## PL_NA_D1|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/NA/Day1/AvB|Storm Point,Storm Point,Storm Point,E-District,E-District,E-District
+VexX Gaming|2 3 13 3 4 15|11 5 4 7 13 2|72
+Crazy Thieves A|13 2 16 14 6 1|3 9 0 0 4 20|62
+Team Vision A|6 14 11 2 5 9|11 1 0 16 6 5|59
+Forged Wolves B|20 1 4 10 3 5|1 10 1 0 7 4|53
+Full XI A|3 12 9 5 1 3|3 4 1 3 4 0|48
+Team Liquid A|19 11 12 1 9 11|1 3 2 11 5 3|42
+Geekay Esports|9 4 15 16 15 12|0 13 6 3 1 6|39
+Sesame oil A|1 9 10 13 10 4|6 1 4 0 0 2|37
+AG GLOBAL A|15 7 3 8 18 19|0 6 8 6 3 0|36
+SR A|16 16 1 12 11 17|3 0 11 0 2 3|33
+DKF B|11 6 2 11 20 2|1 1 6 0 0 1|32
+Sentinels B|5 5 5 7 12 6|0 2 2 2 1 4|30
+Team Darkspire B|8 17 8 18 2 14|5 2 3 0 3 0|27
+Storm B|17 8 14 15 7 8|1 1 5 1 5 4|26
+Unreal Nightmare B|4 20 19 4 8 7|6 0 0 3 0 0|24
+W Press A|12 10 6 6 19 20|3 0 3 3 2 0|20
+DINOS B|18 18 18 9 16 10|0 1 1 6 0 4|16
+Free Thinkers A|10 15 17 20 13 18|6 0 0 0 1 0|11
+Buckle Boys A|7 13 20 17 14 16|1 0 0 2 0 3|11
+Headglytch B|14 19 7 19 17 13|0 0 5 0 0 0|10
+## PL_NA_D2|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/NA/Day2/AvC|World's Edge,World's Edge,World's Edge,Storm Point,Storm Point,Storm Point
+AG GLOBAL|5 2 11 1 18 2|0 9 6 11 0 8|69
+Nice Guys|3 9 17 7 1 1|5 1 0 2 10 11|65
+Full XI|2 5 4 8 2 7|5 2 9 0 5 2|55
+NinjasinPyjamas|7 18 1 6 16 10|14 0 9 3 3 4|53
+Team Vision|6 1 2 9 13 6|2 5 9 3 1 2|52
+World Wide|13 4 6 15 7 3|3 12 4 1 3 7|50
+Stallions|1 19 8 17 9 5|11 0 1 0 4 5|41
+Crazy Thieves|4 16 7 4 12 13|7 0 2 15 0 1|40
+FFS|17 7 3 5 17 9|0 3 0 7 3 7|36
+Sesame oil|8 11 10 20 3 4|6 1 0 0 5 4|33
+SLG|12 3 13 2 11 18|1 6 1 2 3 0|32
+Team Liquid|18 17 5 14 15 17|2 3 7 3 3 0|24
+W Press|14 15 9 3 19 11|1 0 4 4 0 0|21
+NRG|11 20 14 10 5 16|1 0 6 1 3 1|20
+EBOYS|15 14 15 12 8 8|1 3 1 0 5 1|19
+ShopifyRebellion|19 8 19 11 10 12|1 2 0 2 3 1|15
+STRONGFISH|9 13 12 18 14 14|3 2 0 0 0 3|14
+Team Falcons|10 6 20 19 6 19|2 2 0 0 1 0|13
+Buckle Boys|20 12 16 16 4 15|0 1 2 0 1 1|12
+Free Thinkers|16 10 18 13 20 20|0 4 0 3 0 1|11
+## PL_NA_D3|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/NA/Day3/BvC|E-District,E-District,E-District,World's Edge,World's Edge,World's Edge
+DKF|1 5 9 9 9 1|13 4 3 6 0 16|76
+Geekay Esports|2 1 5 10 10 3|2 8 2 8 0 6|62
+DINOS|14 3 3 2 2 10|2 10 1 1 7 5|61
+Headglytch|15 17 1 4 6 7|1 0 9 11 8 4|57
+VexX Gaming|16 16 4 1 12 2|1 4 3 7 3 2|47
+Sentinels|4 15 15 7 1 8|5 3 2 1 9 2|46
+Forged Wolves|5 6 6 6 4 12|1 3 7 0 4 2|36
+SSS|7 2 16 12 8 11|3 9 4 1 2 0|35
+World Wide|10 8 12 3 5 4|0 0 2 4 4 4|35
+Team Falcons|18 14 19 14 3 9|3 0 0 6 9 0|29
+JD GAMING|11 4 11 19 16 16|6 8 3 0 4 1|29
+NinjasinPyjamas|20 10 2 16 13 18|0 2 8 0 2 2|26
+Team Darkspire|6 20 14 20 14 5|6 0 1 0 2 5|23
+Storm|12 7 10 13 17 15|1 4 5 1 0 3|22
+Nice Guys|3 18 7 18 7 13|2 0 1 1 2 1|21
+Stallions|8 13 13 17 19 19|5 0 5 1 1 3|19
+SeventhLetterGg|9 19 8 8 15 20|4 2 4 1 0 0|18
+EBOYS|13 11 18 5 18 17|0 3 0 5 0 2|16
+STRONGFISH|17 9 17 11 20 6|1 2 0 3 0 1|13
+Unreal Nightmare|19 12 20 15 11 14|0 1 0 0 0 1|6
+## PL_NA_D4|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/NA/Day4/AvB|World's Edge,World's Edge,World's Edge,Storm Point,Storm Point,Storm Point
+Team Vision|1 14 5 2 9 1|3 3 11 10 3 11|81
+Geekay Esports|3 1 12 13 1 6|8 8 7 8 12 0|79
+DINOS|19 2 3 5 13 5|0 9 11 0 6 8|59
+Forged Wolves|2 10 11 7 3 3|4 1 0 0 8 7|49
+VexX Gaming|11 19 1 12 4 2|1 0 10 0 3 1|43
+Unreal Nightmare|18 7 7 1 18 11|1 4 4 9 0 0|37
+Headglytch|20 15 4 9 2 4|0 0 3 2 5 5|37
+Sentinels|17 3 8 4 19 8|0 5 4 8 0 3|36
+Team Liquid|7 13 15 3 15 12|3 5 3 7 0 2|34
+AG GLOBAL|15 4 10 11 7 15|3 6 3 4 3 0|32
+Buckle Boys|14 17 2 10 8 20|0 0 9 4 1 0|28
+Crazy Thieves|4 12 13 20 17 13|8 8 1 0 0 3|28
+W Press|5 6 17 14 11 7|2 2 0 0 0 9|25
+ShopifyRebellion|6 11 6 18 16 9|5 4 1 0 0 1|20
+DKF|16 16 20 6 10 16|6 0 0 4 5 0|20
+Team Darkspire|12 18 14 17 5 18|4 0 1 1 5 0|17
+Full XI|10 9 9 8 14 14|0 4 0 0 0 1|15
+Storm|9 5 19 19 6 19|2 0 0 0 2 2|15
+Free Thinkers|13 20 16 15 20 10|2 0 3 0 0 1|10
+Sesame oil|8 8 18 16 12 17|1 0 0 1 0 2|9
+## PL_NA_D5|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/NA/Day5/AvC|E-District,E-District,E-District,World's Edge,World's Edge,World's Edge
+NinjasinPyjamas|17 3 9 1 16 6|2 7 7 15 5 3|63
+Nice Guys|14 2 4 4 3 11|2 3 8 4 12 1|58
+Team Vision|16 6 16 15 7 1|4 2 5 4 6 12|52
+FFS|4 13 1 5 6 5|4 3 8 1 1 0|46
+NRG|5 7 12 7 18 3|3 2 4 1 0 15|43
+Full XI|8 1 6 10 11 2|0 8 4 0 0 1|42
+AG GLOBAL|1 16 13 16 5 9|13 0 0 1 7 0|40
+W Press|13 17 2 6 2 10|0 3 5 2 3 2|39
+ShopifyRebellion|12 4 7 8 8 15|4 4 8 5 1 3|39
+Buckle Boys|2 5 18 3 19 19|2 8 0 7 0 0|37
+Team Falcons|9 20 14 14 10 4|8 1 0 2 0 12|34
+SLG|20 12 5 2 15 12|1 1 1 14 0 0|33
+Team Liquid|18 11 17 19 1 17|0 1 2 0 11 2|29
+Crazy Thieves|3 15 10 12 12 16|4 4 0 0 2 3|25
+World Wide|10 8 15 9 4 14|1 0 0 2 6 0|22
+Stallions|11 9 11 18 9 8|3 0 3 1 4 3|22
+STRONGFISH|19 10 3 20 14 7|1 2 3 0 0 0|19
+EBOYS|7 14 19 11 13 13|5 1 0 1 1 0|15
+Sesame oil|15 19 8 17 20 20|0 1 5 0 0 0|9
+Free Thinkers|6 18 20 13 17 18|0 3 0 1 0 0|8
+## PL_NA_D6|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/NA/Day6/BvC|Storm Point,Storm Point,Storm Point,E-District,E-District,E-District
+DINOS|1 1 8 13 1 12|18 10 6 1 14 1|90
+Team Falcons|3 16 1 10 13 1|6 4 15 6 2 18|85
+World Wide|2 17 5 6 5 4|2 2 12 3 5 2|51
+NRG|16 3 2 8 17 16|3 4 6 10 4 0|45
+Stallions|17 2 14 5 8 3|0 11 0 0 3 4|41
+Team Darkspire|4 20 12 1 11 10|3 1 3 11 0 0|39
+Forged Wolves|8 12 10 2 7 7|2 3 0 12 0 2|39
+Nice Guys|9 8 3 4 2 15|0 0 3 3 5 0|37
+JD GAMING|20 5 16 7 10 2|0 6 0 1 5 6|36
+Geekay Esports|15 13 9 19 19 13|2 6 11 0 0 5|29
+Sentinels|5 4 19 20 3 18|2 2 0 1 5 0|26
+NinjasinPyjamas|7 19 17 11 4 17|4 0 0 2 10 0|25
+Unreal Nightmare|10 14 15 3 14 8|0 1 1 5 0 3|24
+DKF|11 15 6 18 12 6|6 0 1 1 1 3|21
+EBOYS|19 9 4 16 9 11|0 1 2 1 0 5|19
+STRONGFISH|13 11 11 9 6 9|3 1 0 1 4 0|19
+VexX Gaming|18 6 20 14 16 5|0 4 0 1 1 4|18
+SLG|6 10 7 12 18 20|3 3 0 2 0 0|17
+Storm|14 7 13 17 20 19|2 0 3 2 2 3|17
+Headglytch|12 18 18 15 15 14|0 0 0 0 4 0|8
+## PL_NA_D7|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/NA/Day7/AvB|E-District,E-District,E-District,World's Edge,World's Edge,World's Edge
+Team Liquid|1 3 15 9 6 1|8 13 1 3 8 8|78
+Forged Wolves|3 7 3 11 2 2|3 4 8 0 8 11|70
+Crazy Thieves|5 10 7 1 14 12|4 2 5 17 8 3|62
+VexX Gaming|2 13 1 8 17 3|8 4 11 2 0 3|59
+ShopifyRebellion|4 15 2 7 13 17|6 0 7 2 7 0|41
+Team Vision|16 1 16 19 15 4|4 12 0 0 2 4|40
+Team Darkspire|9 20 11 20 1 11|7 0 1 0 4 5|33
+W Press|14 11 13 2 10 6|0 2 0 7 2 2|30
+AG GLOBAL|6 16 4 18 3 16|5 0 6 0 4 0|30
+Sesame oil|10 18 19 4 8 8|3 0 0 5 6 3|28
+Geekay Esports|18 17 9 14 5 7|1 3 6 4 3 1|28
+Full XI|12 2 14 6 9 14|1 4 0 1 2 0|25
+Buckle Boys|13 4 6 3 16 10|0 2 3 2 0 0|25
+DKF|20 5 8 12 4 15|1 2 2 3 3 0|24
+DINOS|8 12 5 16 20 18|1 6 5 3 0 1|23
+Free Thinkers|7 9 20 17 19 5|7 2 0 0 0 3|21
+Storm|11 6 17 10 12 13|0 0 3 4 2 3|20
+Unreal Nightmare|17 14 18 15 18 9|1 0 0 2 2 10|19
+Sentinels|19 8 10 5 11 19|0 1 0 2 3 0|15
+Headglytch|15 19 12 13 7 20|2 0 0 1 1 0|10
+## PL_NA_D8|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/NA/Day8/AvC|Storm Point,Storm Point,Storm Point,E-District,E-District,E-District
+NRG|11 1 2 1 5 1|5 12 7 14 7 6|101
+Crazy Thieves|1 3 6 7 1 6|14 4 3 10 14 2|87
+Team Falcons|6 6 14 6 7 2|6 8 1 1 4 4|46
+Team Liquid|2 18 13 3 17 14|10 0 1 12 0 1|42
+EBOYS|8 5 1 12 10 15|1 3 7 2 0 1|36
+Buckle Boys|12 7 10 18 13 4|2 2 0 0 2 16|34
+STRONGFISH|18 2 16 13 3 9|0 6 1 0 7 0|33
+Team Vision|13 14 4 9 14 20|5 0 7 6 5 0|33
+SLG|15 4 12 5 12 10|2 3 2 2 4 6|33
+ShopifyRebellion|9 10 11 15 9 7|6 1 1 3 6 3|31
+NinjasinPyjamas|17 17 8 17 2 16|0 1 9 1 6 1|29
+World Wide|10 20 7 2 4 19|1 0 3 2 4 0|29
+W Press|3 9 3 4 20 18|3 3 2 0 0 0|29
+Sesame oil|5 15 17 8 15 13|0 3 3 3 2 6|26
+Full XI|4 13 18 11 18 3|0 0 0 0 0 9|23
+FFS|19 12 9 19 8 11|2 5 5 1 0 2|21
+Nice Guys|7 11 5 10 16 8|1 1 1 4 0 0|19
+Free Thinkers|16 8 19 14 19 17|2 1 1 0 0 4|11
+Stallions|14 16 15 16 6 12|2 0 0 1 0 0|9
+AG GLOBAL|20 19 20 20 11 5|0 1 1 0 0 1|8
+## PL_NA_D9|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/NA/Day9/BvC|World's Edge,World's Edge,World's Edge,Storm Point,Storm Point,Storm Point
+Geekay Esports|13 1 2 19 9 2|3 9 6 0 2 11|64
+NRG|2 2 14 3 6 16|4 12 1 5 4 2|57
+Team Falcons C|16 8 1 9 16 3|1 2 16 3 3 7|55
+Sentinels B|1 3 7 14 14 6|3 2 4 5 0 6|47
+World Wide C|6 4 10 8 18 1|6 4 2 0 0 8|44
+Headglytch B|3 12 11 11 11 4|11 4 3 4 2 4|44
+NinjasinPyjamas C|18 18 6 4 2 14|5 0 2 1 15 0|41
+Nice Guys C|12 13 13 2 5 12|2 1 1 8 5 4|38
+EBOYS C|11 16 4 12 1 10|0 2 2 1 9 1|36
+Stallions C|19 7 15 5 8 9|2 5 0 9 3 3|34
+Forged Wolves B|10 17 20 1 3 8|1 0 0 4 4 1|33
+FFS|15 14 5 17 7 5|3 0 9 2 5 1|33
+DINOS B|5 19 12 7 19 7|7 0 2 6 0 5|31
+STRONGFISH C|8 11 17 16 4 13|1 5 1 0 4 4|24
+VexX Gaming|4 5 9 20 15 15|3 0 1 0 3 2|22
+Storm B|9 20 3 13 10 20|2 0 5 1 0 0|20
+Team Darkspire B|17 9 8 10 13 19|2 2 4 2 0 0|17
+SLG C|20 6 18 6 12 17|0 6 2 1 0 0|16
+DKF B|7 15 16 15 20 18|2 2 2 0 1 0|12
+Unreal Nightmare B|14 10 19 18 17 11|0 4 0 1 0 0|9
+## PL_NA_FINALS|2.7|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/NA/Finals/Finals|Storm Point,World's Edge,E-District,E-District,World's Edge,Storm Point,Storm Point,World's Edge,E-District,E-District
+Crazy Thieves|7 1 14 12 8 14 7 8 4 1|2 11 0 1 5 0 6 4 4 15|90
+Team Falcons|3 3 17 15 1 15 4 7 3 7|10 5 0 1 12 0 0 1 8 1|84
+World Wide|14 2 7 11 4 5 11 12 5 3|1 5 9 5 6 7 5 1 5 2|82
+Team Liquid|11 19 2 20 9 1 17 6 15 4|5 0 11 0 3 14 0 6 0 3|75
+AG GLOBAL|19 4 15 2 12 4 3 20 10 8|0 11 0 7 5 5 9 0 0 3|72
+Team Vision|10 16 18 9 6 20 2 4 7 16|0 2 1 4 6 1 7 10 7 6|68
+ShopifyRebellion|18 12 1 19 17 11 15 1 11 14|0 7 13 0 0 1 3 3 0 4|60
+NRG|8 5 20 1 19 9 6 2 19 20|3 3 0 8 1 0 5 7 0 0|59
+NinjasinPyjamas|17 8 13 13 3 17 1 9 6 5|0 0 5 2 2 1 4 3 8 1|58
+DINOS|6 20 12 8 13 8 13 11 1 9|6 0 1 0 2 6 3 3 9 2|57
+DKF|2 9 9 5 11 10 9 13 12 18|4 2 5 5 3 2 7 2 2 0|56
+Nice Guys|1 14 4 6 18 2 14 17 9 11|10 1 1 4 0 3 0 0 1 0|54
+Team Darkspire|12 18 3 17 7 3 18 3 20 13|4 0 4 0 0 10 0 3 0 1|48
+Sentinels|16 17 6 16 2 6 5 15 8 12|0 1 2 2 8 4 7 0 1 0|48
+VexX Gaming|5 7 11 7 5 13 19 14 13 6|7 0 2 1 4 1 0 6 3 3|48
+Forged Wolves|13 6 5 18 10 19 12 5 2 15|2 2 1 1 1 1 1 4 7 0|45
+FFS|15 15 8 3 16 16 16 18 16 2|0 0 3 7 0 0 0 0 0 9|39
+Geekay Esports|4 13 16 10 15 7 10 16 17 10|6 4 0 1 0 2 0 1 3 6|39
+Full XI|9 10 19 4 20 12 8 10 14 17|1 1 0 6 0 1 1 0 0 0|25
+W Press|20 11 10 14 14 18 20 19 18 19|0 2 1 0 0 1 0 1 0 2|12

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Champs Broadcast Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a caster's stat desk: fast to read, numbers first, no decoration.
+   IDEA: the production scoreboard sheet a stats producer keeps beside the broadcast.
+   PICTURE: the live lobby table itself, with win-chance bars updating as scores go in.
+   COLOUR and TYPE: charcoal ground, off-white ink, steel-blue bars, signal red only for match point; Barlow Condensed + Barlow.
+   LAYOUT: title strip, four tabs (Live, Field, Compare, Missed LAN), one working view at a time. */
+:root{color-scheme:light dark;--bg:light-dark(#f4f2ee,#14161b);--card:light-dark(#ffffff,#1d2027);--ink:light-dark(#16181d,#f1efe9);--mute:light-dark(#5a5f6b,#a3a8b4);--line:light-dark(#d9d5cc,#30343e);--bar:light-dark(#2f6fb3,#6aa9ee);--hot:light-dark(#c9271f,#ff5a4d);--good:light-dark(#1d7a46,#5ccf8e)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Barlow,system-ui,sans-serif;overflow-x:clip}
+.wrap{max-width:1240px;margin:0 auto;padding:0 max(4vw,14px)}
+header{padding:22px 0 0}
+h1{font:700 clamp(30px,4.4vw,46px)/1.02 "Barlow Condensed",sans-serif;margin:0;text-wrap:balance}
+h2{font:700 clamp(22px,2.6vw,28px)/1.1 "Barlow Condensed",sans-serif;margin:0 0 6px}
+h3{font:600 17px/1.2 Barlow,sans-serif;margin:18px 0 6px}
+p{margin:0 0 10px;max-width:72ch}.mute{color:var(--mute)}.small{font-size:13px}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 0;border-bottom:2px solid var(--ink)}
+nav button{font:600 16px Barlow,sans-serif;min-height:44px;padding:8px 16px;border:0;background:none;color:var(--mute);cursor:pointer;border-radius:6px 6px 0 0}
+nav button[aria-selected=true]{background:var(--ink);color:var(--bg)}
+section{display:none;padding:22px 0 48px}section.on{display:block}
+.ctl{display:flex;gap:12px;flex-wrap:wrap;align-items:end;margin:12px 0}
+.ctl>div{flex:0 1 150px}.ctl>div.w{flex:0 1 240px}
+label{display:block;font-weight:600;font-size:13px;color:var(--mute);margin-bottom:4px}
+select,input,button{font:inherit;font-size:16px}
+select,input[type=number]{width:100%;min-height:44px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink)}
+.btn{min-height:44px;padding:8px 14px;border:1px solid var(--ink);border-radius:6px;background:var(--card);color:var(--ink);font-weight:600;cursor:pointer}
+.btn.p{background:var(--ink);color:var(--bg)}
+:focus-visible{outline:3px solid var(--bar);outline-offset:2px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.tile b{display:block;font:700 clamp(24px,3vw,32px)/1.1 "Barlow Condensed",sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile span{font-size:13px;color:var(--mute)}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th{font-size:12px;font-weight:600;color:var(--mute)}th.l,td.l{text-align:left}
+.scroll{overflow-x:auto}
+tr.click{cursor:pointer}tr.click:hover,tr.sel{background:var(--card)}
+td input[type=number]{width:64px;min-height:36px;text-align:right}
+.pb{display:inline-block;width:110px;height:12px;background:color-mix(in oklab,var(--line) 60%,transparent);border-radius:3px;vertical-align:middle;margin-right:8px;overflow:hidden}
+.pb i{display:block;height:100%;background:var(--bar);border-radius:0 3px 3px 0}
+.mp{display:inline-block;font-size:12px;font-weight:600;padding:1px 6px;border-radius:4px;border:1px solid var(--hot);color:var(--hot)}
+.tag{display:inline-block;font-size:12px;padding:1px 6px;border-radius:4px;border:1px solid var(--line);color:var(--mute)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chips button{min-height:36px;padding:4px 10px;border-radius:18px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-size:14px}
+.chips button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px;margin:12px 0}
+ul.tp{margin:8px 0;padding-left:20px}ul.tp li{margin:4px 0;max-width:80ch}
+.msg{color:var(--hot);font-weight:600;min-height:1.4em}
+.cmp{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:4px 14px;align-items:center;max-width:640px}
+.cmp div{padding:5px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}.cmp .a{text-align:right}.cmp .m{text-align:center;color:var(--mute);font-size:13px;border:0}.cmp .win{font-weight:600;color:var(--good)}
+details summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+a{color:var(--bar)}
+@media(max-width:600px){.pb{width:60px}td input[type=number]{width:54px}}
+</style></head><body><div class="wrap">
+<header>
+  <p class="mute small">ALGS Year 6 Championship · Sapporo · Jan 28–31, 2027 · model ratings from <span id="h-games"></span> games, data to 24 Nov 2026</p>
+  <h1>Champs broadcast desk</h1>
+  <nav role="tablist">
+    <button role="tab" data-t="live">Live tracker</button><button role="tab" data-t="field">The field (40)</button><button role="tab" data-t="groups">Groups &amp; bracket</button><button role="tab" data-t="compare">Compare</button><button role="tab" data-t="meta">Legends &amp; guns</button><button role="tab" data-t="missed">Missed LAN</button>
+  </nav>
+</header>
+
+<section id="live">
+  <h2>Live lobby tracker</h2>
+  <p class="mute">Enter each game's placements and kills (or type point totals directly). Win chances are re-simulated from the current scores and each team's rating (expected points per game, shown in The field). Your entries are remembered in this browser only.</p>
+  <div class="ctl">
+    <div class="w"><label for="mode">Stage type</label><select id="mode"><option value="mp">Match-point finals</option><option value="series">Series: top teams advance</option></select></div>
+    <div id="c-thr"><label for="thr">Match-point threshold</label><input id="thr" type="number" min="1" max="200" value="50"></div>
+    <div id="c-left" hidden><label for="left">Games left</label><input id="left" type="number" min="0" max="18" value="6"></div>
+    <div id="c-topk" hidden><label for="topk">Teams advancing</label><input id="topk" type="number" min="1" max="19" value="10"></div>
+    <button class="btn" id="b-undo">Undo last game</button><button class="btn" id="b-reset">Reset scores</button>
+  </div>
+  <details id="lobbyed"><summary>Choose the lobby (<span id="lobbyn"></span>&nbsp;teams)</summary>
+    <div class="ctl"><button class="btn" id="b-top20">Top 20 by rating</button><button class="btn" id="b-none">Clear</button></div>
+    <div class="chips" id="chips"></div>
+  </details>
+  <div class="tiles">
+    <div class="tile"><b id="t-games">0</b><span>games entered</span></div>
+    <div class="tile"><b id="t-mp">0</b><span id="t-mp-l">teams on match point</span></div>
+    <div class="tile"><b id="t-end">–</b><span id="t-end-l">chance it ends next game</span></div>
+    <div class="tile"><b id="t-fav">–</b><span id="t-fav-l">current favourite</span></div>
+  </div>
+  <div class="scroll"><table id="lt"></table></div>
+  <div class="ctl"><button class="btn p" id="b-add">Add game result</button><span class="msg" id="msg" role="status"></span></div>
+  <h3>Talking points</h3>
+  <ul class="tp" id="tp"></ul>
+</section>
+
+<section id="field">
+  <h2>The 40-team field</h2>
+  <p class="mute">32 teams qualified on Championship Points; 8 came through November's Last Chance Qualifiers (top two per region; the second spot is read from the final standings). Use the Groups &amp; bracket tab once groups are announced. Title and finals odds come from 8,000 simulations of the Split 2 Playoffs format with random groups, so they will shift once groups are drawn. Click a team for its profile.</p>
+  <div class="ctl">
+    <div class="w"><label for="f-reg">Region</label><select id="f-reg"><option value="">All regions</option></select></div>
+    <div class="w"><label for="f-sort">Sort by</label><select id="f-sort"><option value="pw">Title odds</option><option value="pow">Rating (expected points per game)</option><option value="ppg">Actual points per game</option><option value="dmg">Damage per game (Pro League)</option><option value="kpg">Kills per game</option><option value="ap">Average placement</option><option value="team">Name</option></select></div>
+  </div>
+  <div id="profile"></div>
+  <div class="scroll"><table id="ft"></table></div>
+</section>
+
+<section id="groups">
+  <h2>Groups and bracket</h2>
+  <p class="mute">Put the 40 teams into the four groups once they are announced, then simulate the whole event: group stage, Winners and Losers rounds, and the match-point finals. Until then, "Random draw" shows what a typical draw looks like. Format assumed: the Split 2 Playoffs format.</p>
+  <div class="ctl"><button class="btn" id="g-rand">Random draw</button><button class="btn" id="g-clear">Clear groups</button><button class="btn p" id="g-sim">Simulate the event</button><span class="msg" id="g-msg" role="status"></span></div>
+  <div class="tiles" id="g-tiles"></div>
+  <div class="ctl"><div class="w"><label for="g-match">Send a group matchup to the live tracker</label><select id="g-match"><option>A vs B</option><option>C vs D</option><option>B vs D</option><option>A vs C</option><option>B vs C</option><option>A vs D</option></select></div><button class="btn" id="g-send">Load into tracker</button></div>
+  <div class="scroll"><table id="gt"></table></div>
+</section>
+
+<section id="compare">
+  <h2>Compare two teams</h2>
+  <div class="ctl"><div class="w"><label for="ca">Team A</label><select id="ca"></select></div><div class="w"><label for="cb">Team B</label><select id="cb"></select></div></div>
+  <div id="cmp"></div>
+</section>
+
+<section id="meta">
+  <h2>Legend picks and team comps</h2>
+  <p class="mute">Share of team-games in which each legend was played. "Wins" is how often a team using it won the game; 5% is par in a 20-team lobby.</p>
+  <div class="ctl"><div class="w"><label for="lg-ev">Event</label><select id="lg-ev"></select></div></div>
+  <div class="scroll"><table id="lgt"></table></div>
+  <h3>Most-played comps at the Split 2 Playoffs (LAN)</h3>
+  <div class="scroll"><table id="cpt"></table></div>
+  <h3>Guns at the Split 2 Playoffs</h3>
+  <div class="scroll"><table id="gnt"></table></div>
+  <h3>Best drop spots at the Split 2 Playoffs</h3>
+  <div class="ctl"><div class="w"><label for="poi-map">Map</label><select id="poi-map"></select></div></div>
+  <div class="scroll"><table id="pot"></table></div>
+  <p class="small mute">Drop-spot numbers are averages over 3 to 21 games each, so the order is rough. Each team's own legend picks are in its profile under The field.</p>
+</section>
+
+<section id="missed">
+  <h2>Teams that missed the Championship</h2>
+  <p class="mute">Every rated team that played Split 2 Pro League, the Split 2 Playoffs or an LCQ final and is not in the field, strongest first. The rating is the points per game we would expect from the team in a Championship lobby (the field averages about <span id="m-avg"></span>). "Would rank" places that rating among the 40 qualified teams.</p>
+  <div class="ctl">
+    <div class="w"><label for="m-reg">Region</label><select id="m-reg"><option value="">All regions</option></select></div>
+    <div class="w"><label for="m-min">Minimum games</label><select id="m-min"><option value="0">Any</option><option value="20" selected>20+</option><option value="40">40+</option></select></div>
+  </div>
+  <div class="tiles" id="m-tiles"></div>
+  <div class="scroll"><table id="mt"></table></div>
+</section>
+
+<p class="mute small" style="padding-bottom:28px">How the rating works: it is the points per game we expect from a team in a Championship lobby, worked out from each game's full finishing order across Year 5 Champs finals, Year 6 Playoffs, Split 2 Pro League and LCQ finals. Teams with thin records are pulled toward the average for their region, and teams with no LAN record are marked down. A gap of half a point per game is small. Rosters and renames are not tracked, and names are as listed on apexlegendsstatus.com. Scoring: 12/9/7/5/4/3/3/2/2/2/1×5 placement points, +1 per kill.</p>
+</div>
+
+<script>
+{
+const D = __DATA__;
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct = (x, d=0) => (100*x).toFixed(d) + '%';
+const sg = x => (x >= 0 ? '+' : '') + x.toFixed(2);
+const F = D.field, FT = Object.fromEntries(F.map(t => [t.team, t]));
+const PTS = [0, ...D.pts], KB = [0, ...D.kb];
+const byS = [...F].sort((a, b) => b.pow - a.pow); byS.forEach((t, i) => t.fr = i + 1);
+const ord = n => n + (['th','st','nd','rd'][(n % 100 - 20) % 10] || ['th','st','nd','rd'][n % 100] || 'th');
+$('#h-games').textContent = D.meta.games;
+
+// ---------- tabs ----------
+const tabs = ['live', 'field', 'groups', 'compare', 'meta', 'missed'];
+function show(t){ if (!tabs.includes(t)) t = 'live';
+  tabs.forEach(x => { $('#' + x).classList.toggle('on', x === t); $(`nav [data-t=${x}]`).setAttribute('aria-selected', x === t); }); }
+document.querySelectorAll('nav button').forEach(b => b.onclick = () => { location.hash = b.dataset.t; show(b.dataset.t); });
+addEventListener('hashchange', () => show(location.hash.slice(1)));
+show(location.hash.slice(1));
+
+// ---------- live tracker ----------
+const KEY = 'champsDeskV1';
+let S = {lobby: byS.slice(0, 20).map(t => t.team), pts: {}, hist: [], mode: 'mp', thr: 50, left: 6, topk: 10};
+try { const j = JSON.parse(localStorage.getItem(KEY)); if (j && Array.isArray(j.lobby)) { j.lobby = j.lobby.filter(t => FT[t]); S = Object.assign(S, j); } } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+const P = t => S.pts[t] || 0;
+const gumbel = () => -Math.log(-Math.log(Math.random() || 1e-12));
+function pois(mu){ const L = Math.exp(-mu); let k = 0, p = 1; do { k++; p *= Math.random(); } while (p > L); return k - 1; }
+function simulate(n){
+  const L = S.lobby, N = L.length, th = L.map(t => FT[t].s), ks = L.map(t => FT[t].ks), base = L.map(P);
+  const win = new Array(N).fill(0), ex = new Array(N).fill(0), idx = [...Array(N).keys()]; let glen = 0;
+  const play = tot => { const z = th.map(v => v + gumbel()); idx.sort((a, b) => z[b] - z[a]);
+    const first = idx[0], was = tot[first]; for (let r = 0; r < N; r++){ const t = idx[r]; tot[t] += PTS[r + 1] + pois(KB[Math.min(r + 1, 20)] * Math.exp(ks[t])); } return [first, was]; };
+  for (let s = 0; s < n; s++){ const tot = base.slice();
+    if (S.mode === 'mp'){ for (let g = 0; g < 40; g++){ const [f, was] = play(tot); glen++; if (was >= S.thr){ win[f]++; break; } } }
+    else { for (let g = 0; g < S.left; g++) play(tot);
+      const r = idx.slice().sort((a, b) => tot[b] - tot[a] || Math.random() - .5); for (let k = 0; k < Math.min(S.topk, N); k++) win[r[k]]++; tot.forEach((v, i) => ex[i] += v); } }
+  return {p: Object.fromEntries(L.map((t, i) => [t, win[i] / n])), ex: Object.fromEntries(L.map((t, i) => [t, ex[i] / n])), glen: glen / n};
+}
+function nextWin(){ const e = S.lobby.map(t => Math.exp(FT[t].s)), sum = e.reduce((a, b) => a + b, 0); return Object.fromEntries(S.lobby.map((t, i) => [t, e[i] / sum])); }
+function renderChips(){
+  $('#chips').innerHTML = [...F].sort((a, b) => a.team.localeCompare(b.team)).map(t => `<button type="button" aria-pressed="${S.lobby.includes(t.team)}" data-team="${esc(t.team)}">${esc(t.team)}</button>`).join('');
+  $('#chips').querySelectorAll('button').forEach(b => b.onclick = () => { const t = b.dataset.team, i = S.lobby.indexOf(t);
+    if (i >= 0) S.lobby.splice(i, 1); else if (S.lobby.length < 20) S.lobby.push(t); else { $('#msg').textContent = 'A lobby holds 20 teams. Remove one first.'; return; }
+    S.hist = []; renderAll(); });
+  $('#lobbyn').textContent = S.lobby.length;
+}
+let entry = {};
+function renderLive(){
+  const mp = S.mode === 'mp'; $('#c-thr').hidden = !mp; $('#c-left').hidden = mp; $('#c-topk').hidden = mp;
+  $('#mode').value = S.mode; $('#thr').value = S.thr; $('#left').value = S.left; $('#topk').value = S.topk;
+  const N = S.lobby.length;
+  if (N < 2){ $('#lt').innerHTML = '<tr><td class="l mute">Pick at least two teams in "Choose the lobby".</td></tr>'; $('#tp').innerHTML = ''; return; }
+  const sim = simulate(3000), nw = nextWin();
+  const rows = [...S.lobby].sort((a, b) => P(b) - P(a) || sim.p[b] - sim.p[a]);
+  const pmax = Math.max(.01, ...rows.map(t => sim.p[t]));
+  $('#lt').innerHTML = `<tr><th>#</th><th class="l">Team</th><th>Points</th><th>Place</th><th>Kills</th><th class="l">${mp ? 'Win the finals' : 'Advance'}</th><th>${mp ? 'Wins next game' : 'Projected pts'}</th><th class="l">Status</th></tr>` +
+    rows.map((t, i) => { const on = mp && P(t) >= S.thr, need = S.thr - P(t), e = entry[t] || {};
+      return `<tr><td>${i + 1}</td><td class="l">${esc(t)} <span class="tag">${esc(FT[t].region)}</span></td>
+      <td><input type="number" min="0" max="400" value="${P(t)}" data-k="pts" data-team="${esc(t)}" aria-label="Points for ${esc(t)}"></td>
+      <td><input type="number" min="1" max="${N}" value="${e.p ?? ''}" data-k="p" data-team="${esc(t)}" aria-label="Placement for ${esc(t)}"></td>
+      <td><input type="number" min="0" max="40" value="${e.k ?? ''}" data-k="k" data-team="${esc(t)}" aria-label="Kills for ${esc(t)}"></td>
+      <td class="l"><span class="pb"><i style="width:${(100 * sim.p[t] / pmax).toFixed(1)}%"></i></span>${pct(sim.p[t], 1)}</td>
+      <td>${mp ? pct(nw[t], 1) : sim.ex[t].toFixed(0)}</td>
+      <td class="l">${mp ? (on ? '<span class="mp">MATCH POINT</span>' : `<span class="mute">needs ${need}</span>`) : (i < S.topk ? 'in' : '<span class="mute">out</span>')}</td></tr>`; }).join('');
+  $('#lt').querySelectorAll('input').forEach(inp => inp.onchange = () => { const t = inp.dataset.team, k = inp.dataset.k, v = inp.value === '' ? null : Math.max(0, Math.round(+inp.value));
+    if (k === 'pts'){ S.pts[t] = v || 0; save(); setTimeout(renderLive, 0); } else { (entry[t] = entry[t] || {})[k] = v; } });
+  const elig = rows.filter(t => P(t) >= S.thr), fav = rows.reduce((a, b) => sim.p[b] > sim.p[a] ? b : a);
+  $('#t-games').textContent = S.hist.length;
+  $('#t-mp').textContent = mp ? elig.length : S.left; $('#t-mp-l').textContent = mp ? 'teams on match point' : 'games left in the series';
+  $('#t-end').textContent = mp ? pct(elig.reduce((a, t) => a + nw[t], 0)) : P(rows[Math.min(S.topk, N) - 1]) - P(rows[Math.min(S.topk, N - 1)] || rows[N - 1]);
+  $('#t-end-l').textContent = mp ? 'chance it ends next game' : 'point gap at the cut line';
+  $('#t-fav').textContent = fav; $('#t-fav-l').textContent = (mp ? 'favourite · ' : 'safest · ') + pct(sim.p[fav]);
+  // talking points
+  const tp = [];
+  if (mp){
+    if (!elig.length){ const close = rows.filter(t => S.thr - P(t) <= 21 && P(t) > 0);
+      tp.push(S.hist.length || rows.some(t => P(t)) ? `No one is on match point yet. ${close.length} team${close.length === 1 ? '' : 's'} could get there with one big game (within 21 points).` : `Scores are level. On ratings alone, ${esc(fav)} leads at ${pct(sim.p[fav], 1)}; pure luck would give each team ${pct(1 / N, 1)}.`); }
+    else { tp.push(`${elig.length} team${elig.length === 1 ? ' is' : 's are'} on match point: ${elig.map(esc).join(', ')}. There is a ${pct(elig.reduce((a, t) => a + nw[t], 0))} chance ${elig.length === 1 ? 'it wins' : 'one of them wins'} the next game and ends it.`);
+      const lead = rows[0]; if (sim.p[lead] < sim.p[fav]) tp.push(`${esc(lead)} leads on points, but ${esc(fav)} has the better title chance (${pct(sim.p[fav])} vs ${pct(sim.p[lead])}).`); }
+    tp.push(`From here the model expects about ${sim.glen.toFixed(1)} more game${sim.glen < 1.5 ? '' : 's'}.`);
+    const dark = rows.filter(t => P(t) < S.thr).sort((a, b) => sim.p[b] - sim.p[a])[0]; if (elig.length && dark) tp.push(`Best chance from outside match point: ${esc(dark)} at ${pct(sim.p[dark], 1)}, needing ${S.thr - P(dark)} more points first.`);
+  } else {
+    const k = Math.min(S.topk, N), bub = rows.filter(t => sim.p[t] > .15 && sim.p[t] < .85);
+    tp.push(`${k} of ${N} advance with ${S.left} game${S.left === 1 ? '' : 's'} left.`);
+    if (bub.length) tp.push(`On the bubble: ${bub.map(t => `${esc(t)} (${pct(sim.p[t])})`).join(', ')}.`);
+    const safe = rows.filter(t => sim.p[t] >= .95); if (safe.length) tp.push(`Effectively through: ${safe.map(esc).join(', ')}.`);
+  }
+  const noLan = rows.filter(t => FT[t].nolan); if (noLan.length) tp.push(`No LAN record in the data for ${noLan.map(esc).join(', ')}: rated on online regional play and marked down for it.`);
+  $('#tp').innerHTML = tp.map(x => `<li>${x}</li>`).join('');
+}
+function renderAll(){ save(); renderChips(); renderLive(); }
+$('#b-add').onclick = () => { const N = S.lobby.length, seen = new Set(); let bad = '';
+  for (const t of S.lobby){ const p = entry[t]?.p; if (!p || p < 1 || p > N) { bad = `Enter a placement from 1 to ${N} for every team (missing: ${t}).`; break; } if (seen.has(p)) { bad = `Placement ${p} is used twice.`; break; } seen.add(p); }
+  if (bad){ $('#msg').textContent = bad; return; }
+  const g = {}; S.lobby.forEach(t => { g[t] = PTS[Math.min(entry[t].p, 20)] + (entry[t].k || 0); S.pts[t] = P(t) + g[t]; });
+  const w = S.lobby.find(t => entry[t].p === 1), wasMP = S.mode === 'mp' && S.pts[w] - g[w] >= S.thr;
+  S.hist.push(g); if (S.mode === 'series' && S.left > 0) S.left--; entry = {};
+  $('#msg').textContent = wasMP ? `${w} won from match point: that is the title.` : `Game ${S.hist.length} added.`; renderAll(); };
+$('#b-undo').onclick = () => { const g = S.hist.pop(); if (!g){ $('#msg').textContent = 'No game to undo.'; return; } Object.keys(g).forEach(t => S.pts[t] = Math.max(0, P(t) - g[t])); if (S.mode === 'series') S.left++; $('#msg').textContent = 'Last game removed.'; renderAll(); };
+$('#b-reset').onclick = () => { S.pts = {}; S.hist = []; entry = {}; $('#msg').textContent = 'Scores cleared.'; renderAll(); };
+$('#b-top20').onclick = () => { S.lobby = byS.slice(0, 20).map(t => t.team); S.hist = []; renderAll(); };
+$('#b-none').onclick = () => { S.lobby = []; S.hist = []; renderAll(); };
+$('#mode').onchange = e => { S.mode = e.target.value; renderAll(); };
+[['thr', 1, 200], ['left', 0, 18], ['topk', 1, 19]].forEach(([k, lo, hi]) => $('#' + k).onchange = e => { S[k] = Math.min(hi, Math.max(lo, Math.round(+e.target.value) || lo)); renderAll(); });
+
+// ---------- field ----------
+const regions = [...new Set(F.map(t => t.region))].sort();
+['#f-reg', '#m-reg'].forEach(id => $(id).insertAdjacentHTML('beforeend', regions.map(r => `<option>${esc(r)}</option>`).join('')));
+const rankOf = (t, key, asc) => 1 + F.filter(o => asc ? o[key] < t[key] : o[key] > t[key]).length;
+const histRows = t => Object.entries(t.hist).map(([ev, h]) => `<tr><td class="l">${esc(ev)}</td><td>${h[0]}</td><td>${h[1].toFixed(1)}</td><td>${h[2].toFixed(1)}</td><td>${h[3]}</td><td>${h[4].toFixed(1)}</td></tr>`).join('');
+function profile(name){
+  const t = FT[name]; if (!t){ $('#profile').innerHTML = ''; return; }
+  const notes = [];
+  notes.push(t.path === 'LCQ' ? `Qualified through the Last Chance Qualifier (finished ${ord(t.lcq)} in the regional final).` : 'Qualified on Championship Points.');
+  t.fin.forEach(f => notes.push(`${esc(f[0])} finals: ${D.champions[f[0]] === t.team ? 'champions' : ord(f[1]) + ' on points'} with ${f[2]} points.`));
+  const kr = rankOf(t, 'kpg'), pr = rankOf(t, 'ap', true);
+  if (kr <= 8 && pr > 16) notes.push(`Fights for points: ${ord(kr)} in the field for kills per game but ${ord(pr)} for average placement.`);
+  else if (pr <= 8 && kr > 16) notes.push(`Plays for placement: ${ord(pr)} in the field for average placement but ${ord(kr)} for kills per game.`);
+  else if (kr <= 5 && pr <= 5) notes.push(`Top five in the field for both kills per game and average placement.`);
+  if (t.nolan) notes.push('No LAN record in the data. The rating comes from online regional play and is marked down, because first-time LAN teams at the last Playoffs scored well below their regional form.');
+  else if (t.g < 40) notes.push(`Only ${t.g} games in the data, so the rating is pulled toward average.`);
+  $('#profile').innerHTML = `<div class="card" id="p-card"><h2>${esc(t.team)} <span class="tag">${esc(t.region)}</span> <span class="tag">${t.path === 'LCQ' ? 'via LCQ' : 'via points'}</span></h2>
+    <div class="tiles"><div class="tile"><b>${pct(t.pw, 1)}</b><span>title odds (${ord(rankOf(t, 'pw'))} of 40)</span></div><div class="tile"><b>${pct(t.pf)}</b><span>reach the finals</span></div>
+    <div class="tile"><b>${t.pow.toFixed(1)}</b><span>rating: expected points per game (${ord(t.fr)} of 40, likely ${t.plo.toFixed(1)}–${t.phi.toFixed(1)}; field average ${D.meta.avg.toFixed(1)})</span></div><div class="tile"><b>${t.ppg.toFixed(1)}</b><span>actual points per game so far (${ord(rankOf(t, 'ppg'))})</span></div>
+    <div class="tile"><b>${t.kpg.toFixed(1)}</b><span>kills per game (${ord(kr)})</span></div><div class="tile"><b>${t.w}</b><span>game wins in ${t.g} games (${t.lg} at LAN)</span></div></div>
+    <ul class="tp">${notes.map(n => `<li>${n}</li>`).join('')}</ul>
+    <h3>Results by event</h3><div class="scroll"><table><tr><th class="l">Event</th><th>Games</th><th>Pts/game</th><th>Avg place</th><th>Wins</th><th>Kills/game</th></tr>${histRows(t)}</table></div>
+    <h3>Fighting stats, per game</h3><div class="scroll"><table><tr><th class="l">Measured at</th><th>Games</th><th>Kills</th><th>Knocks</th><th>Assists</th><th>Damage</th><th>Dealt ÷ taken</th><th>Revives</th></tr>${[['lan', 'Split 2 Playoffs (LAN)'], ['pl', 'Split 2 Pro League']].map(([k, lab]) => { const d = t.deep[k]; return d ? `<tr><td class="l">${lab}</td><td>${d.games}</td><td>${d.kills.toFixed(1)}</td><td>${d.knocks.toFixed(1)}</td><td>${d.assists.toFixed(1)}</td><td>${d.dmg.toLocaleString()}</td><td>${d.ratio.toFixed(2)}</td><td>${d.rez.toFixed(1)}</td></tr>` : `<tr><td class="l">${lab}</td><td colspan="7" class="l mute">did not play</td></tr>`; }).join('')}</table></div>
+    ${t.tl ? `<h3>Legends and comps</h3><p>${t.tl.legends.map(l => `${esc(l[0])} ${l[1]}%`).join(' · ')}</p><p class="mute">Top comps: ${(t.tl.comps || []).map(c => `${esc(c[0])} (${c[1]}% of games, avg place ${c[2].toFixed(1)})`).join('; ')}. Measured at: ${esc(t.tl.src)}.</p>` : ''}
+    ${Object.keys(t.maps).length ? `<h3>Points per game by map</h3><div class="scroll"><table><tr>${Object.keys(t.maps).map(m => `<th>${esc(m)}</th>`).join('')}</tr><tr>${Object.values(t.maps).map(v => `<td>${v[1].toFixed(1)} <span class="mute small">(${v[0]} games)</span></td>`).join('')}</tr></table></div><p class="small mute">Across all teams, map-to-map differences are no bigger than chance, so don't read much into these.</p>` : ''}
+    ${t.players.length ? `<h3>Players, per game (${esc(t.players[0].src)})</h3><div class="scroll"><table><tr><th class="l">Player</th><th>Games</th><th>Kills</th><th>Knocks</th><th>Assists</th><th>Damage</th><th>Dealt ÷ taken</th></tr>${[...t.players].sort((a, b) => b.dmg - a.dmg).map(p => `<tr><td class="l">${esc(p.player)}</td><td>${p.games}</td><td>${p.kills.toFixed(2)}</td><td>${p.knocks.toFixed(2)}</td><td>${p.assists.toFixed(2)}</td><td>${p.dmg.toLocaleString()}</td><td>${p.ratio.toFixed(2)}</td></tr>`).join('')}</table></div><p class="small mute">Rosters change often. Check these names against the Championship roster before using them on air.</p>` : ''}</div>`;
+}
+let selTeam = null;
+function renderField(){
+  const reg = $('#f-reg').value, k = $('#f-sort').value;
+  const val = (t, k) => k === 'dmg' ? (t.deep.pl ? t.deep.pl.dmg : 0) : t[k];
+  const rows = F.filter(t => !reg || t.region === reg).sort((a, b) => k === 'team' ? a.team.localeCompare(b.team) : k === 'ap' ? a.ap - b.ap : val(b, k) - val(a, k));
+  const pm = Math.max(...F.map(t => t.pw));
+  $('#ft').innerHTML = `<tr><th>#</th><th class="l">Team</th><th class="l">Region</th><th class="l">Path</th><th class="l">Title odds</th><th>Finals</th><th>Rating</th><th>Actual pts</th><th>Kills</th><th>Damage</th><th>Avg place</th><th>Wins</th><th>Games</th><th>LAN</th></tr>` +
+    rows.map((t, i) => `<tr class="click${t.team === selTeam ? ' sel' : ''}" data-team="${esc(t.team)}" tabindex="0"><td>${i + 1}</td><td class="l">${esc(t.team)}</td><td class="l"><span class="tag">${esc(t.region)}</span></td><td class="l">${t.path}</td>
+      <td class="l"><span class="pb"><i style="width:${(100 * t.pw / pm).toFixed(1)}%"></i></span>${pct(t.pw, 1)}</td><td>${pct(t.pf)}</td><td>${t.pow.toFixed(1)}</td><td>${t.ppg.toFixed(1)}</td><td>${t.kpg.toFixed(1)}</td><td>${t.deep.pl ? t.deep.pl.dmg.toLocaleString() : '–'}</td><td>${t.ap.toFixed(1)}</td><td>${t.w}</td><td>${t.g}</td><td>${t.lg}</td></tr>`).join('');
+  $('#ft').querySelectorAll('tr.click').forEach(r => { const go = () => { selTeam = r.dataset.team; profile(selTeam); renderField(); $('#p-card').scrollIntoView({block: 'nearest', behavior: 'smooth'}); };
+    r.onclick = go; r.onkeydown = e => { if (e.key === 'Enter') go(); }; });
+}
+$('#f-reg').onchange = renderField; $('#f-sort').onchange = renderField;
+
+// ---------- compare ----------
+const opts = [...F].sort((a, b) => a.team.localeCompare(b.team)).map(t => `<option>${esc(t.team)}</option>`).join('');
+$('#ca').innerHTML = opts; $('#cb').innerHTML = opts; $('#ca').value = byS[0].team; $('#cb').value = byS[1].team;
+function renderCmp(){
+  const a = FT[$('#ca').value], b = FT[$('#cb').value];
+  if (a.team === b.team){ $('#cmp').innerHTML = '<p class="mute">Pick two different teams.</p>'; return; }
+  const pa = 1 / (1 + Math.exp(b.s - a.s)), key = a.team < b.team ? `${a.team}|${b.team}` : `${b.team}|${a.team}`, h = D.h2h[key];
+  const aw = h ? (a.team < b.team ? h[1] : h[0] - h[1]) : 0;
+  const line = (lab, va, vb, fa, fb, lower) => { const wa = lower ? va < vb : va > vb, wb = lower ? vb < va : vb > va; return `<div class="a${wa ? ' win' : ''}">${fa}</div><div class="m">${lab}</div><div class="${wb ? 'win' : ''}">${fb}</div>`; };
+  const dl = (lab, k, dp) => { const x = a.deep.pl, y = b.deep.pl; if (!x || !y) return ''; const f = v => dp ? v.toFixed(dp) : v.toLocaleString(); return line(lab, x[k], y[k], f(x[k]), f(y[k])); };
+  $('#cmp').innerHTML = `<div class="tiles"><div class="tile"><b>${pct(pa)} – ${pct(1 - pa)}</b><span>model: chance ${esc(a.team)} finishes ahead of ${esc(b.team)} in a game</span></div>
+    <div class="tile"><b>${h ? aw + ' – ' + (h[0] - aw) : 'none'}</b><span>${h ? `actual record in the ${h[0]} games they shared a lobby` : 'shared games in the data'}</span></div></div>
+    <div class="cmp"><div class="a"><strong>${esc(a.team)}</strong></div><div class="m"></div><div><strong>${esc(b.team)}</strong></div>
+    ${line('Region', 0, 0, esc(a.region), esc(b.region))}${line('Title odds', a.pw, b.pw, pct(a.pw, 1), pct(b.pw, 1))}${line('Reach finals', a.pf, b.pf, pct(a.pf), pct(b.pf))}
+    ${line('Rating (exp. pts/game)', a.pow, b.pow, a.pow.toFixed(1), b.pow.toFixed(1))}${line('Actual pts/game', a.ppg, b.ppg, a.ppg.toFixed(1), b.ppg.toFixed(1))}${line('Kills per game', a.kpg, b.kpg, a.kpg.toFixed(1), b.kpg.toFixed(1))}${dl('Knocks per game', 'knocks', 1)}${dl('Assists per game', 'assists', 1)}${dl('Damage per game', 'dmg', 0)}${dl('Damage dealt ÷ taken', 'ratio', 2)}
+    ${line('Average placement', a.ap, b.ap, a.ap.toFixed(1), b.ap.toFixed(1), true)}${line('Game wins', a.w, b.w, a.w, b.w)}${line('Games (LAN)', 0, 0, `${a.g} (${a.lg})`, `${b.g} (${b.lg})`)}</div>
+    <p class="small mute" style="margin-top:10px">Green marks the better figure. Knocks, assists and damage are from Split 2 Pro League, where every team has 36+ games. Teams from different regions mostly meet at LAN, so shared-lobby records are small samples.</p>`;
+}
+$('#ca').onchange = renderCmp; $('#cb').onchange = renderCmp;
+
+// ---------- missed ----------
+function renderMissed(){
+  const reg = $('#m-reg').value, min = +$('#m-min').value, M = D.missed.filter(t => (!reg || t.region === reg) && t.g >= min);
+  const wr = t => 1 + F.filter(o => o.pow > t.pow).length, sm = Math.max(...D.missed.map(t => t.pow), .01);
+  const top = M.filter(t => wr(t) <= 20);
+  $('#m-tiles').innerHTML = `<div class="tile"><b>${M.length}</b><span>teams shown that missed out</span></div><div class="tile"><b>${top.length}</b><span>rate inside the field's top 20</span></div>${M[0] ? `<div class="tile"><b>${esc(M[0].team)}</b><span>strongest team not going (${M[0].pow.toFixed(1)} pts/game, would rank ${ord(wr(M[0]))})</span></div>` : ''}`;
+  $('#mt').innerHTML = `<tr><th>#</th><th class="l">Team</th><th class="l">Region</th><th class="l">Rating (exp. pts/game)</th><th>Likely range</th><th>Would rank</th><th>LCQ final</th><th>Pts/game</th><th>Kills/game</th><th>Avg place</th><th>Games</th><th>LAN</th></tr>` +
+    (M.length ? M.map((t, i) => `<tr><td>${i + 1}</td><td class="l">${esc(t.team)}</td><td class="l"><span class="tag">${esc(t.region)}</span></td><td class="l"><span class="pb"><i style="width:${Math.max(0, 100 * t.pow / sm).toFixed(1)}%"></i></span>${t.pow.toFixed(1)}</td><td>${t.plo.toFixed(1)}–${t.phi.toFixed(1)}</td><td>${ord(wr(t))} of 41</td><td>${t.lcq ? ord(t.lcq) : '–'}</td><td>${t.ppg.toFixed(1)}</td><td>${t.kpg.toFixed(1)}</td><td>${t.ap.toFixed(1)}</td><td>${t.g}</td><td>${t.lg}</td></tr>`).join('') : '<tr><td class="l mute" colspan="12">No teams match these filters.</td></tr>');
+}
+$('#m-avg').textContent = D.meta.avg.toFixed(1);
+$('#lg-ev').innerHTML = Object.keys(D.legends).map(e => `<option>${esc(e)}</option>`).join('');
+function renderMeta(){ const L = D.legends[$('#lg-ev').value].filter(l => l.pick >= 1), mx = L[0].pick;
+  $('#lgt').innerHTML = `<tr><th class="l">Legend</th><th class="l">Picked</th><th>Wins</th><th>Avg place</th><th>Team-games</th></tr>` + L.map(l => `<tr><td class="l">${esc(l.legend)}</td><td class="l"><span class="pb"><i style="width:${(100 * l.pick / mx).toFixed(1)}%"></i></span>${l.pick.toFixed(0)}%</td><td>${l.win.toFixed(1)}%</td><td>${l.avg_place.toFixed(1)}</td><td>${l.n}</td></tr>`).join('');
+  $('#cpt').innerHTML = `<tr><th class="l">Comp</th><th>Picked</th><th>Wins</th><th>Top 5</th><th>Avg place</th></tr>` + D.comps.map(c => `<tr><td class="l">${esc(c.comp)}</td><td>${c.pick.toFixed(1)}%</td><td>${c.win.toFixed(1)}%</td><td>${c.top5.toFixed(0)}%</td><td>${c.avg_place.toFixed(1)}</td></tr>`).join(''); }
+$('#lg-ev').onchange = renderMeta; renderMeta();
+{ const tot = D.guns.reduce((a, g) => a + g.kills, 0);
+  $('#gnt').innerHTML = `<tr><th class="l">Weapon</th><th class="l">Kills</th><th>Share</th><th>Knocks</th><th>Damage</th><th>Time in hand</th></tr>` + D.guns.filter(g => g.kills >= 10).map(g => `<tr><td class="l">${esc(g.weapon)}</td><td class="l"><span class="pb"><i style="width:${(100 * g.kills / D.guns[0].kills).toFixed(1)}%"></i></span>${g.kills.toLocaleString()}</td><td>${pct(g.kills / tot)}</td><td>${g.knocks.toLocaleString()}</td><td>${g.dmg.toLocaleString()}</td><td>${esc(g.time)}</td></tr>`).join('');
+  $('#poi-map').innerHTML = Object.keys(D.poi).map(m => `<option>${esc(m)}</option>`).join('');
+  const dp = () => { const P = D.poi[$('#poi-map').value].filter(x => x.picks >= 5).sort((a, b) => b.pts - a.pts);
+    $('#pot').innerHTML = `<tr><th class="l">Drop spot</th><th class="l">Points per game</th><th>Kills per game</th><th>Avg place</th><th>Wins</th><th>Games</th></tr>` + P.map(x => `<tr><td class="l">${esc(x.poi)}</td><td class="l"><span class="pb"><i style="width:${(100 * x.pts / P[0].pts).toFixed(1)}%"></i></span>${x.pts.toFixed(1)}</td><td>${x.kills.toFixed(1)}</td><td>${x.place.toFixed(1)}</td><td>${x.wins}</td><td>${x.picks}</td></tr>`).join(''); };
+  $('#poi-map').onchange = dp; dp(); }
+
+// ---------- groups & bracket ----------
+const GK = 'champsGroupsV1'; let GR = {}; try { GR = JSON.parse(localStorage.getItem(GK)) || {}; } catch (e) {}
+let GRES = null;
+const gsave = () => { try { localStorage.setItem(GK, JSON.stringify(GR)); } catch (e) {} };
+const gcount = () => { const c = {A: 0, B: 0, C: 0, D: 0}; F.forEach(t => { if (GR[t.team]) c[GR[t.team]]++; }); return c; };
+function simEvent(n){
+  const idx = Object.fromEntries(F.map((t, i) => [t.team, i])), th = F.map(t => t.s), ks = F.map(t => t.ks), N = F.length;
+  const grp = {A: [], B: [], C: [], D: []}; F.forEach((t, i) => grp[GR[t.team]].push(i));
+  const top20 = new Array(N).fill(0), fin = new Array(N).fill(0), win = new Array(N).fill(0);
+  const game = (lob, tot) => { const z = lob.map(i => th[i] + gumbel()), o = lob.map((_, k) => k).sort((a, b) => z[b] - z[a]);
+    const first = lob[o[0]], was = tot[first]; o.forEach((k, r) => { const i = lob[k]; tot[i] += PTS[r + 1] + pois(KB[r + 1] * Math.exp(ks[i])); }); return [first, was]; };
+  const series = (lob, g) => { const tot = new Array(N).fill(0); for (let k = 0; k < g; k++) game(lob, tot); return lob.slice().sort((a, b) => tot[b] - tot[a] || Math.random() - .5); };
+  for (let s = 0; s < n; s++){
+    const tot = new Array(N).fill(0);
+    for (const [a, b] of [['A', 'B'], ['C', 'D'], ['B', 'D'], ['A', 'C'], ['B', 'C'], ['A', 'D']]){ const lob = grp[a].concat(grp[b]); for (let k = 0; k < 6; k++) game(lob, tot); }
+    const all = [...Array(N).keys()].sort((a, b) => tot[b] - tot[a] || Math.random() - .5);
+    all.slice(0, 20).forEach(i => top20[i]++);
+    const wr = series(all.slice(0, 20), 6), lr1 = series(all.slice(20), 6), lr2 = series(wr.slice(10).concat(lr1.slice(0, 10)), 6);
+    const f = wr.slice(0, 10).concat(lr2.slice(0, 10)); f.forEach(i => fin[i]++);
+    const ft = new Array(N).fill(0); for (let g = 0; g < 40; g++){ const [first, was] = game(f, ft); if (was >= 50){ win[first]++; break; } }
+  }
+  return Object.fromEntries(F.map((t, i) => [t.team, {top20: top20[i] / n, fin: fin[i] / n, win: win[i] / n}]));
+}
+function renderGroups(){
+  const c = gcount(), ready = ['A', 'B', 'C', 'D'].every(g => c[g] === 10);
+  $('#g-tiles').innerHTML = ['A', 'B', 'C', 'D'].map(g => { const m = F.filter(t => GR[t.team] === g), avg = m.length ? m.reduce((a, t) => a + t.pow, 0) / m.length : 0;
+    return `<div class="tile"><b>${m.length ? avg.toFixed(2) : '–'}</b><span>Group ${g}: ${m.length}/10 teams, average rating${m.length === 10 ? '' : ' so far'}</span></div>`; }).join('');
+  const rows = [...F].sort((a, b) => (GR[a.team] || 'Z').localeCompare(GR[b.team] || 'Z') || (GRES ? GRES[b.team].win - GRES[a.team].win : b.pow - a.pow));
+  const wm = GRES ? Math.max(...F.map(t => GRES[t.team].win)) : 1;
+  $('#gt').innerHTML = `<tr><th class="l">Group</th><th class="l">Team</th><th class="l">Region</th><th>Rating</th><th>Top 20 after groups</th><th>Reach finals</th><th class="l">Win the title</th></tr>` +
+    rows.map(t => { const r = GRES && GRES[t.team]; return `<tr><td class="l"><select data-team="${esc(t.team)}" aria-label="Group for ${esc(t.team)}" style="min-height:36px;width:70px"><option value="">–</option>${['A', 'B', 'C', 'D'].map(g => `<option${GR[t.team] === g ? ' selected' : ''}>${g}</option>`).join('')}</select></td><td class="l">${esc(t.team)}</td><td class="l"><span class="tag">${esc(t.region)}</span></td><td>${t.pow.toFixed(1)}</td><td>${r ? pct(r.top20) : '–'}</td><td>${r ? pct(r.fin) : '–'}</td><td class="l">${r ? `<span class="pb"><i style="width:${(100 * r.win / wm).toFixed(1)}%"></i></span>${pct(r.win, 1)}` : '–'}</td></tr>`; }).join('');
+  $('#gt').querySelectorAll('select').forEach(sel => sel.onchange = () => { if (sel.value) GR[sel.dataset.team] = sel.value; else delete GR[sel.dataset.team]; GRES = null; gsave(); renderGroups(); });
+  $('#g-sim').disabled = !ready;
+  if (!ready && !$('#g-msg').textContent) $('#g-msg').textContent = 'Each group needs exactly 10 teams before you can simulate.';
+}
+$('#g-rand').onclick = () => { const sh = F.map(t => t.team).sort(() => Math.random() - .5); GR = {}; sh.forEach((t, i) => GR[t] = 'ABCD'[i % 4]); GRES = null; gsave(); $('#g-msg').textContent = 'Random draw loaded. Replace it with the real groups when they are announced.'; renderGroups(); };
+$('#g-clear').onclick = () => { GR = {}; GRES = null; gsave(); $('#g-msg').textContent = ''; renderGroups(); };
+$('#g-sim').onclick = () => { $('#g-msg').textContent = 'Simulating…'; setTimeout(() => { GRES = simEvent(1500); const best = F.reduce((a, b) => GRES[b.team].win > GRES[a.team].win ? b : a); $('#g-msg').textContent = `Done: 1,500 simulated events. Favourite with these groups: ${best.team} at ${pct(GRES[best.team].win, 1)}.`; renderGroups(); }, 30); };
+$('#g-send').onclick = () => { const [a, b] = $('#g-match').value.split(' vs '), lob = F.filter(t => GR[t.team] === a || GR[t.team] === b).map(t => t.team);
+  if (lob.length !== 20){ $('#g-msg').textContent = `Groups ${a} and ${b} need 10 teams each first.`; return; }
+  S.lobby = lob; S.pts = {}; S.hist = []; S.mode = 'series'; S.left = 6; S.topk = 10; entry = {}; renderAll(); location.hash = 'live'; show('live'); $('#msg').textContent = `Loaded Group ${a} vs Group ${b}. "Teams advancing" is only a marker here: group-stage points carry across all three series.`; };
+renderGroups();
+$('#m-reg').onchange = renderMissed; $('#m-min').onchange = renderMissed;
+
+renderAll(); renderField(); renderCmp(); renderMissed();
+}
+</script>
+</body></html>

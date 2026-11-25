@@ -1,0 +1,89 @@
+# Y6 Split 2 Playoffs drop spots. POI|Wins|AvgPoints|AvgKills|AvgPlacement|Picks
+## Storm Point
+Zeus Station|0|6.33|3.52|9.81|21
+Checkpoint|3|7.05|3.19|9.52|21
+Cascade Falls|1|4.52|2|10.57|21
+Lift|2|6|2.87|10.67|15
+North Pad|1|5.62|2.95|10.86|21
+The Mill|0|5.1|2.71|10.67|21
+Devastated Coast|1|6.1|3.24|9.24|21
+Echo HQ|1|4.67|2.71|12.19|21
+Coastal Camp|0|5.28|2.61|10.67|18
+Storm Catcher|2|6|3|9.86|21
+Jurassic|0|4.95|2.24|10.29|21
+Lightning Rod|2|6.05|3.33|10.81|21
+The Wall|1|6.33|3.57|10.81|21
+Barometer|1|6.86|3.86|9.33|21
+Command Center|1|4.81|2.38|10.33|21
+The Pylon|1|5.48|3.38|12.14|21
+Downed Beast|0|4.33|2.33|12.38|21
+Launch Pad|1|6.95|3.62|8.67|21
+Cenote Cave|2|6.38|3.24|10.33|21
+Ceto Station|1|6.1|3.33|9.86|21
+Trident|0|2.5|1|11.33|6
+East Trail|0|0.67|0.33|16.33|3
+## E-District
+Resort|0|4.15|2.35|11.1|20
+Electro Dam|1|6.5|3.3|10|20
+Settlement|0|5.7|3.4|9.55|20
+Neon Square|0|5.3|3|10.55|20
+Old Town|2|7.25|3.35|9.3|20
+City Hall|0|5.2|2.6|11.3|20
+Galleria|2|6.1|2.75|10.45|20
+Canal Plaza|1|5.75|3.1|10|20
+The Lotus|1|3.95|2.3|13|20
+Heights|1|5.55|2.95|10.8|20
+Boardwalk|2|7.9|4.3|10|20
+Draft Point|0|5.6|2.7|9.4|20
+Energy Bank|1|5.65|2|8.15|20
+Viaduct|0|2.45|1.45|13.15|20
+Humbert Labs|2|5.9|2.7|9.6|20
+Blossom Drive|3|5.95|3.5|12.8|20
+Vibe Isle|1|7.65|4.15|8.15|20
+Street Market|0|4.95|2.65|10.85|20
+Shipyard Arcade|1|4.75|2.8|11.85|20
+Stadium|2|7.1|4|10|20
+## Olympus
+Gardens|1|7.25|4.5|11|8
+Oasis|0|3.6|2|10.2|5
+Clinic|0|4.38|2.88|11.88|8
+Somers University|1|8|4|9.63|8
+Hydroponics|1|10.17|5.83|9.67|6
+Elysium|0|2.75|1.88|13.63|8
+Fight Night|0|3.2|1.2|12.8|5
+Turbine|0|5.75|3.13|10.63|8
+Estates|0|5.38|3|9.5|8
+Phase Driver|2|11.13|5.63|8|8
+Bonsai Plaza|0|3.25|1.63|11.75|8
+Grow Towers|0|5.75|3.13|10.25|8
+Terminal|0|6.63|3.88|8.38|8
+Icarus|0|3.13|0.63|10|8
+Power Grid|0|3.88|2.5|12.88|8
+Solar Array|0|4.63|3.13|12|8
+Hammond Labs|0|6.38|2.13|7.38|8
+Rift|1|7.5|4.25|10.5|8
+Gravity Engine|1|7.63|3.38|6.88|8
+Dockyard|0|4.13|2|12.38|8
+Carrier|1|12|6|6|3
+Stabilizer|0|2.2|1.6|15.2|5
+## World's Edge
+The Epicenter|1|6.21|2.57|9.64|14
+Harvester|3|7.36|3.36|9|14
+Launch Site|0|5.43|3.36|11.64|14
+Big Maude|0|4.07|2.21|11|14
+Lava Fissure|1|5.79|2.86|10.29|14
+War Camp|1|4.93|2.29|11.14|14
+The Geyser|0|4.43|1.86|9.21|14
+East Village|0|5.93|3.29|11|14
+Countdown|1|5.93|3.21|10.93|14
+Mirage A Trois|1|5.5|2.79|10.07|14
+Overlook|0|7.14|3.64|8.64|14
+The Tree|1|5.79|3.29|11.36|14
+Staging|1|6.07|2.79|9.5|14
+The Dome|0|2.07|0.86|12.71|14
+Thermal Station|2|10|5.93|8.14|14
+Stacks|0|6.64|3.64|10.64|14
+Monument|0|4.94|2.88|11.12|17
+Sorting Factory|1|5.14|2.36|10.07|14
+Skyhook East|1|3.64|1.91|13.55|11
+Skyhook West|0|6|4|10.86|14

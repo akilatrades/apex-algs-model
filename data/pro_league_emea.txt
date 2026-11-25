@@ -1,0 +1,211 @@
+# Y6 Split 2 Pro League EMEA (apexlegendsstatus.com, fetched 2026-11-24)
+## PL_EMEA_D1|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/EMEA/Day1/AvB|Storm Point,Storm Point,Storm Point,E-District,E-District,E-District
+Alliance|18 16 3 1 1 8|3 4 1 11 9 3|64
+PVISION|19 3 1 8 5 3|0 12 11 2 4 3|64
+MAMMA MIA|3 7 20 3 2 2|3 2 0 5 7 10|62
+TLN PIRATES|15 12 5 10 6 1|0 0 9 6 1 9|48
+ZIPLINE MAFIA|2 6 15 15 4 5|10 1 2 3 2 2|43
+Infinite|1 11 6 18 8 4|9 3 1 1 1 4|42
+GaiminGladiators|11 5 7 17 17 9|4 9 7 0 0 5|35
+PlayFor2nd|7 20 4 20 3 16|6 0 2 0 10 0|33
+Summer Haze|9 10 12 11 11 7|3 0 2 2 5 8|30
+Team WaR|14 13 9 9 14 12|2 3 3 3 7 4|30
+JOB|13 1 11 7 16 13|1 7 0 2 0 0|28
+3 MEN|8 18 2 6 19 11|1 3 7 1 0 1|28
+Ronin|20 14 13 2 12 19|1 0 6 6 1 1|27
+DN|12 2 19 12 9 15|1 1 0 1 7 2|26
+Pixel Lumina|16 9 8 4 15 6|2 2 1 3 0 4|25
+Shadows Of Nine|5 4 14 14 20 10|4 6 0 0 0 0|23
+Made In Heaven|4 15 10 16 13 17|6 0 0 3 0 0|18
+Bacalhau|17 8 18 13 7 14|0 3 0 0 6 2|18
+Take Flyte|10 19 17 5 18 20|1 0 2 7 0 0|16
+REDRAGON|6 17 16 19 10 18|4 0 0 4 0 0|13
+## PL_EMEA_D2|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/EMEA/Day2/AvC|World's Edge,World's Edge,World's Edge,Storm Point,Storm Point,Storm Point
+Aurora|2 1 18 17 18 3|13 14 2 4 0 1|62
+JOB|8 10 11 8 1 1|4 3 2 2 8 9|59
+Alliance|19 15 9 1 6 19|2 4 3 21 4 2|54
+REDRAGON|3 5 5 2 13 9|6 4 1 7 1 2|48
+GaiminGladiators|4 7 17 5 2 13|4 5 2 6 3 3|45
+TLN PIRATES|15 2 3 11 5 17|1 2 6 0 7 2|40
+Team WaR|7 20 6 12 3 18|2 0 5 0 17 1|39
+Summer Haze|11 17 4 10 4 5|3 3 1 1 5 8|38
+FUL|17 4 2 14 14 11|0 2 10 0 3 3|35
+TOP|10 13 8 3 7 7|0 0 3 6 4 3|34
+Infinite|1 6 13 4 20 12|5 1 1 2 0 1|32
+Bacalhau|6 12 19 6 10 2|4 0 0 1 2 7|32
+Ben|9 9 7 7 11 16|0 4 2 6 1 1|25
+BPR|13 11 10 9 12 14|4 1 7 3 1 0|24
+Pixel Lumina|16 18 1 15 19 10|0 0 6 0 0 2|23
+TEAM ECLIPSE|14 8 15 13 8 4|2 3 0 0 0 2|19
+ForFun Esports|18 16 12 18 15 6|0 3 1 0 0 6|15
+Blessed|20 3 14 16 16 20|0 5 0 0 0 0|13
+Glacier|5 14 20 20 17 8|2 0 0 0 0 2|11
+Fear the Lamb|12 19 16 19 9 15|5 0 1 0 0 0|10
+## PL_EMEA_D3|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/EMEA/Day3/BvC|E-District,E-District,E-District,World's Edge,World's Edge,World's Edge
+ZIPLINE MAFIA|14 1 2 2 4 1|1 8 5 3 6 5|76
+BANDITS|18 10 5 3 3 9|8 5 2 7 8 6|58
+TEAM ECLIPSE|1 7 10 5 17 8|17 1 1 2 3 3|50
+Aurora|9 14 4 6 7 5|1 1 7 4 6 8|45
+Ben|5 4 19 4 13 3|2 1 1 2 0 14|42
+3 MEN|10 6 1 16 20 11|4 2 13 1 0 2|40
+ForFun Esports|16 5 18 12 9 2|0 9 0 3 3 7|38
+DN|4 2 8 17 12 6|3 6 2 0 2 2|35
+MAMMA MIA|11 3 12 7 18 4|4 4 1 5 0 4|35
+GEI|7 19 6 1 15 19|3 3 0 8 0 0|33
+D4C|2 16 7 10 14 17|4 0 7 2 4 0|32
+TOP|6 12 3 15 11 14|2 4 5 3 3 1|32
+FUL|17 18 11 8 10 10|0 0 10 10 4 0|31
+BPR|3 11 13 11 16 12|7 0 2 1 0 3|24
+Blessed|12 20 9 13 1 13|0 1 1 0 3 1|23
+Made In Heaven|8 17 15 9 2 18|0 0 0 4 5 0|23
+Ronin|13 13 17 14 8 7|2 0 1 0 5 1|17
+Shadows Of Nine|15 15 16 19 5 15|1 0 0 3 1 3|15
+Glacier|19 9 14 18 6 20|0 1 4 0 2 0|13
+Take Flyte|20 8 20 20 19 16|0 7 0 0 0 2|11
+## PL_EMEA_D4|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/EMEA/Day4/AvB|World's Edge,World's Edge,World's Edge,Storm Point,Storm Point,Storm Point
+Alliance|1 1 2 4 14 15|13 12 7 7 5 6|90
+D4C|7 17 3 1 8 1|2 3 6 18 5 17|87
+GaiminGladiators|9 8 15 2 9 13|4 7 8 14 1 3|54
+Made In Heaven|3 3 4 14 4 10|11 1 7 0 6 2|54
+Ronin|15 6 13 5 3 6|1 12 4 3 8 7|54
+BANDITS|6 5 19 11 1 14|4 7 0 3 11 3|49
+TLN PIRATES|19 10 1 10 7 2|0 0 10 1 6 4|49
+Pixel Lumina|2 13 7 18 5 7|7 1 4 0 2 2|36
+Team WaR|17 19 11 3 2 9|1 0 2 2 4 2|30
+Majin|5 2 16 12 13 17|3 7 0 2 0 0|27
+Summer Haze|4 18 14 17 20 3|2 1 0 3 0 6|25
+REDRAGON|8 4 5 8 16 8|1 4 3 0 0 0|23
+DN|13 15 18 13 6 4|0 0 1 0 4 1|17
+3 MEN|10 9 10 15 12 18|4 3 1 0 1 0|17
+Bacalhau|12 16 9 7 11 5|1 0 2 2 0 0|16
+ZIPLINE MAFIA|18 7 17 6 17 12|0 3 0 5 0 0|15
+Infinite|20 20 6 9 15 16|0 0 2 0 3 3|14
+Take Flyte|16 14 8 20 10 20|0 0 3 0 0 0|8
+Shadows Of Nine|14 12 20 19 19 19|4 0 0 0 0 0|6
+MAMMA MIA|11 11 12 16 18 11|0 0 0 0 2 0|6
+## PL_EMEA_D5|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/EMEA/Day5/AvC|E-District,E-District,E-District,World's Edge,World's Edge,World's Edge
+GaiminGladiators|2 13 5 19 2 3|10 7 14 3 15 4|83
+ForFun Esports|7 7 10 14 3 1|6 6 1 0 3 16|60
+TEAM ECLIPSE|1 1 9 12 12 4|6 5 0 1 0 3|48
+TOP|3 12 1 11 17 20|5 1 13 2 0 1|43
+TLN PIRATES|5 8 2 6 14 17|6 2 8 4 1 1|41
+Blessed|8 9 6 1 11 14|4 2 2 10 0 0|39
+REDRAGON|17 6 20 2 5 6|0 1 0 8 3 6|37
+Pixel Lumina|4 3 11 10 10 16|4 6 4 1 2 1|35
+Team WaR|14 5 3 8 19 15|0 4 13 0 0 1|33
+BPR|13 2 17 20 4 19|1 12 1 2 1 0|32
+Aurora|15 10 14 17 1 13|0 3 1 0 9 0|30
+Infinite|16 17 4 9 9 9|1 0 2 2 9 5|30
+Ben|18 15 12 3 13 11|3 1 0 10 2 1|28
+Summer Haze|9 4 13 4 15 10|4 0 1 5 0 1|27
+Glacier|20 19 7 16 6 2|0 0 0 0 1 5|21
+FUL|19 18 19 7 20 5|0 0 0 5 0 7|19
+Alliance|11 20 18 15 7 7|0 0 0 0 7 3|18
+JOB|6 14 15 5 18 18|1 1 0 6 0 0|17
+Fear the Lamb|10 11 16 18 8 12|2 4 0 0 3 1|16
+Bacalhau|12 16 8 13 16 8|1 0 0 1 0 2|10
+## PL_EMEA_D6|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/EMEA/Day6/BvC|Storm Point,Storm Point,Storm Point,E-District,E-District,E-District
+ForFun Esports|4 12 6 1 1 3|4 3 5 10 9 5|76
+Aurora|6 4 4 8 2 6|4 8 6 0 5 4|54
+Made In Heaven|3 1 15 6 5 11|5 5 0 1 11 3|53
+ZIPLINE MAFIA|14 17 1 14 3 9|1 2 10 5 5 5|51
+TOP|11 2 5 10 15 4|5 6 2 2 3 6|46
+3 MEN|2 3 9 18 4 7|5 2 2 0 7 3|45
+TEAM ECLIPSE|8 7 2 2 8 8|1 0 6 7 0 2|43
+Take Flyte|1 15 3 19 18 16|9 4 3 1 0 3|40
+FUL|15 13 12 15 10 1|0 1 6 2 3 9|39
+PlayFor2nd|16 9 8 3 13 15|3 7 4 11 0 1|39
+Shadows Of Nine|12 18 13 20 6 2|2 1 0 0 5 10|32
+Ronin|10 11 11 5 16 14|1 4 1 11 6 0|32
+PVISION|17 6 17 4 17 5|0 7 3 1 0 5|28
+BPR|5 16 7 9 11 10|8 0 4 0 1 0|25
+Ben|18 10 16 7 12 17|3 1 1 7 0 0|18
+DN|19 5 20 11 7 20|1 0 1 3 1 0|14
+Blessed|7 19 18 12 20 12|2 0 0 1 0 4|12
+Fear the Lamb|13 14 19 17 14 13|1 3 0 0 2 1|11
+MAMMA MIA|9 8 10 16 19 19|1 1 0 2 0 0|10
+Glacier|20 20 14 13 9 18|0 0 2 0 3 0|9
+## PL_EMEA_D7|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/EMEA/Day7/AvB|E-District,E-District,E-District,World's Edge,World's Edge,World's Edge
+PlayFor2nd|1 15 2 13 12 2|7 0 12 0 1 11|64
+Team WaR A|8 3 10 1 6 18|3 16 1 8 5 0|59
+Made In Heaven B|11 5 4 4 3 7|0 3 10 10 3 3|54
+PVISION|18 16 19 2 1 6|0 0 1 10 11 3|49
+Alliance A|14 10 15 17 15 1|2 4 0 0 0 25|48
+Summer Haze A|2 13 5 8 14 3|14 1 2 2 1 3|47
+DN B|13 18 1 3 4 8|2 0 4 3 2 0|38
+Bacalhau A|12 2 9 20 9 9|3 6 3 0 8 0|36
+MAMMA MIA B|4 17 3 18 13 10|7 0 7 3 2 2|36
+TLN PIRATES A|20 1 12 9 18 14|0 13 0 2 2 2|35
+Take Flyte B|10 11 6 10 2 16|2 2 3 2 8 0|34
+Ronin B|16 4 11 14 17 20|2 5 10 3 3 0|30
+GaiminGladiators A|5 12 18 6 5 5|2 0 0 1 4 7|30
+JOB A|6 19 13 15 10 15|10 0 1 1 4 0|24
+3 MEN B|15 6 14 7 19 12|4 2 7 2 0 0|24
+Infinite A|17 20 20 5 7 4|0 0 0 5 3 2|22
+ZIPLINE MAFIA B|3 9 8 11 20 13|2 1 1 0 0 3|20
+Pixel Lumina A|19 7 7 12 16 17|0 2 1 2 2 0|14
+REDRAGON A|7 8 17 19 8 11|3 0 0 1 0 1|13
+Shadows Of Nine B|9 14 16 16 11 19|3 0 0 1 0 0|8
+## PL_EMEA_D8|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/EMEA/Day8/AvC|Storm Point,Storm Point,Storm Point,E-District,E-District,E-District
+Aurora|3 5 12 1 1 8|11 7 5 9 12 10|92
+Team WaR|18 1 16 5 7 3|0 11 0 11 4 7|59
+Alliance|6 9 15 10 17 16|9 4 8 9 7 6|51
+GaiminGladiators|8 6 1 16 3 13|2 2 13 1 1 1|45
+Blessed|2 7 10 8 11 2|5 2 3 1 2 3|42
+TLN PIRATES|12 11 6 14 6 4|3 5 8 0 6 6|42
+ForFun Esports|14 4 11 12 15 1|0 6 5 0 0 7|39
+Summer Haze|11 8 2 2 18 10|0 4 3 6 0 2|38
+Infinite|16 10 3 9 2 15|2 0 3 1 7 1|35
+Majin|17 3 5 3 19 5|0 4 1 3 0 4|34
+TEAM ECLIPSE|15 2 7 6 9 9|0 7 2 2 2 0|33
+Pixel Lumina|19 12 8 4 5 6|0 0 3 4 5 5|32
+REDRAGON|1 18 14 20 20 17|9 0 2 0 0 0|24
+BPR|9 17 9 18 13 14|6 0 0 3 3 4|22
+FUL|4 19 20 7 8 19|5 0 0 4 2 0|21
+Bacalhau|7 15 13 13 4 18|5 1 1 0 1 0|19
+GEI|5 16 4 19 12 11|2 0 1 0 1 4|19
+Glacier|20 20 18 11 10 7|0 0 0 1 4 0|11
+Ben|10 14 19 15 14 20|0 3 0 0 3 0|11
+TOP|13 13 17 17 16 12|0 0 0 1 1 3|8
+## PL_EMEA_D9|2.5|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/EMEA/Day9/BvC|World's Edge,World's Edge,World's Edge,Storm Point,Storm Point,Storm Point
+TOP|11 19 2 4 20 2|0 0 8 10 1 12|55
+ZIPLINE MAFIA|4 17 8 6 14 1|8 1 7 1 4 6|50
+Ben|19 2 13 2 16 15|0 14 1 8 3 0|46
+FUL|1 9 16 16 1 16|10 1 0 1 8 0|46
+Aurora|18 11 5 1 8 11|1 4 2 10 0 7|44
+DN|16 1 15 19 9 3|2 9 2 0 3 5|43
+Take Flyte|10 8 7 12 2 8|6 3 1 2 11 0|42
+TEAM ECLIPSE|20 3 1 17 10 4|0 5 5 0 0 2|38
+Ronin|17 10 17 9 4 6|0 3 1 6 4 10|36
+3 MEN|2 7 9 10 11 7|5 1 5 1 0 3|35
+Made In Heaven|5 4 20 8 3 19|1 6 0 4 5 0|34
+BPR|13 18 11 15 5 17|6 0 6 1 10 3|33
+Blessed|3 20 4 13 17 5|7 0 5 0 0 1|30
+ForFun Esports|6 6 19 11 7 9|4 3 0 4 7 0|30
+MAMMA MIA|7 5 6 18 12 13|2 1 3 1 1 7|27
+BANDITS|12 16 12 5 13 10|4 0 1 6 2 4|26
+Glacier|15 15 10 3 15 12|0 5 0 2 0 1|21
+GEI|8 14 14 20 6 20|5 2 3 0 3 0|20
+Shadows Of Nine|14 12 3 14 18 18|0 0 2 1 0 2|15
+D4C|9 13 18 7 19 14|3 0 0 1 0 2|13
+## PL_EMEA_FINALS|2.7|https://apexlegendsstatus.com/algs/Y6-Split2/Pro-League/EMEA/Finals/Finals|Storm Point,World's Edge,E-District,E-District,World's Edge,Storm Point
+Aurora|5 1 12 1 1 -|5 19 4 9 12 -|90
+Alliance|17 4 1 12 2 3|1 8 16 9 7 16|91
+TEAM ECLIPSE|2 3 4 8 10 4|7 2 3 2 5 1|50
+ForFun Esports|6 14 18 15 9 1|6 0 0 2 6 9|42
+FUL|1 20 14 3 8 14|8 0 1 3 4 3|42
+Infinite|20 9 8 9 11 2|0 1 3 3 5 11|39
+GaiminGladiators|14 18 3 6 3 15|0 0 1 4 7 2|33
+PVISION|8 8 13 16 5 16|8 3 1 0 4 2|27
+TLN PIRATES|3 5 5 10 14 10|2 0 1 0 3 1|27
+DN|7 6 10 7 15 6|2 1 1 3 1 4|27
+Team WaR|11 12 16 2 18 11|0 4 2 7 0 0|25
+Summer Haze|16 7 2 19 19 12|4 1 7 0 0 0|25
+Ben|18 2 9 14 20 18|0 4 5 3 0 0|24
+Made In Heaven|9 11 20 4 4 13|4 0 0 4 0 0|22
+JOB|4 19 11 11 7 7|1 1 4 0 3 0|22
+ZIPLINE MAFIA|15 13 17 20 6 5|3 0 0 0 3 6|21
+TOP|19 17 7 5 13 17|0 0 4 5 3 0|20
+3 MEN|12 10 6 18 12 9|1 7 2 0 0 0|19
+PlayFor2nd|10 16 15 13 16 8|3 6 0 0 1 0|16
+Ronin|13 15 19 17 17 19|2 3 0 0 0 0|7

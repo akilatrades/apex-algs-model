@@ -1,0 +1,296 @@
+# Y6 Playoffs group stages + Y6S2 Losers Round 1 (apexlegendsstatus.com, fetched 2026-11-24)
+## Y6S1_PLAYOFFS_GRP_AvB|1.9|https://apexlegendsstatus.com/algs/Y6-Split1/ALGS-Playoffs/Global/Day1/AvB|E-District,E-District,E-District,Storm Point,Storm Point,Storm Point
+GaiminGladiators|5,2,1,10,8,4|2,6,8,0,1,6|57
+ZEDI ESPORTS|12,11,3,1,4,14|3,1,10,10,2,2|55
+AG GLOBAL|3,9,9,14,2,3|3,5,2,5,8,4|55
+Team Falcons|13,1,7,8,14,19|3,15,9,4,1,0|51
+Wolves Esports|1,5,8,12,3,16|10,2,0,3,2,4|47
+ZETA DIVISION|17,16,19,6,1,1|0,0,0,2,13,4|46
+PXX|2,12,10,13,11,9|8,6,4,0,1,5|40
+Relove DCG|18,14,2,15,9,7|1,2,10,0,4,2|35
+UNLIMIT|15,15,17,19,13,2|3,0,0,0,6,13|34
+FLAT|7,3,16,20,6,15|6,6,1,0,5,0|32
+ShopifyRebellion|9,4,20,7,12,11|0,3,2,1,5,7|30
+ForFun Esports|14,8,11,3,5,20|1,2,1,7,3,0|29
+TIE|6,17,14,2,10,8|1,0,2,8,0,0|28
+Virtus.pro|19,19,12,4,18,10|0,0,2,8,3,6|27
+JD GAMING|4,7,13,5,16,18|6,0,0,5,0,1|25
+Kirisame Havoc|8,10,18,16,7,6|5,7,0,1,0,2|25
+Dory|16,18,4,11,15,5|0,0,2,1,4,3|21
+GenG Esports|20,20,5,9,19,17|0,0,7,4,0,2|19
+TriniTY|11,6,6,18,17,12|1,4,0,0,0,0|13
+TEAM HERETICS|10,13,15,17,20,13|5,0,2,0,0,0|12
+## Y6S1_PLAYOFFS_GRP_CvD|1.9|https://apexlegendsstatus.com/algs/Y6-Split1/ALGS-Playoffs/Global/Day1/CvD|E-District,E-District,E-District,Storm Point,Storm Point,Storm Point
+ELITE Esports|14,1,6,20,4,1|2,5,7,0,3,15|65
+Team RRQ|9,4,2,2,15,9|5,3,7,17,0,2|62
+Team Liquid|3,18,16,1,6,7|11,2,0,5,5,5|53
+S8UL|13,3,4,10,3,5|2,6,4,4,6,1|49
+Geekay Esports|19,15,1,9,2,10|0,3,7,2,1,3|42
+Sentinels|2,12,8,7,9,4|6,1,3,1,4,5|42
+REJECT|6,5,3,15,12,2|3,4,7,0,0,3|42
+KINOTROPE CLUB|17,14,12,4,1,16|0,2,1,7,8,3|40
+AURORA|1,11,10,11,8,11|9,0,1,0,4,0|33
+VK GAMING|8,9,7,8,5,3|0,0,1,2,4,5|32
+WGR NEO|10,2,20,16,13,15|0,15,0,0,2,1|31
+ENTER FORCE.36|16,6,15,3,20,6|2,5,0,6,2,0|29
+Team Vision|4,17,13,19,7,17|6,1,4,3,3,2|28
+DINOS|18,10,5,17,11,18|0,3,7,5,1,1|24
+ZIPLINE MAFIA|5,13,11,5,19,8|1,0,3,1,0,4|21
+Alliance|11,7,17,18,10,12|1,3,0,1,5,3|20
+Team Nemesis|7,16,9,13,17,14|7,0,1,0,3,1|19
+NinjasinPyjamas|12,20,14,12,14,13|5,0,3,0,4,1|18
+Dogred|20,8,18,6,16,19|0,2,0,1,1,0|9
+TLN Pirates|15,19,19,14,18,20|0,0,0,0,0,0|2
+## Y6S1_PLAYOFFS_GRP_AvC|1.9|https://apexlegendsstatus.com/algs/Y6-Split1/ALGS-Playoffs/Global/Day2/AvC|World's Edge,World's Edge,World's Edge,E-District,E-District,E-District
+ELITE Esports|3,14,5,1,8,6|6,3,14,15,2,4|73
+AG GLOBAL|6,2,8,4,4,11|3,10,5,9,8,5|65
+REJECT|16,1,9,13,5,1|0,14,0,2,2,9|58
+GaiminGladiators|1,3,12,3,10,20|11,2,2,4,3,0|51
+Team Nemesis|2,20,17,17,19,2|9,0,0,2,1,6|36
+Sentinels|7,8,15,6,6,4|0,2,1,5,6,5|36
+TIE|9,6,14,2,2,16|1,4,0,2,4,0|35
+ZEDI ESPORTS|14,4,13,18,13,5|4,11,2,0,3,2|34
+KINOTROPE CLUB|20,18,3,8,1,19|0,0,5,0,6,1|33
+VK GAMING|11,5,6,11,3,17|0,3,3,3,7,0|32
+ForFun Esports|5,10,10,20,9,3|6,0,0,0,2,6|31
+PXX|13,16,2,5,15,10|1,1,4,0,4,3|30
+NinjasinPyjamas|8,9,1,19,16,18|1,2,7,0,0,1|27
+Alliance|12,19,7,10,12,7|0,1,4,6,4,2|27
+Relove DCG|4,12,20,12,20,15|11,1,2,1,0,2|25
+Team RRQ|17,17,11,9,7,9|0,0,3,4,5,5|25
+Geekay Esports|10,13,19,14,11,13|2,0,0,5,7,1|21
+ZETA DIVISION|15,15,16,15,14,8|4,0,1,3,3,4|21
+JD GAMING|18,7,4,16,17,12|0,2,3,0,0,2|16
+TriniTY|19,11,18,7,18,14|1,1,3,1,1,0|12
+## Y6S1_PLAYOFFS_GRP_BvD|1.9|https://apexlegendsstatus.com/algs/Y6-Split1/ALGS-Playoffs/Global/Day2/BvD|World's Edge,World's Edge,World's Edge,E-District,E-District,E-District
+Team Liquid|2,19,1,6,10,4|8,3,13,4,2,4|65
+Virtus.pro|4,10,2,17,2,3|6,1,3,0,10,9|61
+S8UL|20,6,13,1,1,19|0,6,1,15,5,0|55
+DINOS|10,1,18,5,11,9|4,15,2,8,2,3|55
+Team Vision|15,14,10,2,5,2|0,2,5,2,4,7|46
+Dogred|8,9,5,3,9,7|3,1,7,5,3,2|41
+UNLIMIT|7,7,15,8,7,8|2,2,1,8,7,7|41
+GenG Esports|3,15,3,13,12,12|2,0,10,3,1,4|38
+TEAM HERETICS|14,2,14,4,3,14|0,3,0,4,6,1|38
+Team Falcons|1,16,11,12,13,13|11,3,0,3,2,1|36
+ShopifyRebellion|17,13,20,14,6,1|2,2,0,1,4,9|35
+ZIPLINE MAFIA|11,4,8,11,4,5|0,0,1,3,4,7|33
+WGR NEO|6,12,7,15,16,10|2,2,6,0,3,1|24
+FLAT|9,18,16,20,14,6|7,0,0,1,0,6|20
+TLN Pirates|12,11,17,10,8,17|3,3,0,2,3,2|19
+Kirisame Havoc|19,3,9,7,18,18|0,3,1,2,0,0|18
+AURORA|5,8,19,18,15,20|2,6,1,2,0,0|18
+ENTER FORCE.36|16,5,4,19,20,16|3,1,2,0,0,1|16
+Wolves Esports|13,20,12,9,19,11|1,0,2,0,0,2|10
+Dory|18,17,6,16,17,15|0,0,2,0,0,0|6
+## Y6S1_PLAYOFFS_GRP_AvD|1.9|https://apexlegendsstatus.com/algs/Y6-Split1/ALGS-Playoffs/Global/Day3/AvD|Olympus,Olympus,Olympus,Storm Point,Storm Point,Storm Point
+ZETA DIVISION|2,3,3,3,18,1|9,4,3,3,1,8|70
+Team Vision|9,12,5,12,1,8|8,3,10,3,19,0|65
+Team Liquid|11,14,12,1,2,2|2,3,0,12,6,8|64
+S8UL|7,2,14,2,4,12|3,5,8,4,9,0|57
+JD GAMING|3,20,1,11,16,10|10,0,13,3,0,8|56
+ForFun Esports|5,1,11,6,13,20|3,9,2,0,6,0|41
+TLN Pirates|4,10,6,4,6,11|5,5,4,7,0,0|40
+ZIPLINE MAFIA|1,17,4,16,11,9|9,0,5,0,0,4|38
+ZEDI ESPORTS|6,4,15,5,14,14|3,8,2,5,2,3|38
+ENTER FORCE.36|15,5,2,20,8,3|3,1,5,0,2,2|36
+GaiminGladiators|10,8,7,19,9,4|1,7,1,0,4,4|31
+DINOS|19,11,8,8,10,5|0,1,2,2,0,4|20
+PXX|8,6,17,17,7,6|1,2,0,0,3,3|20
+AURORA|17,19,20,14,3,7|0,3,0,0,3,2|19
+WGR NEO|20,13,10,9,15,18|0,2,3,3,5,0|19
+TIE|18,15,13,7,12,15|0,2,2,5,0,1|17
+Dogred|16,9,9,13,19,13|0,2,0,0,0,8|16
+AG GLOBAL|13,16,18,15,17,17|3,0,0,9,0,0|14
+Relove DCG|14,7,16,10,20,16|0,1,0,3,0,0|10
+TriniTY|12,18,19,18,5,19|0,0,0,0,1,0|6
+## Y6S1_PLAYOFFS_GRP_BvC|1.9|https://apexlegendsstatus.com/algs/Y6-Split1/ALGS-Playoffs/Global/Day3/BvC|Olympus,Olympus,Olympus,Storm Point,Storm Point,Storm Point
+Alliance|3,10,4,1,6,12|3,2,4,21,1,0|61
+Team Nemesis|12,7,1,9,4,8|1,11,14,4,3,3|61
+ELITE Esports|1,6,2,20,16,7|12,6,11,0,1,4|61
+NinjasinPyjamas|2,5,6,16,5,1|7,6,1,0,4,9|59
+Wolves Esports|20,3,16,7,1,2|0,3,0,3,5,6|48
+Sentinels|17,16,14,11,2,4|1,2,2,0,14,3|38
+VK GAMING|6,20,9,6,8,6|6,0,2,4,7,6|38
+ShopifyRebellion|9,8,8,5,9,14|3,4,4,2,7,3|36
+Team Falcons|15,9,18,3,3,9|1,3,0,3,3,4|33
+UNLIMIT|18,1,12,13,17,16|1,7,2,4,2,1|31
+FLAT|5,12,3,17,20,17|6,0,11,2,0,0|31
+REJECT|19,2,19,15,19,3|0,4,0,0,0,7|28
+KINOTROPE CLUB|4,4,11,4,11,13|0,4,0,3,2,1|28
+Kirisame Havoc|7,13,10,12,15,5|5,1,3,2,0,1|24
+Geekay Esports|8,18,15,2,18,19|7,0,0,2,0,0|21
+Virtus.pro|14,17,7,18,12,11|2,1,5,1,1,2|18
+Team RRQ|11,11,17,10,7,10|0,1,0,2,4,1|17
+GenG Esports|10,15,20,14,14,15|0,0,0,2,4,5|17
+Dory|16,19,5,8,10,20|2,0,0,3,3,0|16
+TEAM HERETICS|13,14,13,19,13,18|4,3,0,2,2,1|16
+## Y6S2_PLAYOFFS_GRP_AvB|2.8|https://apexlegendsstatus.com/algs/Y6-Split2/ALGS-Playoffs/Global/Day1/AvB|Storm Point,Storm Point,Storm Point,E-District,E-District,E-District
+Alliance|11,6,3,1,15,11|0,6,16,10,2,7|66
+ForFun Esports|1,1,2,12,13,12|3,5,5,0,0,6|55
+Geekay Esports|12,4,15,16,6,1|4,2,3,2,8,10|51
+Team Falcons|3,9,9,3,19,20|11,6,5,8,0,0|48
+NRG|14,14,12,15,1,10|2,3,0,1,19,2|45
+WhiteGrimReaper|19,18,1,10,12,5|2,1,12,0,5,3|42
+Forged Wolves|5,2,18,13,20,2|4,4,0,3,0,8|42
+VK GAMING|13,3,6,6,3,6|0,5,3,0,5,4|41
+REJECT|2,8,19,18,11,3|9,5,3,0,2,0|38
+NOEZ FOXX|6,5,14,5,14,16|7,4,0,3,3,2|32
+Wolves Esports|15,11,8,8,9,4|1,4,2,4,2,5|31
+Sentinels|17,7,4,9,5,7|0,5,2,5,0,0|29
+GaiminGladiators|7,19,5,4,17,17|4,0,0,11,0,1|28
+7VEN|16,16,10,20,2,14|0,3,1,0,10,0|26
+AG GLOBAL|8,20,7,17,10,15|6,0,2,0,7,1|24
+Team WaR|9,12,17,7,7,13|0,1,0,5,1,5|22
+PXX|20,17,20,2,4,18|0,0,0,5,1,0|20
+ZETA DIVISION|18,15,11,19,18,8|1,2,0,0,0,9|16
+VexX Gaming|10,10,13,11,16,9|1,3,0,1,0,3|16
+LawsonTicketXone|4,13,16,14,8,19|2,0,0,1,2,0|14
+## Y6S2_PLAYOFFS_GRP_CvD|2.8|https://apexlegendsstatus.com/algs/Y6-Split2/ALGS-Playoffs/Global/Day1/CvD|Storm Point,Storm Point,Storm Point,E-District,E-District,E-District
+DINOS|1,19,19,3,3,2|10,0,0,13,4,12|74
+Aurora|10,3,1,16,2,14|4,3,15,1,8,1|63
+UNLIMIT|3,8,13,13,9,1|2,6,2,4,7,12|58
+Team Vision|18,1,11,14,5,5|2,12,2,2,5,3|48
+World Wide|13,2,3,18,10,8|1,5,2,0,8,4|41
+TEAM ECLIPSE|11,17,9,5,1,3|0,0,1,6,4,2|39
+KINOTROPE gaming|16,7,2,12,8,18|2,1,11,7,0,0|36
+Team RRQ|12,15,6,2,14,11|1,0,5,7,4,2|35
+Gen.G Citadel|4,14,7,6,7,16|8,4,0,3,2,3|35
+Team Liquid|17,4,8,9,13,7|0,9,1,2,5,2|32
+Relove DCG|8,10,16,10,12,4|8,2,2,1,0,6|31
+KINOTROPE CLUB|2,6,4,11,16,15|4,1,2,0,0,4|30
+ShopifyRebellion|15,9,20,1,15,17|0,4,0,7,2,0|29
+Crazy Thieves|5,11,14,15,6,13|6,1,1,2,4,3|28
+TitanEsportsClub|6,12,5,20,19,6|6,4,3,0,0,2|26
+RIDDLEORDER ZERO|7,20,15,4,4,19|2,0,0,3,0,0|19
+ENTER FORCE.36|14,5,18,7,17,12|1,4,0,0,1,4|19
+NinjasinPyjamas|19,18,12,17,18,10|0,0,11,2,0,1|17
+Nice Guys|9,16,10,19,11,9|2,0,0,0,0,1|10
+PVISION|20,13,17,8,20,20|0,0,0,1,0,0|4
+## Y6S2_PLAYOFFS_GRP_BvD|2.8|https://apexlegendsstatus.com/algs/Y6-Split2/ALGS-Playoffs/Global/Day1/BvD|Olympus,Olympus,Olympus,E-District,E-District,E-District
+ShopifyRebellion|6,1,2,7,15,3|6,13,5,1,0,7|67
+Team Liquid|19,5,1,16,8,1|1,1,12,3,4,13|64
+NinjasinPyjamas|2,4,14,9,2,8|10,3,4,3,7,1|56
+VexX Gaming|11,16,6,1,4,18|2,4,5,11,1,0|44
+WhiteGrimReaper|4,13,18,15,1,9|7,0,1,0,6,5|40
+AG GLOBAL|8,7,12,18,10,2|3,0,4,0,5,8|37
+UNLIMIT|18,18,5,2,14,15|0,0,7,9,4,1|36
+Gen.G Citadel|1,15,19,13,19,14|9,3,3,1,1,3|35
+REJECT|12,2,16,17,17,16|5,16,1,0,2,0|34
+Team Falcons|15,8,20,19,12,6|2,13,0,0,2,7|31
+Relove DCG|3,19,15,5,7,20|5,0,1,2,7,0|30
+GaiminGladiators|13,12,9,6,9,5|0,1,3,8,5,0|30
+RIDDLEORDER ZERO|16,20,3,4,20,4|0,0,3,5,1,4|30
+Aurora|7,14,10,14,3,13|5,0,0,0,7,1|28
+World Wide|5,10,11,8,6,19|1,1,4,7,0,0|25
+Wolves Esports|10,6,8,10,5,12|1,4,1,3,2,0|25
+NRG|9,9,17,3,18,11|5,2,0,3,0,0|22
+KINOTROPE gaming|14,3,7,12,13,17|0,0,2,1,1,0|17
+ForFun Esports|17,11,4,11,11,10|0,1,3,1,1,0|16
+7VEN|20,17,13,20,16,7|1,0,0,0,0,4|9
+## Y6S2_PLAYOFFS_GRP_AvC|2.8|https://apexlegendsstatus.com/algs/Y6-Split2/ALGS-Playoffs/Global/Day2/AvC|Olympus,Olympus,Olympus,E-District,E-District,E-District
+ZETA DIVISION|1,6,17,1,13,19|11,8,1,18,3,0|69
+Team RRQ|3,15,2,7,4,1|2,0,4,3,5,5|56
+DINOS|14,2,7,9,6,5|2,7,11,1,7,5|55
+KINOTROPE CLUB|13,4,1,2,7,20|2,1,15,3,1,0|52
+Crazy Thieves|4,12,18,3,8,15|12,0,0,4,8,4|44
+Geekay Esports|12,7,12,12,1,17|2,2,2,3,10,3|40
+PVISION|9,8,3,19,12,11|4,12,3,0,2,4|38
+Team Vision|2,11,8,18,18,12|9,3,8,3,0,1|37
+Nice Guys|17,3,10,17,3,3|1,2,3,0,5,3|37
+ENTER FORCE.36|18,1,11,15,20,6|0,11,0,0,0,8|36
+Sentinels|11,5,5,10,5,16|1,3,4,4,5,0|32
+TEAM ECLIPSE|6,19,13,5,2,10|2,1,0,1,4,3|30
+Forged Wolves|7,9,15,4,10,7|5,0,0,3,1,4|29
+Alliance|8,14,4,16,16,14|1,5,8,0,0,1|24
+Team WaR|15,17,19,20,11,2|0,0,2,0,0,9|22
+TitanEsportsClub|10,20,6,8,14,13|1,0,4,7,0,0|21
+NOEZ FOXX|16,18,20,11,15,8|5,0,0,1,6,5|21
+LawsonTicketXone|5,16,9,13,19,4|2,0,0,0,0,6|20
+VK GAMING|19,13,14,14,9,9|0,3,2,1,4,0|17
+PXX|20,10,16,6,17,18|0,2,0,2,0,0|9
+## Y6S2_PLAYOFFS_GRP_BvC|2.8|https://apexlegendsstatus.com/algs/Y6-Split2/ALGS-Playoffs/Global/Day2/BvC|World's Edge,World's Edge,World's Edge,Storm Point,Storm Point,Storm Point
+Crazy Thieves|2,17,3,4,3,13|9,4,14,4,5,3|68
+Team Falcons|1,4,16,16,1,9|6,6,1,3,8,3|58
+REJECT|3,10,13,8,4,3|11,4,5,2,7,5|58
+DINOS|7,2,17,3,16,4|3,11,1,7,3,3|52
+WhiteGrimReaper|10,14,12,1,7,14|0,0,0,19,9,0|48
+Team RRQ|20,6,1,2,15,10|0,5,7,7,0,0|46
+TitanEsportsClub|12,12,15,17,19,1|4,3,1,0,2,14|39
+Team Vision|18,3,6,5,9,7|1,7,6,0,0,3|36
+KINOTROPE CLUB|13,1,18,13,11,5|3,5,1,2,0,2|32
+ForFun Esports|9,20,8,9,5,11|1,0,7,3,3,7|32
+Nice Guys|4,16,5,20,2,20|2,1,3,0,7,0|31
+VexX Gaming|15,5,14,10,13,2|1,1,0,5,0,6|31
+GaiminGladiators|16,11,2,18,20,12|3,1,5,2,0,2|24
+ENTER FORCE.36|5,7,10,11,14,19|4,8,1,0,0,0|24
+7VEN|17,18,11,19,8,6|4,0,0,0,5,8|23
+TEAM ECLIPSE|6,8,4,7,18,8|2,0,3,1,0,0|21
+AG GLOBAL|11,9,20,12,6,17|4,3,0,3,4,0|21
+NRG|8,19,9,6,12,15|1,1,1,3,3,0|18
+Wolves Esports|14,15,7,14,17,16|1,0,5,0,0,3|15
+PVISION|19,13,19,15,10,18|0,0,0,3,3,0|10
+## Y6S2_PLAYOFFS_GRP_AvD|2.8|https://apexlegendsstatus.com/algs/Y6-Split2/ALGS-Playoffs/Global/Day2/AvD|World's Edge,World's Edge,World's Edge,Storm Point,Storm Point,Storm Point
+World Wide|2,4,1,4,1,2|7,0,12,4,8,6|89
+Aurora|5,3,3,2,6,1|12,3,2,0,5,11|75
+Team Liquid|9,2,15,9,4,8|1,12,1,1,8,9|53
+ZETA DIVISION|8,16,7,3,3,4|4,2,5,4,7,5|51
+UNLIMIT|1,12,10,12,14,12|11,4,5,5,2,3|48
+Relove DCG|6,1,5,11,20,7|3,9,4,2,0,0|41
+NinjasinPyjamas|20,6,2,19,13,3|0,5,8,0,2,4|39
+Alliance|17,18,6,18,2,11|1,0,9,3,5,7|38
+Forged Wolves|10,7,16,1,10,20|2,0,3,11,2,0|37
+Gen.G Citadel|18,11,8,7,8,5|1,5,0,9,3,3|33
+Geekay Esports|12,13,17,14,9,6|3,0,1,3,8,6|29
+Team WaR|14,5,14,6,5,16|1,10,0,2,0,2|28
+Sentinels|15,8,4,10,17,17|0,1,6,3,3,2|25
+LawsonTicketXone|11,9,9,15,12,10|2,3,2,2,2,0|20
+KINOTROPE gaming|7,19,18,5,16,9|4,0,0,4,1,0|18
+VK GAMING|4,20,19,8,7,13|0,0,0,1,2,3|17
+RIDDLEORDER ZERO|3,15,12,13,19,19|3,0,1,2,0,0|16
+PXX|19,17,13,17,15,14|3,0,1,0,3,1|11
+ShopifyRebellion|13,10,11,16,18,18|2,2,0,0,0,0|8
+NOEZ FOXX|16,14,20,20,11,15|0,1,0,0,1,0|5
+## Y6S2_PLAYOFFS_LR1|2.9|https://apexlegendsstatus.com/algs/Y6-Split2/ALGS-Playoffs/Global/Day3/LosersRound1|E-District,E-District,E-District,World's Edge,World's Edge,World's Edge
+VexX Gaming|15,3,2,5,6,2|1,4,15,4,10,7|74
+GaiminGladiators|16,4,1,2,1,12|1,2,9,6,11,3|71
+Team WaR|3,9,3,6,9,1|7,1,7,1,2,7|58
+Sentinels|4,5,17,1,16,18|2,9,0,12,0,0|44
+Nice Guys|7,11,7,19,2,20|5,9,5,1,7,0|43
+AG GLOBAL|10,2,9,14,8,8|5,5,5,1,3,5|42
+Wolves Esports|1,18,6,17,10,9|12,0,1,3,2,3|40
+NOEZ FOXX|13,1,16,8,20,19|1,11,3,10,0,0|40
+NRG|14,10,12,11,3,17|1,3,3,6,12,0|37
+PVISION|2,6,13,7,13,11|6,5,0,3,3,0|35
+RIDDLEORDER ZERO|12,7,4,20,15,5|3,4,2,0,2,8|33
+7VEN|19,16,20,18,4,3|0,1,0,1,5,4|23
+ENTER FORCE.36|18,8,19,13,14,6|0,1,0,1,6,8|23
+LawsonTicketXone|6,14,5,3,7,16|4,0,0,1,0,0|23
+TEAM ECLIPSE|8,19,15,9,18,7|5,0,0,3,0,5|21
+VK GAMING|11,13,18,4,5,10|0,0,0,2,3,2|20
+PXX|5,12,10,16,19,13|6,3,0,0,0,0|17
+KINOTROPE gaming|9,20,11,15,11,4|1,0,3,2,0,0|16
+TitanEsportsClub|20,15,14,12,17,15|1,1,1,0,0,8|15
+Relove DCG|17,17,8,10,12,14|0,0,5,0,0,3|14
+
+## Y6S2_PLAYOFFS_WR1|2.9|https://apexlegendsstatus.com/algs/Y6-Split2/ALGS-Playoffs/Global/Day3/WinnersRound1|Storm Point,Storm Point,Storm Point,E-District,E-District,E-District
+Crazy Thieves|2,5,15,12,1,18|6,11,3,6,15,0|68
+NinjasinPyjamas|11,2,9,2,14,1|1,7,5,7,2,9|65
+Aurora|3,13,19,1,7,4|3,0,0,15,2,4|52
+Team Vision|18,1,11,6,12,6|0,10,2,1,6,5|44
+Team Falcons|4,19,1,10,10,14|8,0,11,1,0,0|42
+ShopifyRebellion|5,4,3,5,8,19|1,3,9,2,2,0|39
+KINOTROPE CLUB|8,14,2,3,19,12|5,0,6,4,0,1|36
+WhiteGrimReaper|16,11,7,16,20,3|1,5,11,0,0,6|34
+Team Liquid|7,12,20,14,3,9|5,6,0,0,7,0|32
+Forged Wolves|1,7,18,17,5,15|8,2,0,0,0,0|30
+Team RRQ|6,20,8,20,2,8|2,0,5,0,6,1|30
+World Wide|20,8,6,8,13,2|0,0,0,8,0,5|30
+ForFun Esports|14,10,13,11,4,7|2,0,0,3,3,8|29
+UNLIMIT|13,17,4,7,9,16|3,0,2,1,8,4|29
+Geekay Esports|9,18,16,9,15,10|6,4,0,0,0,11|28
+DINOS|15,9,14,13,6,11|3,8,0,1,6,0|27
+ZETA DIVISION|12,3,10,15,11,20|0,4,0,4,2,0|22
+REJECT|19,16,5,19,16,5|1,0,6,2,0,0|17
+Gen.G Citadel|17,15,17,4,18,13|0,1,0,4,1,1|14
+Alliance|10,6,12,18,17,17|3,0,2,0,0,2|13

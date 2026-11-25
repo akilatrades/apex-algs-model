@@ -1,0 +1,34 @@
+# Y6 Split 2 Playoffs weapons (apexlegendsstatus.com, fetched 2026-11-24). Weapon|Kills|Damage|Knockdowns|FWR%|Playtime
+Prowler Burst PDW|1686|600197|2011|52.59|101h 15m
+Nemesis Burst AR|547|724264|778|70.22|166h 26m
+C.A.R.|363|142496|458|46.97|32h 47m
+Triple Take|158|213647|227|68.79|49h 33m
+Frag Grenade|104|81417|135|100|-
+P2020|78|26266|92|43.81|8h 2m
+Volt SMG|71|32975|95|50.26|8h 23m
+Longbow DMR|66|116835|127|74.71|24h 12m
+Hemlok|66|84656|106|63.47|28h 52m
+L-STAR EMG|46|17901|56|63.64|1h 28m
+R-99 SMG|38|14467|46|45.54|4h 55m
+Alternator SMG|36|14551|46|42.20|5h 47m
+Kraber .50-Cal Sniper|31|22646|54|68.35|2h 55m
+G7 Scout|30|55450|46|67.65|15h 52m
+Arc Star|30|23814|56|100|-
+RE-45|30|12498|37|40.66|4h 22m
+VK-47 Flatline|26|14434|34|55.74|6h 29m
+HAVOC Rifle|25|23972|31|48.44|8h 3m
+Thermite Grenade|21|15512|31|100|-
+Charge Rifle|15|44296|69|92.00|9h 44m
+Peacekeeper|14|4923|16|41.03|1h 5m
+Mastiff Shotgun|13|8534|20|33.33|2h 16m
+30-30 Repeater|13|10474|18|85.71|1h 1m
+R-301 Carbine|7|5489|12|85.71|2h 28m
+Bocek Compound Bow|7|19419|12|75.00|6h 40m
+Sentinel|6|19024|15|62.50|5h 49m
+Wingman|6|9239|9|32.14|4h 44m
+Mozambique (Akimbo)|6|1935|2|100|0h 26m
+EVA-8 Auto|3|565|3|50.00|0h 15m
+M600 Spitfire|2|1985|4|36.36|1h 15m
+Rampage LMG|2|2372|3|60.00|1h 50m
+Mozambique Shotgun|2|657|10|37.04|0h 14m
+Devotion LMG|1|858|1|50.00|0h 14m

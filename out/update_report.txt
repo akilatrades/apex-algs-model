@@ -1,0 +1,5 @@
+WARNING new scrim names not matched to ALGS teams (rated on scrims alone): 5STAR, LEGACY, QSM
+scrim games: 12 -> 12 (latest 2026-11-24)
+re-check next run: none
+ALL MATHS CHECKS PASS
+no team's Champs win chance moved by 1 point or more

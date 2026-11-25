@@ -1,0 +1,111 @@
+# Legend pick rates (share of teams-games using the legend). Legend|Pick%|AvgPlace|Win%|Occurrences
+## Y6S2_PLAYOFFS
+Seer|38.97|10.8|4.9|491
+Wattson|33.65|10.4|5.2|424
+Pathfinder|30.08|10.7|5.3|379
+Wraith|29.6|10.2|4.3|373
+Alter|28.02|10.5|5.1|353
+Mad Maggie|24.29|11|3.9|306
+Newcastle|23.33|10.2|5.8|294
+Rampart|21.11|10.5|5.3|266
+Catalyst|16.19|10.2|4.9|204
+Crypto|15.87|10.5|5|200
+Fuse|11.67|10.6|4.8|147
+Gibraltar|9.37|10.2|5.1|118
+Sparrow|7.38|9.9|7.5|93
+Valkyrie|5.24|10|6.1|66
+Bangalore|3.33|10.3|4.8|42
+Vantage|1.03|12.8|0|13
+Axle|0.48|14|0|6
+Caustic|0.16|11|0|2
+Ash|0.08|13|0|1
+Bloodhound|0.08|7|0|1
+Lifeline|0.08|16|0|1
+## PL_NA
+Wraith|34.27|10.2|4.8|438
+Alter|32.86|10.5|4.8|420
+Wattson|31.61|10.3|4.7|404
+Catalyst|30.05|10.4|4.9|384
+Mad Maggie|28.4|10.4|6.1|363
+Seer|25.98|10.6|5.4|332
+Crypto|23|10.5|5.1|294
+Pathfinder|15.65|10.3|5.5|200
+Fuse|13.07|10.8|3|167
+Rampart|11.97|10.9|3.3|153
+Sparrow|11.27|10.4|4.2|144
+Bloodhound|9.62|11.3|6.5|123
+Gibraltar|7.82|10.2|5|100
+Axle|7.12|12.1|5.5|91
+Newcastle|6.65|9.8|5.9|85
+Valkyrie|5.16|10|7.6|66
+Caustic|3.29|9.7|2.4|42
+Bangalore|1.88|11.3|8.3|24
+Loba|0.16|15.5|0|2
+Mirage|0.08|18|0|1
+Horizon|0.08|20|0|1
+## PL_EMEA
+Alter|46.74|10.5|4.8|560
+Wattson|36.56|10.2|4.6|438
+Mad Maggie|31.55|10.5|6.1|378
+Seer|25.04|10.6|4|300
+Wraith|22.79|10.3|3.7|273
+Catalyst|17.36|10.7|4.3|208
+Crypto|16.36|10.4|4.6|196
+Rampart|15.03|10.5|3.3|180
+Pathfinder|12.94|10.8|6.5|155
+Bloodhound|12.85|10.5|8.4|154
+Newcastle|11.94|10|7|143
+Fuse|10.77|11.8|2.3|129
+Valkyrie|8.93|10|7.5|107
+Gibraltar|8.51|10.4|6.9|102
+Sparrow|8.26|10.4|5.1|99
+Caustic|6.51|10.5|3.8|78
+Axle|6.43|11.2|6.5|77
+Bangalore|1|9.8|0|12
+Vantage|0.33|8.3|0|4
+Conduit|0.08|20|0|1
+## PL_APN
+Alter|33.23|11|5.8|412
+Wattson|29.92|9.9|5.4|371
+Seer|29.27|10.8|5.5|363
+Fuse|23.71|11|4.8|294
+Mad Maggie|22.18|11.4|4|275
+Newcastle|21.53|9.7|4.9|267
+Wraith|21.45|9.3|3.8|266
+Rampart|17.98|10|3.1|223
+Crypto|16.05|10.5|5|199
+Pathfinder|13.15|11|2.5|163
+Valkyrie|12.74|10.4|5.7|158
+Axle|12.02|11.2|6|149
+Catalyst|10.97|10.4|2.9|136
+Gibraltar|8.87|9.2|10|110
+Vantage|7.58|10.6|7.4|94
+Bangalore|6.45|11|6.3|80
+Sparrow|5.73|10.9|5.6|71
+Caustic|3.31|9|7.3|41
+Bloodhound|2.26|12.4|0|28
+Ash|1.53|12.9|5.3|19
+Horizon|0.08|18|0|1
+## PL_APS
+Alter|38.45|10.4|5.6|484
+Catalyst|34.4|10.7|3.2|433
+Mad Maggie|30.43|10.7|3.9|383
+Seer|28.52|10.6|5.3|359
+Pathfinder|25.26|10.5|5.7|318
+Wattson|24.55|10.5|4.5|309
+Wraith|23.12|10.2|3.8|291
+Sparrow|17.88|10.1|7.6|225
+Fuse|16.92|10.4|6.6|213
+Crypto|15.89|10.5|5|200
+Rampart|10.65|9.8|6.7|134
+Axle|8.74|11|8.2|110
+Bloodhound|7.55|10.8|2.1|95
+Newcastle|3.58|10.1|4.4|45
+Vantage|3.34|11.2|7.1|42
+Valkyrie|2.78|10|2.9|35
+Gibraltar|2.7|10.9|2.9|34
+Caustic|2.3|12.5|6.9|29
+Bangalore|2.3|11.3|3.4|29
+Ash|0.48|8.7|0|6
+Horizon|0.08|19|0|1
+Loba|0.08|17|0|1

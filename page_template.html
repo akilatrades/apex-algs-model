@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Apex ALGS Model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: newspaper graphics desk, plain words, one idea per section, every number explained where it sits.
+   IDEA: a pre-tournament form guide you can poke at.
+   PICTURE: the power ranking bars: expected points per game for every Championship team.
+   COLOUR and TYPE: pale pink ground, ink, teal for the model, claret for the "pure luck" marker; Libre Franklin.
+   LAYOUT: headline + three numbers, ranking, what-if sliders, team stats, legends, players, can-you-trust-it. */
+:root{color-scheme:light dark;--bg:light-dark(#ffe3dc,#1c1512);--card:light-dark(#fff1ec,#261d19);--ink:light-dark(#1a1817,#f3e9e4);--mute:light-dark(#5b5350,#b3a7a1);--line:light-dark(#e8c9c0,#3b2f2a);--teal:light-dark(#008aa3,#2aa3ae);--claret:light-dark(#990f3d,#e0527a)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Libre Franklin",system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(24px,4vw,52px) max(5vw,16px);max-width:1180px;margin:0 auto}
+h1{font-size:clamp(30px,4.6vw,48px);line-height:1.05;font-weight:800;margin:0 0 14px;text-wrap:balance;max-width:22ch}
+h2{font-size:clamp(22px,2.6vw,30px);line-height:1.1;font-weight:800;margin:0 0 8px;text-wrap:balance}
+h3{font-size:17px;margin:20px 0 6px}
+p{max-width:66ch;margin:0 0 12px}.mute{color:var(--mute)}.small{font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:22px 0 0}
+.kpi{border-top:2px solid var(--ink);padding-top:10px}.kpi b{display:block;font-size:clamp(30px,4vw,44px);font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.how{background:var(--card);border-left:4px solid var(--teal);padding:10px 14px;margin:12px 0;max-width:66ch;font-size:15px}
+.ctl{display:flex;gap:14px;flex-wrap:wrap;align-items:end;margin:12px 0}.ctl>div{flex:1 1 200px;max-width:300px}
+label{display:block;font-weight:600;font-size:14px;margin:0 0 4px}
+select,input[type=range]{font:inherit;font-size:16px;width:100%;min-height:44px}
+select{padding:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:6px}
+input[type=range]{accent-color:var(--teal)}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.rows{display:grid;gap:2px}
+.r{display:grid;grid-template-columns:minmax(0,12em) minmax(0,1fr) 5.2em;gap:10px;align-items:center;font-size:14px;padding:3px 0}
+.r.w{grid-template-columns:minmax(0,12em) minmax(0,1fr) 6.2em 6.2em 6.2em}.r.h .v{white-space:normal;line-height:1.2}
+.r .bar{height:16px;position:relative}.r .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--teal);border-radius:0 4px 4px 0}
+.r .bar s{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--claret)}
+.r .bar u{position:absolute;top:7px;height:2px;background:var(--ink);opacity:.55}
+#tlcomps td.l{white-space:normal}.r .v{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.r .n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.r.h{font-size:12px;color:var(--mute);font-weight:600;border-bottom:1px solid var(--line)}
+.r:not(.h):hover{background:var(--card)}
+.tag{display:inline-block;font-size:11px;padding:0 5px;border-radius:4px;border:1px solid var(--claret);color:var(--claret);margin-left:4px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--mute);margin:8px 0}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px;border-radius:2px;background:var(--teal)}
+.legend span.c::before{width:2px;height:14px;background:var(--claret);border-radius:0}.legend span.u::before{height:2px;width:14px;background:var(--ink);opacity:.55;vertical-align:4px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:12px 0}
+.tile{background:var(--card);border-radius:8px;padding:10px 12px}.tile b{display:block;font-size:28px;font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums}.tile span{font-size:13px;color:var(--mute)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:32px}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th{font-weight:600;color:var(--mute);font-size:12px}th.l,td.l{text-align:left}
+.scroll{overflow-x:auto;max-width:100%}#comps td.l{white-space:normal}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);padding:8px 10px;border-radius:6px;font-size:13px;line-height:1.4;opacity:0;max-width:250px;z-index:9}
+details{margin-top:12px}summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+ul{max-width:66ch;padding-left:20px}li{margin:4px 0}
+a{color:var(--teal)}hr{border:0;border-top:1px solid var(--line);margin:0}
+@media(max-width:640px){.r,.r.w{grid-template-columns:minmax(0,7.5em) minmax(0,1fr) 4.4em}.r.w .x{display:none}}
+</style></head><body>
+
+<section class="band" id="top">
+  <p class="mute small">ALGS Year 6 Championship form guide · based on <span id="m-games"></span> official games this year · updated 24 Nov 2026</p>
+  <h1 id="headline"></h1>
+  <p id="lead"></p>
+  <div class="kpis">
+    <div class="kpi"><b id="k1"></b><span class="mute" id="k1t"></span></div>
+    <div class="kpi"><b id="k2"></b><span class="mute">of the time, the team we rated higher finished ahead when we checked against real results. A coin flip would be 50%.</span></div>
+    <div class="kpi"><b id="k3"></b><span class="mute">LAN games before a team's results are more skill than luck. One event is about 30 games, which is why upsets are normal.</span></div>
+  </div>
+</section>
+<hr>
+
+<section class="band" id="ranking">
+  <h2>Who's strongest</h2>
+  <p class="mute">Teams ranked by how many points we'd expect them to score in an average game at Champs.</p>
+  <div class="how"><strong>How to read it.</strong> <em>Points a game</em>: a win is worth 12 points and each kill 1, and the average Champs team scores about <span id="avgp"></span>. <em>Wins a game</em>: the chance of winning any single game (5% is average with 20 teams). <em>Wins Champs</em>: the chance of winning the whole event. The thin line shows the realistic range. If two teams' lines overlap, there's no real gap between them. Title chances don't follow the order exactly, because some teams' records are less certain than others.</div>
+  <div class="ctl"><div><label for="rk-show">Show</label><select id="rk-show"><option value="field">The 40 Championship teams</option><option value="all">Every team with 40+ games, including those who missed out</option></select></div>
+  <div><label for="rk-reg">Region</label><select id="rk-reg"><option value="">All regions</option></select></div></div>
+  <div class="legend"><span>expected points a game</span><span class="u">realistic range</span><span class="c">average Championship team</span></div>
+  <div class="rows" id="rank"></div>
+  <p class="small mute">"No LAN record" means the team has only played online in their own region. We knock them down a little, because teams at their first LAN last time scored well below what their online results suggested.</p>
+</section>
+<hr>
+
+<section class="band" id="whatif">
+  <h2>Play with the odds</h2>
+  <p class="mute">Drag the sliders and watch the chances change. Each time you move one, we play out the final day 3,000 times with the top 20 teams and count who wins.</p>
+  <div class="grid2">
+    <div>
+      <label for="s-skill">How much skill matters: <span id="s-skill-v"></span></label>
+      <input id="s-skill" type="range" min="0" max="4" step="0.25" value="1">
+      <p class="small mute">0 = pure luck, every team equal. 1 = the real gaps between teams, as best we can tell. 4 = gaps four times bigger than they really are.</p>
+      <label for="s-thr">Points needed for match point: <span id="s-thr-v"></span></label>
+      <input id="s-thr" type="range" min="20" max="90" step="5" value="50">
+      <p class="small mute">The real number is 50. Raise it and the final lasts longer, which helps the better teams.</p>
+      <label for="s-team">Give one team a boost</label>
+      <select id="s-team"></select>
+      <label for="s-boost" style="margin-top:10px">Boost: <span id="s-boost-v"></span></label>
+      <input id="s-boost" type="range" min="-2" max="3" step="0.25" value="0">
+      <p class="small mute">Extra points a game. Try it for "what if this team is better (or worse) than their results show?"</p>
+      <div class="tiles">
+        <div class="tile"><b id="w-fav"></b><span id="w-fav-t"></span></div>
+        <div class="tile"><b id="w-len"></b><span>games in an average final day</span></div>
+        <div class="tile"><b id="w-low"></b><span>chance a bottom-half team (11th–20th) wins</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="legend"><span>chance to win the final</span><span class="c">pure luck (5%)</span></div>
+      <div class="rows" id="whatrows"></div>
+    </div>
+  </div>
+  <h3>How many games before skill shows?</h3>
+  <p class="mute">Over a few games, a team's results are mostly luck. Slide to see how much of it is real skill as the games add up.</p>
+  <div class="ctl"><div style="max-width:420px"><label for="s-n">Games played: <span id="s-n-v"></span></label><input id="s-n" type="range" min="1" max="120" step="1" value="9"></div></div>
+  <div class="tiles"><div class="tile"><b id="rel-lan"></b><span>of a team's results is skill, at LAN</span></div><div class="tile"><b id="rel-pl"></b><span>in Pro League, where good and bad teams are further apart</span></div><div class="tile"><b id="rel-note"></b><span id="rel-note-t"></span></div></div>
+</section>
+<hr>
+
+<section class="band" id="stats">
+  <h2>How teams score: kills, knocks, damage, assists</h2>
+  <p class="mute">Per-game averages for the 40 Champs teams. Pick a stat and which event to look at.</p>
+  <div class="ctl"><div><label for="st-stat">Stat</label><select id="st-stat"></select></div><div><label for="st-src">Event</label><select id="st-src"><option value="pl">Split 2 Pro League (all 40 teams)</option><option value="lan">Split 2 Playoffs at LAN (teams who were there)</option></select></div></div>
+  <div class="rows" id="statrows"></div>
+  <h3>Which stats go with scoring points?</h3>
+  <p class="mute">At the Split 2 Playoffs, did teams that were good at each stat also score more points? Longer bar = closer link.</p>
+  <div class="rows" id="links" style="max-width:640px"></div>
+  <p class="small mute">Kills line up with points partly because every kill is a point. Placing well matters almost as much. Revives make little difference.</p>
+</section>
+<hr>
+
+<section class="band grid2" id="legends">
+  <div>
+    <h2>Legend picks</h2>
+    <p class="mute">How often teams picked each legend.</p>
+    <div class="ctl"><div><label for="lg-ev">Event</label><select id="lg-ev"></select></div></div>
+    <div class="rows" id="lgrows"></div>
+  </div>
+  <div>
+    <h2>Most-played team comps at LAN</h2>
+    <p class="mute">Split 2 Playoffs. "Wins" is how often teams on that comp won a game. Average is 5%.</p>
+    <div class="scroll"><table id="comps"></table></div>
+    <h3>Players: top 12 at the Split 2 Playoffs</h3>
+    <div class="ctl"><div><label for="pl-stat">Stat</label><select id="pl-stat"><option value="dmg">Damage per game</option><option value="kills">Kills per game</option><option value="knocks">Knocks per game</option><option value="assists">Assists per game</option><option value="ratio">Damage dealt ÷ taken</option></select></div></div>
+    <div class="rows" id="plrows"></div>
+  </div>
+</section>
+<hr>
+
+<section class="band grid2" id="guns">
+  <div>
+    <h2>Guns</h2>
+    <p class="mute">Kills by weapon at the Split 2 Playoffs. Hover for damage, knocks and time in hand.</p>
+    <div class="rows" id="gunrows"></div>
+    <p class="small mute" id="gunnote"></p>
+  </div>
+  <div>
+    <h2>Best drop spots</h2>
+    <p class="mute">Average points for teams that landed at each spot, Split 2 Playoffs. Most spots only saw a handful of games, so treat this as rough.</p>
+    <div class="ctl"><div><label for="poi-map">Map</label><select id="poi-map"></select></div></div>
+    <div class="rows" id="poirows"></div>
+    <p class="small mute" id="mapnote"></p>
+  </div>
+</section>
+<hr>
+
+<section class="band grid2" id="scrims">
+  <div>
+    <h2>Championship scrims so far</h2>
+    <p class="mute">Practice games from the Eternal Esports Club "Year 6 Champs" scrim season (two blocks, 12 games, 24 Nov). They count half as much as official games. Too few to read much into yet.</p>
+    <div class="rows" id="scrimrows"></div>
+  </div>
+  <div>
+    <h2>What each team plays</h2>
+    <p class="mute">Each team's most-picked legends and team comps.</p>
+    <div class="ctl"><div><label for="tl-team">Team</label><select id="tl-team"></select></div></div>
+    <div class="rows" id="tlrows"></div>
+    <div class="scroll"><table id="tlcomps"></table></div>
+    <p class="small mute" id="tlsrc"></p>
+  </div>
+</section>
+<hr>
+
+<section class="band" id="trust">
+  <h2>How much should you trust this?</h2>
+  <p>Use it as a guide, not a crystal ball. It beats guessing, but pro Apex is close and a lot comes down to the day.</p>
+  <div class="grid2">
+    <div>
+      <h3>How we tested it</h3>
+      <p class="mute">We rated teams using only results from before the Split 2 Playoffs, then compared that with what actually happened there (63 games).</p>
+      <div class="rows" id="thirds"></div>
+      <p class="small mute">Bars show the points a game each group actually scored. The teams we rated highest did score the most. One caution: we used this same event to fine-tune things, so it may do a little worse on new games. In Pro League, the team we rated higher finished ahead <span id="acc-pl"></span> of the time.</p>
+    </div>
+    <div>
+      <h3>What's new in this update</h3>
+      <ul id="fixes"></ul>
+      <h3>What it doesn't know</h3>
+      <ul><li>Player swaps on teams that kept the same name. Plenty of rosters changed between splits.</li><li>The real Champs groups and format, which haven't been announced.</li><li>How teams have been practising lately, beyond 12 scrim games.</li></ul>
+    </div>
+  </div>
+  <details><summary>How it works, and where the numbers come from</summary>
+    <p class="small"><strong>The ranking.</strong> Every game's full finishing order counts, not just who won. Finishing 3rd ahead of 17 other teams tells us something. Teams with only a few games are pulled toward the average for their region, so one lucky weekend can't send a team to the top. Teams who've never played a LAN get a small deduction, sized by how much first-time LAN teams dropped off last time.</p>
+    <p class="small"><strong>The odds.</strong> We play out the whole Championship 8,000 times: groups, the elimination rounds, then the match-point final, using each team's ranking plus a realistic amount of luck. A team's chance is simply how often it won. Groups are drawn at random, since the real ones aren't out yet.</p>
+    <p class="small"><strong>Checks.</strong> Every game's results and every team's totals match the stats site, including the site's own season totals for all <span id="c-tot"></span> team-and-event records. We also checked the maths behind the odds with a set of automatic tests.</p>
+    <p class="small"><strong>Sources</strong> (24 Nov 2026): apexlegendsstatus.com for official games (2025 Champs final; this year's Pro League in all four regions for both splits; both Playoffs; the Last Chance Qualifier finals) and for team, player, legend, gun and drop-spot stats. Eternal Esports Club for scrims. Team names are as those sites show them. Two names are treated as one team only when the totals or the exact same three players prove it.</p>
+  </details>
+</section>
+<div id="tip" role="tooltip"></div>
+
+<script>
+{
+const D = __DATA__;
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct = (x, d=0) => (100*x).toFixed(d) + '%';
+const M = D.meta, B = D.backtest, T = D.teams, F = T.filter(t => t.in_field), BY = Object.fromEntries(T.map(t => [t.team, t]));
+const PTS = [0, ...D.place_pts], KB = [0, ...D.kill_base];
+const tip = $('#tip');
+function showTip(e, html){ tip.innerHTML = html; tip.style.opacity = 1; const w = tip.offsetWidth, h = tip.offsetHeight; let x = e.clientX + 14, y = e.clientY + 14;
+  if (x + w > innerWidth - 8) x = e.clientX - w - 14; if (y + h > innerHeight - 8) y = e.clientY - h - 14; tip.style.left = Math.max(8, x) + 'px'; tip.style.top = Math.max(8, y) + 'px'; }
+const hideTip = () => tip.style.opacity = 0;
+const hov = (el, fn) => { el.onmousemove = e => showTip(e, fn()); el.onmouseleave = hideTip; };
+
+// ---- headline ----
+const byWin = [...F].sort((a, b) => b.p_win - a.p_win), f1 = byWin[0], f2 = byWin[1];
+$('#m-games').textContent = M.n_games - (M.by_source.scrim || 0);
+$('#headline').textContent = `${f1.team} and ${f2.team} lead a wide-open Championship`;
+$('#lead').textContent = `No team has better than about a 1-in-${Math.round(1 / f1.p_win)} chance of the title. Forty teams are going to Sapporo, so pure luck would give each a 1-in-40 chance. The favourites are only about ${(f1.p_win / 0.025).toFixed(1)} times likelier than that. Anyone in the top half can win it.`;
+$('#k1').textContent = pct(f1.p_win, 1); $('#k1t').textContent = `${f1.team}'s chance to win Champs, the best of any team. If it were pure luck, every team would have 2.5%.`;
+$('#k2').textContent = pct(B.acc_v2); $('#k3').textContent = Math.ceil((1 - M.icc_lan) / M.icc_lan);
+$('#avgp').textContent = M.avg_power.toFixed(1);
+
+// ---- ranking ----
+const regs = [...new Set(F.map(t => t.region))].sort();
+$('#rk-reg').insertAdjacentHTML('beforeend', regs.map(r => `<option>${esc(r)}</option>`).join(''));
+function drawRank(){
+  const all = $('#rk-show').value === 'all', reg = $('#rk-reg').value;
+  const rows = T.filter(t => (all ? t.games >= 40 : t.in_field) && (!reg || t.region === reg));
+  const mx = Math.max(...rows.map(t => t.power_hi), 8);
+  $('#rank').innerHTML = `<div class="r w h"><span>Team</span><span></span><span class="v">Points a game</span><span class="v x">Wins a game</span><span class="v x">${all ? 'At Champs?' : 'Wins Champs'}</span></div>` +
+    rows.map((t, i) => `<div class="r w" data-team="${esc(t.team)}"><span class="n">${i + 1}. ${esc(t.team)}${t.no_lan ? '<span class="tag">no LAN record</span>' : ''}</span>
+      <span class="bar"><i style="width:${(100 * t.power / mx).toFixed(1)}%"></i><u style="left:${(100 * t.power_lo / mx).toFixed(1)}%;width:${(100 * (t.power_hi - t.power_lo) / mx).toFixed(1)}%"></u><s style="left:${(100 * M.avg_power / mx).toFixed(1)}%"></s></span>
+      <span class="v">${t.power.toFixed(1)}</span><span class="v x">${pct(t.win_game, 1)}</span><span class="v x">${all ? (t.in_field ? 'yes' : 'missed') : pct(t.p_win, 1)}</span></div>`).join('');
+  $('#rank').querySelectorAll('.r[data-team]').forEach(el => hov(el, () => { const t = BY[el.dataset.team];
+    return `<b>${esc(t.team)}</b> · ${esc(t.region)}<br>Expected: ${t.power.toFixed(1)} points a game (realistically ${t.power_lo.toFixed(1)}–${t.power_hi.toFixed(1)})<br>So far: ${t.ppg.toFixed(1)} points a game over ${t.games} games (${t.lan_games} at LAN)<br>Wins about 1 game in ${Math.round(1 / t.win_game)}${t.in_field ? `<br>Makes the final day: ${pct(t.p_finals)} · wins Champs: ${pct(t.p_win, 1)}` : ''}`; }));
+}
+$('#rk-show').onchange = drawRank; $('#rk-reg').onchange = drawRank; drawRank();
+
+// ---- what-if ----
+const lobby = [...F].sort((a, b) => b.power - a.power).slice(0, 20);
+$('#s-team').innerHTML = lobby.map(t => `<option>${esc(t.team)}</option>`).join('');
+const gum = () => -Math.log(-Math.log(Math.random() || 1e-12));
+function pois(mu){ const L = Math.exp(-mu); let k = 0, p = 1; do { k++; p *= Math.random(); } while (p > L); return k - 1; }
+function sim(){
+  const w = +$('#s-skill').value, thr = +$('#s-thr').value, bt = $('#s-team').value, boost = +$('#s-boost').value / M.pts_per_strength, n = 3000, N = 20;
+  const th = lobby.map(t => w * t.strength + (t.team === bt ? boost : 0)), ks = lobby.map(t => w * t.kill_skill), win = new Array(N).fill(0), idx = [...Array(N).keys()]; let games = 0;
+  for (let s = 0; s < n; s++){ const tot = new Array(N).fill(0);
+    for (let g = 0; g < 60; g++){ const z = th.map(v => v + gum()); idx.sort((a, b) => z[b] - z[a]); const f = idx[0], was = tot[f];
+      for (let r = 0; r < N; r++){ const t = idx[r]; tot[t] += PTS[r + 1] + pois(KB[r + 1] * Math.exp(ks[t])); } games++; if (was >= thr){ win[f]++; break; } } }
+  const res = lobby.map((t, i) => ({team: t.team, p: win[i] / n, i})).sort((a, b) => b.p - a.p), mx = Math.max(.12, res[0].p);
+  $('#whatrows').innerHTML = res.map(r => `<div class="r"><span class="n">${esc(r.team)}${r.team === bt && boost ? ' ★' : ''}</span><span class="bar"><i style="width:${(100 * r.p / mx).toFixed(1)}%"></i><s style="left:${(5 / mx).toFixed(1)}%"></s></span><span class="v">${pct(r.p, 1)}</span></div>`).join('');
+  $('#w-fav').textContent = pct(res[0].p, 1); $('#w-fav-t').textContent = `chance for the favourite, ${res[0].team}`;
+  $('#w-len').textContent = (games / n).toFixed(1); $('#w-low').textContent = pct(win.slice(10).reduce((a, b) => a + b, 0) / n);
+}
+function labels(){ $('#s-skill-v').textContent = (+$('#s-skill').value).toFixed(2) + '×'; $('#s-thr-v').textContent = $('#s-thr').value; const b = +$('#s-boost').value; $('#s-boost-v').textContent = (b > 0 ? '+' : '') + b.toFixed(2) + ' pts/game'; }
+let tmr; ['#s-skill', '#s-thr', '#s-boost', '#s-team'].forEach(id => $(id).oninput = () => { labels(); clearTimeout(tmr); tmr = setTimeout(sim, 120); });
+labels(); sim();
+function rel(){ const n = +$('#s-n').value, f = i => n * i / (1 + (n - 1) * i); $('#s-n-v').textContent = n;
+  $('#rel-lan').textContent = pct(f(M.icc_lan)); $('#rel-pl').textContent = pct(f(M.icc_pl));
+  const half = Math.ceil((1 - M.icc_lan) / M.icc_lan); $('#rel-note').textContent = half; $('#rel-note-t').textContent = 'LAN games before a team\'s results are half skill, half luck'; }
+$('#s-n').oninput = rel; rel();
+
+// ---- team stats ----
+const STATS = [['kills', 'Kills per game', 1], ['knocks', 'Knocks per game', 1], ['dmg', 'Damage per game', 0], ['assists', 'Assists per game', 1], ['ratio', 'Damage dealt ÷ taken', 2], ['kd', 'Kills ÷ deaths', 2], ['rez', 'Revives per game', 2], ['ppg', 'Points per game', 1]];
+$('#st-stat').innerHTML = STATS.map(s => `<option value="${s[0]}">${s[1]}</option>`).join(''); $('#st-stat').value = 'dmg';
+function drawStats(){
+  const k = $('#st-stat').value, src = $('#st-src').value, dp = STATS.find(s => s[0] === k)[2];
+  const rows = F.map(t => ({t, d: (D.deep_teams[t.team] || {})[src]})).filter(r => r.d).sort((a, b) => b.d[k] - a.d[k]), mx = Math.max(...rows.map(r => r.d[k]));
+  const fmt = v => dp ? v.toFixed(dp) : Math.round(v).toLocaleString();
+  $('#statrows').innerHTML = rows.map((r, i) => `<div class="r" data-i="${i}"><span class="n">${i + 1}. ${esc(r.t.team)}</span><span class="bar"><i style="width:${(100 * r.d[k] / mx).toFixed(1)}%"></i></span><span class="v">${fmt(r.d[k])}</span></div>`).join('');
+  $('#statrows').querySelectorAll('.r').forEach(el => hov(el, () => { const r = rows[+el.dataset.i], d = r.d;
+    return `<b>${esc(r.t.team)}</b> · ${d.games} games<br>Kills ${d.kills.toFixed(1)} · knocks ${d.knocks.toFixed(1)} · assists ${d.assists.toFixed(1)}<br>${d.dmg.toLocaleString()} damage a game, ${d.ratio.toFixed(2)}× what they took<br>Points ${d.ppg.toFixed(1)} per game · ${d.top1} wins · ${d.top5} top-5s`; }));
+}
+$('#st-stat').onchange = drawStats; $('#st-src').onchange = drawStats; drawStats();
+const strength = r => Math.abs(r) >= .8 ? 'Very close' : Math.abs(r) >= .6 ? 'Close' : Math.abs(r) >= .4 ? 'Some link' : 'Little link';
+$('#links').innerHTML = [...D.links].sort((a, b) => Math.abs(b.lan) - Math.abs(a.lan)).map(l => `<div class="r"><span class="n">${esc(l.stat)}</span><span class="bar"><i style="width:${(100 * l.lan * l.lan).toFixed(1)}%"></i></span><span class="v">${strength(l.lan)}</span></div>`).join('');
+$('#links').querySelectorAll('.r').forEach(el => el.style.gridTemplateColumns = 'minmax(0,11em) minmax(0,1fr) 7em');
+
+// ---- legends, comps, players ----
+$('#lg-ev').innerHTML = Object.keys(D.legends).map(e => `<option>${esc(e)}</option>`).join('');
+function drawLg(){ const L = D.legends[$('#lg-ev').value].filter(l => l.pick >= 1), mx = L[0].pick;
+  $('#lgrows').innerHTML = `<div class="r w h"><span>Legend</span><span></span><span class="v">Picked</span><span class="v x">Wins</span><span class="v x">Avg place</span></div>` + L.map(l => `<div class="r w"><span class="n">${esc(l.legend)}</span><span class="bar"><i style="width:${(100 * l.pick / mx).toFixed(1)}%"></i></span><span class="v">${l.pick.toFixed(0)}%</span><span class="v x">${l.win.toFixed(1)}%</span><span class="v x">${l.avg_place.toFixed(1)}</span></div>`).join(''); }
+$('#lg-ev').onchange = drawLg; drawLg();
+$('#comps').innerHTML = `<tr><th class="l">Comp</th><th>Picked</th><th>Wins</th><th>Top 5</th><th>Avg place</th></tr>` + D.comps.map(c => `<tr><td class="l">${esc(c.comp)}</td><td>${c.pick.toFixed(1)}%</td><td>${c.win.toFixed(1)}%</td><td>${c.top5.toFixed(0)}%</td><td>${c.avg_place.toFixed(1)}</td></tr>`).join('');
+function drawPl(){ const k = $('#pl-stat').value, P = D.players.filter(p => p.games >= 24 && p.src.includes('LAN')).sort((a, b) => b[k] - a[k]).slice(0, 12), mx = P[0][k];
+  $('#plrows').innerHTML = P.map((p, i) => `<div class="r" data-i="${i}"><span class="n">${esc(p.player)} <span class="mute small">${esc(p.team)}</span></span><span class="bar"><i style="width:${(100 * p[k] / mx).toFixed(1)}%"></i></span><span class="v">${k === 'dmg' ? p[k].toLocaleString() : p[k].toFixed(2)}</span></div>`).join('');
+  $('#plrows').querySelectorAll('.r').forEach(el => hov(el, () => { const p = P[+el.dataset.i]; return `<b>${esc(p.player)}</b> · ${esc(p.team)} · ${p.games} games<br>Per game: ${p.kills.toFixed(2)} kills, ${p.knocks.toFixed(2)} knocks, ${p.assists.toFixed(2)} assists, ${p.dmg.toLocaleString()} damage<br>Deals ${p.ratio.toFixed(2)}× the damage taken`; })); }
+$('#pl-stat').onchange = drawPl; drawPl();
+
+// ---- guns, drop spots, scrims, team legends ----
+{ const G = D.guns.filter(g => g.kills >= 10), mx = G[0].kills, tot = D.guns.reduce((a, g) => a + g.kills, 0);
+  $('#gunrows').innerHTML = G.map((g, i) => `<div class="r" data-i="${i}"><span class="n">${esc(g.weapon)}</span><span class="bar"><i style="width:${(100 * g.kills / mx).toFixed(1)}%"></i></span><span class="v">${g.kills.toLocaleString()}</span></div>`).join('');
+  $('#gunrows').querySelectorAll('.r').forEach(el => hov(el, () => { const g = G[+el.dataset.i]; return `<b>${esc(g.weapon)}</b><br>${g.kills.toLocaleString()} kills (${pct(g.kills / tot)} of all) · ${g.knocks.toLocaleString()} knocks<br>${g.dmg.toLocaleString()} damage${g.time !== '-' ? '<br>Time in hand: ' + esc(g.time) : ''}`; }));
+  $('#gunnote').textContent = `${G[0].weapon} took ${pct(G[0].kills / tot)} of all ${tot.toLocaleString()} kills. ${G[1].weapon} dealt the most damage. Weapons with under 10 kills are left out.`;
+  $('#poi-map').innerHTML = Object.keys(D.poi).map(m => `<option>${esc(m)}</option>`).join('');
+  const drawPoi = () => { const P = D.poi[$('#poi-map').value].filter(x => x.picks >= 5).sort((a, b) => b.pts - a.pts), pm = P[0].pts;
+    $('#poirows').innerHTML = P.map((x, i) => `<div class="r" data-i="${i}"><span class="n">${esc(x.poi)}</span><span class="bar"><i style="width:${(100 * x.pts / pm).toFixed(1)}%"></i></span><span class="v">${x.pts.toFixed(1)} pts</span></div>`).join('');
+    $('#poirows').querySelectorAll('.r').forEach(el => hov(el, () => { const x = P[+el.dataset.i]; return `<b>${esc(x.poi)}</b><br>${x.pts.toFixed(1)} points and ${x.kills.toFixed(1)} kills per game<br>Average placement ${x.place.toFixed(1)} · ${x.wins} win${x.wins === 1 ? '' : 's'} in ${x.picks} games`; })); };
+  $('#poi-map').onchange = drawPoi; drawPoi();
+  $('#mapnote').textContent = 'We checked whether some teams are better on certain maps. The differences look like luck, so the ranking is the same on every map.';
+  const S = D.scrims.slice(0, 20), sm = S.length ? S[0].ppg : 1;
+  $('#scrimrows').innerHTML = S.map(x => `<div class="r"><span class="n">${esc(x.team)}${BY[x.team] && BY[x.team].in_field ? '' : ' <span class="mute small">not in field</span>'}</span><span class="bar"><i style="width:${(100 * x.ppg / sm).toFixed(1)}%"></i></span><span class="v">${x.ppg.toFixed(1)} pts</span></div>`).join('') || '<p class="mute">No scrims loaded.</p>';
+  const TL = D.team_legends, names = F.map(t => t.team).filter(t => TL[t]).sort();
+  $('#tl-team').innerHTML = names.map(t => `<option>${esc(t)}</option>`).join(''); $('#tl-team').value = byWin[0].team;
+  const drawTL = () => { const d = TL[$('#tl-team').value];
+    $('#tlrows').innerHTML = d.legends.map(l => `<div class="r"><span class="n">${esc(l[0])}</span><span class="bar"><i style="width:${l[1]}%"></i></span><span class="v">${l[1]}%</span></div>`).join('');
+    $('#tlcomps').innerHTML = `<tr><th class="l">Top comps</th><th>Used</th><th>Avg place</th></tr>` + (d.comps || []).map(c => `<tr><td class="l">${esc(c[0])}</td><td>${c[1]}%</td><td>${c[2].toFixed(1)}</td></tr>`).join('');
+    $('#tlsrc').textContent = 'From: ' + d.src + '.'; };
+  $('#tl-team').onchange = drawTL; drawTL(); }
+
+// ---- trust ----
+const tmx = Math.max(...B.thirds.map(t => t.actual_ppg));
+$('#thirds').innerHTML = B.thirds.map(t => `<div class="r"><span class="n">${['Teams we rated highest', 'Teams in the middle', 'Teams we rated lowest'][B.thirds.indexOf(t)]}</span><span class="bar"><i style="width:${(100 * t.actual_ppg / tmx).toFixed(1)}%"></i></span><span class="v">${t.actual_ppg.toFixed(1)} pts</span></div>`).join('');
+$('#acc-pl').textContent = pct(B.acc_pl);
+const ds = BY['Daylight Savings'], src = M.by_source;
+$('#fixes').innerHTML = [
+  `<strong>Much more data.</strong> ${M.n_games} games now: ${src.lan} at LAN, ${src.pro_league + src.pl_s1} Pro League (both splits), ${src.lcq} LCQ finals and ${src.scrim || 0} scrims. Adding the Split 1 season made the ratings more accurate, so it counts fully.`,
+  `<strong>Teams are matched by players, not just name.</strong> When the same three players show up under two team names, we count them as one team.${ds ? ` The clearest case: Daylight Savings played the last LAN as "7VEN" and scored 3.4 points a game there. Their title chance is now ${pct(ds.p_win, 1)}.` : ''}`,
+  `<strong>First-time LAN teams are knocked down a little.</strong> The ${B.n_debut} teams playing their first LAN at the Split 2 Playoffs scored ${B.debut_actual.toFixed(1)} points a game against ${B.returning_actual.toFixed(1)} for returning teams. ${M.n_no_lan_field} Championship teams have no LAN record.`,
+  `<strong>No map specialists.</strong> Teams' results on different maps vary about as much as luck would, so the ranking doesn't change by map.`].map(x => `<li>${x}</li>`).join('');
+$('#c-tot').textContent = M.totals_checked;
+}
+</script>
+</body></html>

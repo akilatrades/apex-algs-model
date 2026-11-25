@@ -1,0 +1,9 @@
+date,lobby,game,map,team,placement,kills
+2026-11-02,EXAMPLE,1,Storm Point,Team Liquid,1,5
+2026-11-02,EXAMPLE,1,Storm Point,Team Vision,2,3
+2026-11-02,EXAMPLE,1,Storm Point,Alliance,3,2
+2026-11-02,EXAMPLE,1,Storm Point,Team Falcons,4,1
+2026-11-02,EXAMPLE,2,Storm Point,Team Liquid,3,2
+2026-11-02,EXAMPLE,2,Storm Point,Team Vision,1,5
+2026-11-02,EXAMPLE,2,Storm Point,Alliance,4,1
+2026-11-02,EXAMPLE,2,Storm Point,Team Falcons,2,3

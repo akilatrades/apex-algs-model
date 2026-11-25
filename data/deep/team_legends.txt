@@ -1,0 +1,103 @@
+# Per-team legend picks (% of the team's games) and top comps (comp:pick%:avg place). Source: S2 Playoffs LAN unless marked PL.
+## LEGENDS LAN
+VK GAMING|Wattson:50,Mad Maggie:50,Pathfinder:46,Fuse:42,Alter:33,Wraith:21
+NOEZ FOXX|Seer:70,Newcastle:33,Wraith:33,Alter:27,Pathfinder:27,Wattson:23
+Sentinels|Wraith:74,Wattson:56,Catalyst:31,Newcastle:31,Seer:28,Crypto:15
+Alliance|Seer:54,Pathfinder:44,Mad Maggie:33,Alter:31,Wattson:26,Newcastle:18
+REJECT|Wattson:64,Mad Maggie:62,Wraith:49,Alter:31,Catalyst:18,Crypto:15
+ZETA DIVISION|Seer:70,Pathfinder:50,Newcastle:37,Alter:33,Wattson:27,Mad Maggie:23
+7VEN|Pathfinder:58,Wattson:46,Seer:38,Alter:33,Catalyst:29,Newcastle:21
+GaiminGladiators|Wraith:38,Rampart:36,Catalyst:33,Alter:31,Newcastle:31,Pathfinder:31
+LawsonTicketXone|Wraith:46,Rampart:38,Newcastle:33,Catalyst:29,Wattson:29,Alter:25
+NRG|Seer:63,Pathfinder:40,Alter:33,Wattson:33,Mad Maggie:27,Wraith:23
+Wolves Esports|Rampart:38,Newcastle:31,Pathfinder:31,Mad Maggie:31,Alter:26,Wraith:26
+WhiteGrimReaper|Pathfinder:45,Mad Maggie:42,Seer:39,Alter:30,Wattson:24,Rampart:21
+AG GLOBAL|Wattson:44,Wraith:38,Seer:36,Alter:28,Rampart:28,Pathfinder:26
+Geekay Esports|Seer:51,Wraith:36,Newcastle:33,Alter:31,Pathfinder:23,Rampart:21
+ForFun Esports|Wraith:47,Wattson:40,Newcastle:37,Rampart:37,Alter:33,Seer:23
+Forged Wolves|Wraith:58,Rampart:39,Seer:36,Wattson:33,Newcastle:27,Alter:24
+Team WaR|Mad Maggie:59,Wattson:36,Seer:33,Pathfinder:33,Alter:28,Wraith:28
+PXX|Alter:33,Pathfinder:33,Rampart:33,Wattson:29,Newcastle:29,Catalyst:25
+VexX Gaming|Seer:67,Pathfinder:43,Alter:33,Newcastle:33,Wraith:23,Wattson:23
+Team Falcons|Seer:61,Wattson:55,Pathfinder:36,Alter:30,Mad Maggie:21,Wraith:18
+Nice Guys|Rampart:40,Wraith:37,Alter:33,Newcastle:33,Wattson:33,Pathfinder:27
+KINOTROPE gaming|Catalyst:33,Newcastle:33,Wraith:33,Valkyrie:29,Gibraltar:29,Wattson:25
+ShopifyRebellion|Seer:48,Alter:30,Pathfinder:30,Wattson:27,Newcastle:27,Rampart:27
+PVISION|Wattson:49,Seer:41,Pathfinder:33,Wraith:31,Alter:26,Crypto:15
+TitanEsportsClub|Wattson:50,Mad Maggie:38,Pathfinder:38,Alter:33,Seer:33,Catalyst:21
+Crazy Thieves|Seer:58,Mad Maggie:55,Pathfinder:48,Alter:30,Catalyst:21,Crypto:15
+UNLIMIT|Seer:80,Mad Maggie:60,Pathfinder:57,Alter:30,Crypto:17,Sparrow:13
+TEAM ECLIPSE|Wattson:42,Pathfinder:42,Rampart:38,Alter:29,Newcastle:29,Wraith:29
+RIDDLEORDER ZERO|Rampart:54,Seer:42,Alter:33,Newcastle:33,Wraith:33,Pathfinder:21
+Gen.G Citadel|Mad Maggie:70,Seer:37,Alter:33,Wattson:23,Pathfinder:23,Wraith:20
+DINOS|Seer:73,Wraith:37,Alter:33,Wattson:33,Rampart:30,Pathfinder:20
+KINOTROPE CLUB|Wraith:52,Newcastle:36,Rampart:33,Catalyst:30,Gibraltar:27,Seer:21
+World Wide|Wraith:60,Wattson:43,Newcastle:40,Rampart:40,Seer:30,Alter:27
+Team Vision|Seer:52,Pathfinder:52,Newcastle:36,Alter:30,Wattson:27,Mad Maggie:21
+Relove DCG|Pathfinder:38,Seer:38,Alter:33,Fuse:33,Rampart:29,Newcastle:25
+Team Liquid|Wattson:55,Pathfinder:52,Newcastle:36,Seer:33,Alter:30,Mad Maggie:24
+Team RRQ|Wraith:85,Wattson:64,Mad Maggie:28,Newcastle:23,Rampart:18,Catalyst:15
+Aurora|Pathfinder:39,Sparrow:39,Fuse:36,Rampart:30,Newcastle:27,Valkyrie:24
+ENTER FORCE.36|Seer:50,Alter:33,Pathfinder:33,Wattson:33,Rampart:29,Newcastle:25
+NinjasinPyjamas|Seer:64,Pathfinder:45,Wattson:33,Fuse:27,Alter:24,Newcastle:24
+## COMPS LAN
+VK GAMING|Mad Maggie+Pathfinder+Wattson:25:11.5;Alter+Mad Maggie+Wattson:17:12.25
+NOEZ FOXX|Alter+Crypto+Seer:17:13.4;Gibraltar+Newcastle+Valkyrie:13:10
+Sentinels|Catalyst+Crypto+Wraith:15:13.5;Alter+Newcastle+Wattson:15:9.5
+Alliance|Mad Maggie+Pathfinder+Seer:15:10.83;Alter+Catalyst+Crypto:8:12.67
+REJECT|Mad Maggie+Wattson+Wraith:31:11.17;Alter+Catalyst+Crypto:15:8.17
+ZETA DIVISION|Newcastle+Pathfinder+Seer:13:10.25;Pathfinder+Seer+Wattson:13:10.5
+7VEN|Catalyst+Fuse+Pathfinder:17:9.75;Alter+Catalyst+Crypto:13:17.67
+GaiminGladiators|Alter+Catalyst+Crypto:15:11.5;Alter+Newcastle+Rampart:15:8.83
+LawsonTicketXone|Alter+Catalyst+Crypto:17:6.5;Seer+Wattson+Wraith:8:8.5
+NRG|Mad Maggie+Pathfinder+Seer:13:13.75;Alter+Crypto+Seer:10:10.33
+Wolves Esports|Alter+Newcastle+Rampart:10:8.5;Mad Maggie+Rampart+Wraith:10:7.5
+WhiteGrimReaper|Mad Maggie+Pathfinder+Seer:15:9.6;Newcastle+Pathfinder+Rampart:9:10.33
+AG GLOBAL|Alter+Catalyst+Crypto:8:9;Mad Maggie+Wattson+Wraith:8:15
+Geekay Esports|Alter+Newcastle+Seer:13:12.2;Alter+Crypto+Seer:10:9
+ForFun Esports|Newcastle+Rampart+Wraith:20:9.67;Alter+Catalyst+Crypto:17:9.2
+Forged Wolves|Alter+Catalyst+Crypto:15:4.8;Seer+Wattson+Wraith:15:7.2
+Team WaR|Mad Maggie+Pathfinder+Seer:13:14.6;Mad Maggie+Pathfinder+Wattson:13:11.2
+PXX|Alter+Catalyst+Crypto:17:16;Alter+Newcastle+Rampart:13:13
+VexX Gaming|Alter+Newcastle+Seer:13:5.75;Newcastle+Pathfinder+Seer:13:11.5
+Team Falcons|Alter+Seer+Wattson:15:11.6;Seer+Wattson+Wraith:15:11.8
+Nice Guys|Alter+Catalyst+Crypto:17:10.4;Alter+Newcastle+Wattson:13:12.25
+KINOTROPE gaming|Gibraltar+Newcastle+Valkyrie:17:4.75;Alter+Catalyst+Crypto:13:10.67
+ShopifyRebellion|Alter+Crypto+Seer:12:8.75;Alter+Seer+Wattson:9:7.67
+PVISION|Seer+Wattson+Wraith:15:11.33;Alter+Catalyst+Crypto:10:11.75
+TitanEsportsClub|Alter+Catalyst+Crypto:17:12;Alter+Seer+Wattson:8:13.5
+Crazy Thieves|Mad Maggie+Pathfinder+Seer:24:7.5;Catalyst+Mad Maggie+Seer:12:11.5
+UNLIMIT|Mad Maggie+Pathfinder+Seer:40:9.5;Alter+Crypto+Seer:10:8
+TEAM ECLIPSE|Alter+Catalyst+Crypto:17:7.75;Fuse+Pathfinder+Rampart:17:6
+RIDDLEORDER ZERO|Alter+Catalyst+Crypto:13:8.67;Alter+Newcastle+Rampart:13:18.33
+Gen.G Citadel|Mad Maggie+Pathfinder+Seer:13:13.25;Alter+Crypto+Mad Maggie:10:7.67
+DINOS|Alter+Crypto+Seer:17:11.2;Pathfinder+Rampart+Seer:17:12.2
+KINOTROPE CLUB|Gibraltar+Newcastle+Valkyrie:18:6.67;Alter+Catalyst+Crypto:15:8.6
+World Wide|Newcastle+Rampart+Wraith:17:5.8;Alter+Catalyst+Crypto:13:9.75
+Team Vision|Mad Maggie+Pathfinder+Wattson:18:11.83;Alter+Crypto+Seer:15:14.6
+Relove DCG|Alter+Newcastle+Rampart:17:11.75;Fuse+Pathfinder+Seer:13:10.33
+Team Liquid|Alter+Newcastle+Wattson:15:5.2;Newcastle+Pathfinder+Wattson:15:10.2
+Team RRQ|Newcastle+Wattson+Wraith:18:9;Mad Maggie+Wattson+Wraith:15:10.5
+Aurora|Newcastle+Rampart+Valkyrie:21:7.14;Fuse+Pathfinder+Sparrow:18:9
+ENTER FORCE.36|Alter+Crypto+Seer:17:13.75;Newcastle+Pathfinder+Rampart:13:13
+NinjasinPyjamas|Newcastle+Pathfinder+Seer:18:8.67;Alter+Crypto+Fuse:9:16.67
+## LEGENDS PL
+FFS|Alter:41,Wattson:33,Catalyst:28,Seer:26,Mad Maggie:22,Wraith:22
+Stallions|Fuse:50,Alter:31,Wattson:25,Mad Maggie:25,Catalyst:22,Seer:22
+SLG|Wraith:50,Catalyst:44,Alter:42,Wattson:36,Seer:22,Crypto:19
+TLN PIRATES|Alter:48,Wattson:43,Mad Maggie:36,Seer:26,Wraith:26,Rampart:21
+TOP|Mad Maggie:45,Pathfinder:40,Alter:33,Rampart:33,Wattson:29,Seer:24
+ALTERNATIVE|Mad Maggie:61,Alter:56,Axle:42,Seer:42,Crypto:17,Pathfinder:17
+S8UL|Alter:53,Seer:40,Catalyst:36,Wattson:31,Mad Maggie:31,Wraith:27
+CPR|Catalyst:56,Alter:47,Wraith:40,Seer:33,Wattson:31,Mad Maggie:20
+Daylight Savings|Fuse:49,Catalyst:40,Alter:40,Seer:33,Pathfinder:29,Wattson:27
+## COMPS PL
+FFS|Alter+Catalyst+Crypto:13:13.67;Alter+Seer+Wattson:11:8.6
+Stallions|Catalyst+Crypto+Wraith:8:6.67;Seer+Wattson+Wraith:8:13.67
+SLG|Alter+Catalyst+Crypto:14:15.2;Alter+Seer+Wattson:11:10
+TLN PIRATES|Alter+Seer+Wattson:17:7;Alter+Mad Maggie+Wattson:12:5.4
+TOP|Mad Maggie+Pathfinder+Rampart:12:10;Fuse+Pathfinder+Rampart:10:14
+ALTERNATIVE|Axle+Mad Maggie+Vantage:11:15.75;Alter+Mad Maggie+Seer:8:11
+S8UL|Alter+Seer+Wattson:16:11.29;Alter+Catalyst+Mad Maggie:11:10.2
+CPR|Alter+Seer+Wattson:16:11.29;Alter+Catalyst+Crypto:13:9.83
+Daylight Savings|Fuse+Pathfinder+Sparrow:13:7.83;Alter+Catalyst+Crypto:11:6.4

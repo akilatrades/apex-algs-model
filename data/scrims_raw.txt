@@ -1,0 +1,43 @@
+# Eternal Esports Club, "Year 6 Champs" scrim season, 24 Nov 2026. Team|placements|points per game|total
+## EEC-301|Olympus,Olympus,Olympus,Storm Point,Storm Point,Storm Point|https://eternalesports.club/lobbies/301/e4caa6
+S8UL|10 1 1 15 2 4|7 20 16 4 14 9|70
+Stallions|16 6 10 11 4 1|1 14 8 1 12 21|57
+5STAR|1 2 14 16 3 3|16 16 1 0 14 7|54
+GaiminGladiators|2 4 5 2 19 18|16 13 10 11 0 0|50
+Team Falcons|5 5 2 10 8 8|8 6 19 8 2 2|45
+Team Liquid|17 3 8 1 15 9|0 9 7 22 2 2|42
+Alliance|4 16 15 8 6 13|7 3 1 19 7 4|41
+LEGACY|7 9 6 6 18 15|11 4 13 4 2 7|41
+ZETA DIVISION|19 15 20 4 17 2|0 4 0 10 1 18|33
+REDRAGON|14 13 9 12 1 12|3 1 2 6 18 1|31
+TOP|11 14 17 3 13 5|1 1 0 10 4 11|27
+Geekay Esports|9 7 7 5 7 16|5 10 3 5 3 0|26
+Crazy Thieves|12 18 11 9 16 10|4 0 5 4 6 5|24
+Team RRQ|6 10 16 13 5 17|6 5 0 1 10 0|22
+PVISION|18 11 18 7 20 7|1 3 0 7 0 9|20
+VK GAMING|13 17 3 17 14 20|3 0 10 0 4 2|19
+ForFun Esports|8 8 13 18 9 11|5 3 1 2 6 1|18
+Relove DCG|3 20 19 14 11 19|14 0 0 2 1 0|17
+NRG|15 12 12 19 12 6|2 1 5 0 1 6|15
+DINOS|20 19 4 20 10 14|1 0 8 0 2 3|14
+## EEC-303|World's Edge,World's Edge,World's Edge,E-District,E-District,E-District|https://eternalesports.club/lobbies/303/76ee77
+Alliance|1 1 7 7 1 7|18 23 3 4 16 9|73
+ZETA DIVISION|13 3 1 6 18 11|4 15 22 5 1 6|53
+Team Falcons|2 8 13 3 4 19|21 5 4 11 11 0|52
+GaiminGladiators|5 2 9 19 10 1|8 15 2 0 2 20|47
+Team Liquid|3 17 19 10 2 16|18 0 0 7 19 3|47
+5STAR|14 6 2 2 5 20|1 3 23 14 4 0|45
+Geekay Esports|11 14 6 1 16 15|9 1 7 17 5 4|43
+ForFun Esports|10 4 11 15 11 2|3 12 1 1 1 19|37
+S8UL|6 9 14 9 7 5|4 6 1 7 6 10|34
+NRG|8 20 12 17 3 13|6 0 1 0 23 1|31
+Stallions|7 18 10 5 9 12|6 0 5 11 6 1|29
+LEGACY|12 12 17 20 14 3|1 9 0 0 2 16|28
+ZIPLINE MAFIA|16 11 4 12 13 8|0 4 10 1 1 10|26
+Team RRQ|15 16 5 8 12 4|1 0 11 6 2 5|25
+REDRAGON|4 13 8 13 8 10|8 1 7 1 4 2|23
+PVISION|20 10 3 11 19 9|0 3 12 5 0 2|22
+Crazy Thieves|18 19 20 16 6 6|0 0 0 5 8 7|20
+TOP|9 15 15 4 17 14|4 1 2 10 0 2|19
+VK GAMING|19 5 16 18 20 18|1 11 1 2 0 0|15
+QSM|17 7 18 14 15 17|0 4 0 1 1 0|6

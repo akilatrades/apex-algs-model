@@ -1,0 +1,11 @@
+# Y6S2 Playoffs top team compositions. Comp|Pick%|AvgPlace|Win%|Top5%|Occurrences
+Alter, Catalyst, Crypto|8.49|9.9|4.7|25.2|107
+Seer, Wattson, Wraith|6.98|9.9|8|28.4|88
+Mad Maggie, Pathfinder, Seer|6.43|11.4|2.5|19.8|81
+Alter, Crypto, Seer|4.52|11.5|3.5|19.3|57
+Mad Maggie, Wattson, Wraith|4.05|11.1|0|19.6|51
+Mad Maggie, Pathfinder, Wattson|3.89|11.3|6.1|20.4|49
+Newcastle, Rampart, Wraith|3.81|10.5|2.1|22.9|48
+Alter, Newcastle, Wattson|2.94|9.9|5.4|32.4|37
+Alter, Newcastle, Rampart|2.86|10.9|8.3|25|36
+Pathfinder, Seer, Wattson|2.86|11.1|8.3|19.4|36

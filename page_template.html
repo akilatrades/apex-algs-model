@@ -51,11 +51,15 @@ th{font-weight:600;color:var(--mute);font-size:12px}th.l,td.l{text-align:left}
 details{margin-top:12px}summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
 ul{max-width:66ch;padding-left:20px}li{margin:4px 0}
 a{color:var(--teal)}hr{border:0;border-top:1px solid var(--line);margin:0}
+.r .bar b{position:absolute;top:-3px;bottom:-3px;width:3px;background:var(--ink)}
+.legend span.k::before{width:3px;height:14px;background:var(--ink);border-radius:0}
+.verdict{font-weight:700}.verdict.y{color:var(--teal)}.verdict.n{color:var(--claret)}
+#tc-tiles .tile b{font-size:22px}
 @media(max-width:640px){.r,.r.w{grid-template-columns:minmax(0,7.5em) minmax(0,1fr) 4.4em}.r.w .x{display:none}}
 </style></head><body>
 
 <section class="band" id="top">
-  <p class="mute small">ALGS Year 6 Championship form guide · based on <span id="m-games"></span> official games this year · updated 24 Nov 2026</p>
+  <p class="mute small">ALGS Year 6 Championship form guide · based on <span id="m-games"></span> official games this year · updated __DATE__</p>
   <h1 id="headline"></h1>
   <p id="lead"></p>
   <div class="kpis">
@@ -75,6 +79,36 @@ a{color:var(--teal)}hr{border:0;border-top:1px solid var(--line);margin:0}
   <div class="legend"><span>expected points a game</span><span class="u">realistic range</span><span class="c">average Championship team</span></div>
   <div class="rows" id="rank"></div>
   <p class="small mute">"No LAN record" means the team has only played online in their own region. We knock them down a little, because teams at their first LAN last time scored well below what their online results suggested.</p>
+</section>
+<hr>
+
+<section class="band" id="cards">
+  <h2>Team cards</h2>
+  <p class="mute">Pick a team for the short version: its chances, how it plays, who's on it, and what to watch at Champs.</p>
+  <div class="ctl"><div><label for="tc-team">Team</label><select id="tc-team"></select></div></div>
+  <div class="tiles" id="tc-tiles"></div>
+  <ul id="tc-notes"></ul>
+  <h3>By map</h3>
+  <div class="scroll" style="max-width:520px"><table id="tc-maps"></table></div>
+  <p class="small mute">Map-by-map differences are mostly luck. We tried giving every team a separate rating on each map and it made predictions worse, so the odds use one rating for all maps.</p>
+</section>
+<hr>
+
+<section class="band" id="spots">
+  <h2>Landing-spot overlaps at Champs</h2>
+  <p>Teams from different regions have never shared a lobby, and some of them land in the same place. When two teams share a spot, both do worse: <span id="sp-eff"></span></p>
+  <div class="how"><strong>How to read it.</strong> These are each team's latest landing spots from this year's events. Teams often sort out clashes before a LAN, so treat this as a list of fights to watch for, not a prediction. The title odds on this page assume nobody moves.</div>
+  <div class="grid2">
+    <div>
+      <div class="ctl"><div><label for="sp-map">Map</label><select id="sp-map"></select></div></div>
+      <div class="scroll"><table id="sp-table"></table></div>
+    </div>
+    <div>
+      <h3>Who the overlaps cost most</h3>
+      <p class="small mute">Title chance with everyone in their usual spot, compared with the same simulations if no spots were shared.</p>
+      <div class="rows" id="sp-cost"></div>
+    </div>
+  </div>
 </section>
 <hr>
 
@@ -176,6 +210,19 @@ a{color:var(--teal)}hr{border:0;border-top:1px solid var(--line);margin:0}
 </section>
 <hr>
 
+<section class="band" id="calib">
+  <h2>Did we get it right?</h2>
+  <p>Before trusting a percentage, check it. We rated teams using only earlier games, then looked at <span id="cb-n"></span> games the model hadn't seen: the Split 2 Playoffs and the second half of Pro League. We sorted every team-game by how likely we said something was, split them into five equal groups, and counted how often it actually happened.</p>
+  <div class="legend"><span>We said</span><span class="k">It happened</span></div>
+  <div class="grid2">
+    <div><h3>Wins the game</h3><div class="rows" id="cb-win"></div></div>
+    <div><h3>Finishes top 5</h3><div class="rows" id="cb-top5"></div></div>
+  </div>
+  <p id="cb-text" style="margin-top:16px"></p>
+  <p class="small mute">If the black mark sits at the end of the bar, the model said it right. Each group has about 670 team-games, so a gap of a percentage point or so is just chance. Hover a row for the exact counts.</p>
+</section>
+<hr>
+
 <section class="band" id="trust">
   <h2>How much should you trust this?</h2>
   <p>Use it as a guide, not a crystal ball. It beats guessing, but pro Apex is close and a lot comes down to the day.</p>
@@ -185,16 +232,22 @@ a{color:var(--teal)}hr{border:0;border-top:1px solid var(--line);margin:0}
       <p class="mute">We rated teams using only results from before the Split 2 Playoffs, then compared that with what actually happened there (63 games).</p>
       <div class="rows" id="thirds"></div>
       <p class="small mute">Bars show the points a game each group actually scored. The teams we rated highest did score the most. One caution: we used this same event to fine-tune things, so it may do a little worse on new games. In Pro League, the team we rated higher finished ahead <span id="acc-pl"></span> of the time.</p>
+      <h3>Ideas we tested</h3>
+      <p class="small mute">Each idea was added to the model and scored on the same games it hadn&#39;t seen. "Better (+5%)" means its accuracy score went up 5%. We kept only what helped. The match-point adjustment is used when rating teams, so a good final isn't mistaken for a better team, but it adds no wins in the title odds (see What's new).</p>
+      <div class="scroll"><table id="tried"></table></div>
     </div>
     <div>
       <h3>What's new in this update</h3>
       <ul id="fixes"></ul>
+
       <h3>What it doesn't know</h3>
-      <ul><li>Player swaps on teams that kept the same name. Plenty of rosters changed between splits.</li><li>The real Champs groups and format, which haven't been announced.</li><li>How teams have been practising lately, beyond 12 scrim games.</li></ul>
+      <ul><li>The real Champs groups, format and map order, which haven't been announced. We use the Split 2 Playoffs format and map order.</li><li>Whether teams will move landing spots for Champs.</li><li>Players who haven't played an official game together yet: their history only counts through their old teams.</li><li id="dk-scrims"></li></ul>
     </div>
   </div>
   <details><summary>How it works, and where the numbers come from</summary>
     <p class="small"><strong>The ranking.</strong> Every game's full finishing order counts, not just who won. Finishing 3rd ahead of 17 other teams tells us something. Teams with only a few games are pulled toward the average for their region, so one lucky weekend can't send a team to the top. Teams who've never played a LAN get a small deduction, sized by how much first-time LAN teams dropped off last time.</p>
+    <p class="small"><strong>Players.</strong> Part of each rating follows the players, so a player who moves teams brings some of his record along. A brand-new trio starts from its players' history instead of from zero. Players who always played together can't be told apart, so for most teams this changes little.</p>
+    <p class="small"><strong>Landing spots and match point.</strong> The model also learns how much worse teams do when they share a landing spot with another team in that game, and how teams play once they're on match point. Learning the match-point effect separately keeps it from distorting the ratings.</p>
     <p class="small"><strong>The odds.</strong> We play out the whole Championship 8,000 times: groups, the elimination rounds, then the match-point final, using each team's ranking plus a realistic amount of luck. A team's chance is simply how often it won. Groups are drawn at random, since the real ones aren't out yet.</p>
     <p class="small"><strong>Checks.</strong> Every game's results and every team's totals match the stats site, including the site's own season totals for all <span id="c-tot"></span> team-and-event records. We also checked the maths behind the odds with a set of automatic tests.</p>
     <p class="small"><strong>Sources</strong> (24 Nov 2026): apexlegendsstatus.com for official games (2025 Champs final; this year's Pro League in all four regions for both splits; both Playoffs; the Last Chance Qualifier finals) and for team, player, legend, gun and drop-spot stats. Eternal Esports Club for scrims. Team names are as those sites show them. Two names are treated as one team only when the totals or the exact same three players prove it.</p>
@@ -302,7 +355,7 @@ $('#pl-stat').onchange = drawPl; drawPl();
     $('#poirows').innerHTML = P.map((x, i) => `<div class="r" data-i="${i}"><span class="n">${esc(x.poi)}</span><span class="bar"><i style="width:${(100 * x.pts / pm).toFixed(1)}%"></i></span><span class="v">${x.pts.toFixed(1)} pts</span></div>`).join('');
     $('#poirows').querySelectorAll('.r').forEach(el => hov(el, () => { const x = P[+el.dataset.i]; return `<b>${esc(x.poi)}</b><br>${x.pts.toFixed(1)} points and ${x.kills.toFixed(1)} kills per game<br>Average placement ${x.place.toFixed(1)} · ${x.wins} win${x.wins === 1 ? '' : 's'} in ${x.picks} games`; })); };
   $('#poi-map').onchange = drawPoi; drawPoi();
-  $('#mapnote').textContent = 'We checked whether some teams are better on certain maps. The differences look like luck, so the ranking is the same on every map.';
+  $('#mapnote').textContent = 'These are averages for every team that landed there. Who lands where is in the Team cards and in Landing-spot overlaps below.';
   const S = D.scrims.slice(0, 20), sm = S.length ? S[0].ppg : 1;
   $('#scrimrows').innerHTML = S.map(x => `<div class="r"><span class="n">${esc(x.team)}${BY[x.team] && BY[x.team].in_field ? '' : ' <span class="mute small">not in field</span>'}</span><span class="bar"><i style="width:${(100 * x.ppg / sm).toFixed(1)}%"></i></span><span class="v">${x.ppg.toFixed(1)} pts</span></div>`).join('') || '<p class="mute">No scrims loaded.</p>';
   const TL = D.team_legends, names = F.map(t => t.team).filter(t => TL[t]).sort();
@@ -313,17 +366,91 @@ $('#pl-stat').onchange = drawPl; drawPl();
     $('#tlsrc').textContent = 'From: ' + d.src + '.'; };
   $('#tl-team').onchange = drawTL; drawTL(); }
 
+// ---- team cards ----
+const SW = D.swing, MPT = D.mp_team, BU = D.built, CP = D.clash_partners, V3 = D.v3, PLAIN = D.champs_plain;
+const MAPS = ["Storm Point", "World's Edge", "E-District", "Olympus"];
+const list = arr => arr.length <= 1 ? arr.join('') : arr.slice(0, -1).join(', ') + ' and ' + arr[arr.length - 1];
+const styleText = s => s.label === 'Boom or bust' ? 'Big highs and lows: wins a lot of top spots, but also more bad games than its rating suggests.'
+  : s.label === 'Steady' ? 'Consistent: finishes closer to its usual spot than most teams.' : 'Finishes swing about as much as you would expect for its level.';
+function rosterLine(b){
+  if (!b) return ['–', 'No roster data'];
+  if (!b.had_s1) return ['New team', 'No Split 1 games under this name' + (b.new_from.filter(Boolean).length ? `; players from ${list(b.new_from.filter(Boolean).map(esc))}` : '')];
+  const k = b.new_from.length;
+  if (!k) return ['All 3 back', 'Same three players as in Split 1'];
+  const from = b.new_from.map(x => x ? `from ${esc(x)}` : 'new to Pro League');
+  return [`${b.returning} of 3 back`, `${k === 1 ? 'One newcomer' : k + ' newcomers'}: ${list(from)}`];
+}
+$('#tc-team').innerHTML = [...F].sort((a, b) => a.team.localeCompare(b.team)).map(t => `<option>${esc(t.team)}</option>`).join('');
+$('#tc-team').value = byWin[0].team;
+function drawCard(){
+  const n = $('#tc-team').value, t = BY[n], s = SW[n] || {label: 'Typical', top3: 0, bottom: 0}, m = MPT[n], [r1, r2] = rosterLine(BU[n]), cp = CP[n] || [];
+  const cost = t.p_win - (PLAIN[n] ?? t.p_win);
+  $('#tc-tiles').innerHTML = [
+    [pct(t.p_win, 1), `chance to win Champs · makes the final day ${pct(t.p_finals)}`],
+    [s.label, `top 3 in ${pct(s.top3)} of games · 14th or worse in ${pct(s.bottom)}`],
+    [r1, r2],
+    m ? [`${m.wins} of ${m.games}`, `games won while on match point, across ${m.finals} final${m.finals === 1 ? '' : 's'} (its rating alone expects ${m.expected.toFixed(1)})`] : ['–', 'never on match point in a final in our data'],
+    [cp.length ? `${cp.length} map${cp.length === 1 ? '' : 's'}` : 'None', cp.length ? 'where its usual landing spot is also another Champs team\'s' : 'no landing-spot overlaps with other Champs teams'],
+  ].map(([b, s]) => `<div class="tile"><b>${b}</b><span>${s}</span></div>`).join('');
+  const notes = [styleText(s)];
+  cp.forEach(c => notes.push(`<strong>${esc(c.map)}</strong>: lands at ${esc(c.spot)}, also the usual spot of ${list(c.with_.map(esc))}.`));
+  if (Math.abs(cost) >= 0.002) notes.push(`If nobody moves, those overlaps ${cost < 0 ? 'cost' : 'add'} about ${(100 * Math.abs(cost)).toFixed(1)} points of title chance${cost > 0 ? ' (its rivals lose more from theirs)' : ''}.`);
+  if (t.no_lan) notes.push('Has no LAN record, so its rating has a small first-LAN deduction.');
+  $('#tc-notes').innerHTML = notes.map(x => `<li>${x}</li>`).join('');
+  const tm = D.team_maps[n] || {};
+  $('#tc-maps').innerHTML = `<tr><th class="l">Map</th><th>Games</th><th>Points a game</th></tr>` + MAPS.filter(mp => tm[mp]).map(mp => `<tr><td class="l">${esc(mp)}</td><td>${tm[mp][0]}</td><td>${tm[mp][1].toFixed(1)}</td></tr>`).join('') +
+    (Object.keys(tm).length ? '' : '<tr><td class="l mute" colspan="3">Not enough games on any one map.</td></tr>');
+}
+$('#tc-team').onchange = drawCard; drawCard();
+
+// ---- landing-spot overlaps ----
+$('#sp-eff').textContent = `in our data, a team sharing its spot finished as if it were about ${Math.abs(V3.pts_clash).toFixed(1)} points a game worse, and its chance of beating any one rival dropped by about ${pct(Math.abs(V3.clash_odds))}. That comes from ${V3.n_clash_rows} team-games where it happened. Pro teams rarely share spots in their own region, so the sample is small.`;
+const spots = {};
+Object.entries(CP).forEach(([team, arr]) => arr.forEach(c => { const k = c.map + '|' + c.spot; (spots[k] = spots[k] || new Set()).add(team); c.with_.forEach(w => spots[k].add(w)); }));
+$('#sp-map').innerHTML = MAPS.map(m => `<option>${esc(m)}</option>`).join('');
+function drawSpots(){ const m = $('#sp-map').value;
+  const rows = Object.entries(spots).filter(([k]) => k.startsWith(m + '|')).map(([k, s]) => [k.split('|')[1], [...s].sort()]).sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+  $('#sp-table').innerHTML = `<tr><th class="l">Spot</th><th class="l">Teams that land there</th></tr>` + (rows.map(([sp, ts]) => `<tr><td class="l">${esc(sp)}</td><td class="l" style="white-space:normal">${ts.map(esc).join(', ')}</td></tr>`).join('') || '<tr><td class="l mute" colspan="2">No overlaps on this map.</td></tr>'); }
+$('#sp-map').onchange = drawSpots; drawSpots();
+{ const C = F.map(t => ({t: t.team, d: t.p_win - (PLAIN[t.team] ?? t.p_win)})).sort((a, b) => a.d - b.d).slice(0, 10), mx = Math.max(...C.map(c => Math.abs(c.d)), 0.001);
+  $('#sp-cost').innerHTML = C.map(c => `<div class="r"><span class="n">${esc(c.t)}</span><span class="bar"><i style="width:${(100 * Math.abs(c.d) / mx).toFixed(1)}%;background:var(--claret)"></i></span><span class="v">${c.d < 0 ? '−' : '+'}${(100 * Math.abs(c.d)).toFixed(1)} pts</span></div>`).join('');
+  $('#sp-cost').querySelectorAll('.r').forEach((el, i) => hov(el, () => `<b>${esc(C[i].t)}</b><br>Title chance ${pct(BY[C[i].t].p_win, 1)} with shared spots<br>${pct(PLAIN[C[i].t], 1)} if no spots were shared`)); }
+
+// ---- did we get it right? ----
+{ const CB = D.calibration, names = ['Least likely fifth', 'Second fifth', 'Middle fifth', 'Fourth fifth', 'Most likely fifth'];
+  $('#cb-n').textContent = CB.n_games;
+  const draw = (id, rows) => { const mx = Math.max(...rows.map(r => Math.max(r.said, r.happened))) * 1.08;
+    $(id).innerHTML = `<div class="r h"><span>Team-games</span><span></span><span class="v">said → happened</span></div>` + rows.map((r, i) => `<div class="r" data-i="${i}"><span class="n">${names[i]}</span><span class="bar"><i style="width:${(100 * r.said / mx).toFixed(1)}%"></i><b style="left:calc(${(100 * r.happened / mx).toFixed(1)}% - 1px)"></b></span><span class="v">${pct(r.said, 1)} → ${pct(r.happened, 1)}</span></div>`).join('');
+    $(id).querySelectorAll('.r[data-i]').forEach(el => hov(el, () => { const r = rows[+el.dataset.i];
+      return `<b>${names[+el.dataset.i]}</b> · ${r.n} team-games<br>We said ${pct(r.said, 1)} on average<br>It happened ${Math.round(r.happened * r.n)} times (${pct(r.happened, 1)})<br>Chance alone could move this by about ±${pct(2 * r.se, 1)}`; })); };
+  draw('#cb-win', CB.all.pw); draw('#cb-top5', CB.all.p5);
+  const lo = CB.all.p5[0], hi = CB.all.p5[4], wl = CB.all.pw[0], wh = CB.all.pw[4];
+  $('#cb-text').textContent = `The pattern holds. For the teams we gave the best chance of a top-5 finish (${pct(hi.said)} on average), it happened ${pct(hi.happened)} of the time, against ${pct(lo.happened)} for the teams we rated least likely. Single-game wins are much harder to call: even our "most likely" fifth wins only about ${pct(wh.happened)} of games, against ${pct(wl.happened)} for the least likely. That is why Apex titles are so open.` + (wh.happened - wh.said > 2 * wh.se ? ` If anything, the model is a little too cautious about the favourites: they won ${pct(wh.happened, 1)} of games when we said ${pct(wh.said, 1)}.` : '');
+}
+
 // ---- trust ----
 const tmx = Math.max(...B.thirds.map(t => t.actual_ppg));
 $('#thirds').innerHTML = B.thirds.map(t => `<div class="r"><span class="n">${['Teams we rated highest', 'Teams in the middle', 'Teams we rated lowest'][B.thirds.indexOf(t)]}</span><span class="bar"><i style="width:${(100 * t.actual_ppg / tmx).toFixed(1)}%"></i></span><span class="v">${t.actual_ppg.toFixed(1)} pts</span></div>`).join('');
 $('#acc-pl').textContent = pct(B.acc_pl);
 const ds = BY['Daylight Savings'], src = M.by_source;
 $('#fixes').innerHTML = [
-  `<strong>Much more data.</strong> ${M.n_games} games now: ${src.lan} at LAN, ${src.pro_league + src.pl_s1} Pro League (both splits), ${src.lcq} LCQ finals and ${src.scrim || 0} scrims. Adding the Split 1 season made the ratings more accurate, so it counts fully.`,
-  `<strong>Teams are matched by players, not just name.</strong> When the same three players show up under two team names, we count them as one team.${ds ? ` The clearest case: Daylight Savings played the last LAN as "7VEN" and scored 3.4 points a game there. Their title chance is now ${pct(ds.p_win, 1)}.` : ''}`,
-  `<strong>First-time LAN teams are knocked down a little.</strong> The ${B.n_debut} teams playing their first LAN at the Split 2 Playoffs scored ${B.debut_actual.toFixed(1)} points a game against ${B.returning_actual.toFixed(1)} for returning teams. ${M.n_no_lan_field} Championship teams have no LAN record.`,
-  `<strong>No map specialists.</strong> Teams' results on different maps vary about as much as luck would, so the ranking doesn't change by map.`].map(x => `<li>${x}</li>`).join('');
+  `<strong>Ratings now follow players.</strong> We matched ${V3.n_players} players across every event, so a player who changes teams brings some of his record with him, and a team's rating reflects who is on it now.`,
+  `<strong>Shared landing spots count.</strong> Teams that land on the same spot as another team in that game do worse, and the model now knows how much. That feeds into the Champs odds, using every team's latest spots.`,
+  `<strong>Match point is learned, not guessed.</strong> On match point, teams finish higher than their rating says, probably by playing safe. But they win the game itself no more often: ${D.mp_all.wins} wins from ${D.mp_all.games} tries in ${D.mp_all.finals} finals, against ${D.mp_all.expected.toFixed(1)} expected from their ratings. So no team gets a match-point bonus in the title odds.`,
+  `<strong>Boom-or-bust labels.</strong> Each team is marked Steady, Typical or Boom or bust from how much its finishes swing compared with its rating. It only weakly repeats from one set of games to the next, so it's a label, not part of the odds.`,
+  `<strong>A "did we get it right?" check</strong> on ${D.calibration.n_games} games the model hadn't seen. The new model scores ${pct((B.gain_v2 - B.gain_prev) / B.gain_prev)} better than the last one at LAN.`,
+  `<strong>Still counted from before:</strong> ${M.n_games} games (${src.lan} at LAN, ${src.pro_league + src.pl_s1} Pro League over both splits, ${src.lcq} LCQ finals, ${src.scrim || 0} scrims). Teams are matched across name changes by their players, and teams with no LAN record get a small deduction.`].map(x => `<li>${x}</li>`).join('');
 $('#c-tot').textContent = M.totals_checked;
+$('#dk-scrims').textContent = `How teams have been practising lately, beyond ${(src.scrim || 0)} scrim games.`;
+{ const TR = B.trials || [], base = TR.find(r => r.config.startsWith('Before')), sc = B.swing_check;
+  const rel = (v, b) => { const d = (v - b) / b; return Math.abs(d) < 0.005 ? 'Same' : (d > 0 ? 'Better' : 'Worse') + ` (${d > 0 ? '+' : '−'}${Math.round(100 * Math.abs(d))}%)`; };
+  const what = {'+ team strength by map': 'A separate rating for each team on each map', '+ ratings follow players': 'Ratings that follow players between teams',
+    '+ shared landing spot': 'A penalty for sharing a landing spot', '+ match point': 'An adjustment for teams on match point', 'New model (players + spot + match point)': 'All three kept ideas together (the new model)'};
+  const keep = {'+ team strength by map': 'No', '+ ratings follow players': 'Yes', '+ shared landing spot': 'Yes', '+ match point': 'In ratings only', 'New model (players + spot + match point)': 'Yes'};
+  const rows = TR.filter(r => r !== base).map(r => [what[r.config] || r.config, rel(r.lan_gain, base.lan_gain), rel(r.pl_gain, base.pl_gain), keep[r.config]]);
+  if (sc) rows.splice(1, 0, ['Wider swings for boom-or-bust teams', sc.lan_gain < 0 ? 'Worse' : 'Better', sc.pl_gain < 0 ? 'Worse' : 'Better', 'Label only']);
+  $('#tried').innerHTML = `<tr><th class="l">Idea</th><th class="l">At LAN</th><th class="l">In Pro League</th><th class="l">Kept?</th></tr>` +
+    rows.map(r => `<tr><td class="l" style="white-space:normal">${esc(r[0])}</td><td class="l">${r[1]}</td><td class="l">${r[2]}</td><td class="l"><span class="verdict ${r[3] === 'No' || r[3] === 'Label only' ? 'n' : 'y'}">${r[3]}</span></td></tr>`).join(''); }
 }
 </script>
 </body></html>

@@ -1,0 +1,56 @@
+[
+ {
+  "config": "Before (Split 2 model)",
+  "lan_gain": 0.1602,
+  "pl_gain": 0.1935,
+  "beta_debut": 0.08,
+  "clash": 0.0,
+  "mp": 0.0,
+  "ok": true
+ },
+ {
+  "config": "+ team strength by map",
+  "lan_gain": 0.1523,
+  "pl_gain": 0.1766,
+  "beta_debut": 0.079,
+  "clash": 0.0,
+  "mp": 0.0,
+  "ok": true
+ },
+ {
+  "config": "+ ratings follow players",
+  "lan_gain": 0.1661,
+  "pl_gain": 0.2019,
+  "beta_debut": 0.087,
+  "clash": 0.0,
+  "mp": 0.0,
+  "ok": true
+ },
+ {
+  "config": "+ shared landing spot",
+  "lan_gain": 0.1672,
+  "pl_gain": 0.1985,
+  "beta_debut": 0.081,
+  "clash": -0.204,
+  "mp": 0.0,
+  "ok": true
+ },
+ {
+  "config": "+ match point",
+  "lan_gain": 0.1655,
+  "pl_gain": 0.1925,
+  "beta_debut": 0.082,
+  "clash": 0.0,
+  "mp": 0.102,
+  "ok": true
+ },
+ {
+  "config": "New model (players + spot + match point)",
+  "lan_gain": 0.1772,
+  "pl_gain": 0.2051,
+  "beta_debut": 0.09,
+  "clash": -0.208,
+  "mp": 0.1,
+  "ok": true
+ }
+]

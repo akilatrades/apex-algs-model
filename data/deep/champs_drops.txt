@@ -1,0 +1,153 @@
+# Latest known landing spot per map for each Championship team (apexlegendsstatus.com dropsData, most recent Y6 Split 2 event that has it:
+# LCQ finals, then Split 2 Playoffs, then Pro League finals / days 9-7). Fetched 2026-11-25. Team|map|spot  (SP Storm Point, WE World's Edge, ED E-District, OL Olympus)
+SLG|ED|Old Town
+FFS|ED|Boardwalk
+FFS|WE|Skyhook West
+SLG|WE|Stacks
+SLG|SP|Zeus Station
+FFS|SP|North Pad
+Team WaR|ED|Canal Plaza
+TLN PIRATES|ED|Street Market
+Team WaR|WE|War Camp
+TLN PIRATES|WE|Overlook
+Team WaR|SP|Barometer
+TLN PIRATES|SP|Lightning Rod
+NOEZ FOXX|ED|Heights
+ALTERNATIVE|ED|Galleria
+NOEZ FOXX|WE|Launch Site
+ALTERNATIVE|WE|Mirage A Trois
+NOEZ FOXX|SP|Devastated Coast
+ALTERNATIVE|SP|Ceto Station
+Daylight Savings|ED|Vibe Isle
+CPR|ED|Shipyard Arcade
+Daylight Savings|WE|War Camp
+CPR|WE|Monument
+Daylight Savings|SP|Ceto Station
+CPR|SP|Barometer
+Wolves Esports|SP|The Mill
+KINOTROPE CLUB|SP|Cascade Falls
+Forged Wolves|SP|Checkpoint
+Aurora|SP|Storm Catcher
+REJECT|SP|Echo HQ
+AG GLOBAL|SP|Trident
+Team Liquid|SP|Launch Pad
+Team RRQ|SP|Ceto Station
+GaiminGladiators|SP|Jurassic
+Team Falcons|SP|Lightning Rod
+Team Vision|SP|Downed Beast
+WhiteGrimReaper|SP|Zeus Station
+Alliance|SP|North Pad
+PVISION|SP|Lift
+Crazy Thieves|SP|Cenote Cave
+Geekay Esports|SP|Barometer
+Sentinels|SP|Command Center
+ShopifyRebellion|SP|Devastated Coast
+NinjasinPyjamas|SP|The Wall
+AG GLOBAL|OL|Gravity Engine
+PVISION|OL|Clinic
+ShopifyRebellion|OL|Elysium
+Team RRQ|OL|Estates
+WhiteGrimReaper|OL|Fight Night
+Geekay Esports|OL|Bonsai Plaza
+KINOTROPE CLUB|OL|Grow Towers
+Forged Wolves|OL|Turbine
+Team Liquid|OL|Phase Driver
+Wolves Esports|OL|Hammond Labs
+Crazy Thieves|OL|Gardens
+Aurora|OL|Oasis
+GaiminGladiators|OL|Solar Array
+Alliance|OL|Somers University
+Sentinels|OL|Icarus
+Team WaR|OL|Terminal
+REJECT|OL|Rift
+Team Falcons|OL|Power Grid
+NinjasinPyjamas|OL|Stabilizer
+Team Vision|OL|Dockyard
+WhiteGrimReaper|ED|The Lotus
+GaiminGladiators|ED|Settlement
+PVISION|ED|Canal Plaza
+Forged Wolves|ED|City Hall
+KINOTROPE CLUB|ED|Energy Bank
+Alliance|ED|Neon Square
+REJECT|ED|Vibe Isle
+NinjasinPyjamas|ED|Electro Dam
+Aurora|ED|Stadium
+AG GLOBAL|ED|Resort
+Geekay Esports|ED|Draft Point
+Team RRQ|ED|Humbert Labs
+Team Falcons|ED|Heights
+ShopifyRebellion|ED|Boardwalk
+Crazy Thieves|ED|Shipyard Arcade
+Wolves Esports|ED|Galleria
+Team Liquid|ED|Street Market
+Sentinels|ED|Viaduct
+Team Vision|ED|Blossom Drive
+WhiteGrimReaper|WE|Staging
+Team Vision|WE|Launch Site
+ShopifyRebellion|WE|War Camp
+Geekay Esports|WE|Stacks
+REJECT|WE|Monument
+Crazy Thieves|WE|East Village
+KINOTROPE CLUB|WE|The Geyser
+Forged Wolves|WE|Big Maude
+AG GLOBAL|WE|Countdown
+GaiminGladiators|WE|The Dome
+Team RRQ|WE|Lava Fissure
+Aurora|WE|Thermal Station
+Sentinels|WE|Harvester
+NinjasinPyjamas|WE|The Tree
+Wolves Esports|WE|Skyhook East
+Team Falcons|WE|The Epicenter
+PVISION|WE|Sorting Factory
+Alliance|WE|Overlook
+Team Liquid|WE|Skyhook West
+ForFun Esports|SP|Checkpoint
+NRG|SP|Echo HQ
+UNLIMIT|SP|Lightning Rod
+ZETA DIVISION|SP|Barometer
+DINOS|SP|Downed Beast
+Gen.G Citadel|SP|Zeus Station
+ZETA DIVISION|WE|The Tree
+DINOS|WE|Staging
+ForFun Esports|WE|Big Maude
+UNLIMIT|WE|Stacks
+Gen.G Citadel|WE|The Epicenter
+NRG|WE|Monument
+ZETA DIVISION|ED|Viaduct
+ForFun Esports|ED|Settlement
+UNLIMIT|ED|The Lotus
+DINOS|ED|Vibe Isle
+Gen.G Citadel|ED|Shipyard Arcade
+Relove DCG|ED|Resort
+ENTER FORCE.36|ED|The Lotus
+VK GAMING|ED|Humbert Labs
+NRG|ED|Stadium
+PXX|ED|Draft Point
+Relove DCG|WE|War Camp
+ENTER FORCE.36|WE|The Tree
+VK GAMING|WE|The Geyser
+PXX|WE|Skyhook East
+VK GAMING|SP|Command Center
+PXX|SP|Jurassic
+Relove DCG|SP|Ceto Station
+ENTER FORCE.36|SP|North Pad
+ZETA DIVISION|OL|Gardens
+VK GAMING|OL|Solar Array
+PXX|OL|Elysium
+ENTER FORCE.36|OL|Rift
+NOEZ FOXX|OL|Stabilizer
+DINOS|OL|Hydroponics
+UNLIMIT|OL|Gardens
+NRG|OL|Clinic
+Relove DCG|OL|Somers University
+Gen.G Citadel|OL|Hydroponics
+ForFun Esports|OL|Terminal
+TOP|SP|Zeus Station
+TOP|WE|Countdown
+TOP|ED|Settlement
+S8UL|SP|Bean
+S8UL|WE|Harvester
+S8UL|ED|City Hall
+Stallions|WE|Skyhook West
+Stallions|SP|Devastated Coast
+Stallions|ED|Humbert Labs

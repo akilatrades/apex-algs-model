@@ -57,7 +57,7 @@ a{color:var(--bar)}
 @media(max-width:600px){.pb{width:60px}td input[type=number]{width:54px}}
 </style></head><body><div class="wrap">
 <header>
-  <p class="mute small">ALGS Year 6 Championship · Sapporo · Jan 28–31, 2027 · model ratings from <span id="h-games"></span> games, data to 24 Nov 2026</p>
+  <p class="mute small">ALGS Year 6 Championship · Sapporo · Jan 28–31, 2027 · model ratings from <span id="h-games"></span> games, data to __DATE__</p>
   <h1>Champs broadcast desk</h1>
   <nav role="tablist">
     <button role="tab" data-t="live">Live tracker</button><button role="tab" data-t="field">The field (40)</button><button role="tab" data-t="groups">Groups &amp; bracket</button><button role="tab" data-t="compare">Compare</button><button role="tab" data-t="meta">Legends &amp; guns</button><button role="tab" data-t="missed">Missed LAN</button>
@@ -66,13 +66,15 @@ a{color:var(--bar)}
 
 <section id="live">
   <h2>Live lobby tracker</h2>
-  <p class="mute">Enter each game's placements and kills (or type point totals directly). Win chances are re-simulated from the current scores and each team's rating (expected points per game, shown in The field). Your entries are remembered in this browser only.</p>
+  <p class="mute">Enter each game's placements and kills (or type point totals directly). Win chances are re-simulated from the current scores and each team's rating. Pick the map for the next game: teams that usually land on the same spot as another team in this lobby get the shared-spot penalty on that map. With "Update ratings" on, every game you enter this event also nudges the ratings, more for teams we know less about. Your entries are remembered in this browser only.</p>
   <div class="ctl">
     <div class="w"><label for="mode">Stage type</label><select id="mode"><option value="mp">Match-point finals</option><option value="series">Series: top teams advance</option></select></div>
     <div id="c-thr"><label for="thr">Match-point threshold</label><input id="thr" type="number" min="1" max="200" value="50"></div>
     <div id="c-left" hidden><label for="left">Games left</label><input id="left" type="number" min="0" max="18" value="6"></div>
     <div id="c-topk" hidden><label for="topk">Teams advancing</label><input id="topk" type="number" min="1" max="19" value="10"></div>
-    <button class="btn" id="b-undo">Undo last game</button><button class="btn" id="b-reset">Reset scores</button>
+    <div class="w"><label for="nmap">Next game's map</label><select id="nmap"></select></div>
+    <div class="w"><label for="upd"><input type="checkbox" id="upd" style="width:auto;min-height:0;margin-right:6px">Update ratings from games entered</label><span class="small mute" id="upd-n"></span></div>
+    <button class="btn" id="b-undo">Undo last game</button><button class="btn" id="b-reset">Reset scores</button><button class="btn" id="b-clrlog">Clear event history</button>
   </div>
   <details id="lobbyed"><summary>Choose the lobby (<span id="lobbyn"></span>&nbsp;teams)</summary>
     <div class="ctl"><button class="btn" id="b-top20">Top 20 by rating</button><button class="btn" id="b-none">Clear</button></div>
@@ -103,7 +105,7 @@ a{color:var(--bar)}
 
 <section id="groups">
   <h2>Groups and bracket</h2>
-  <p class="mute">Put the 40 teams into the four groups once they are announced, then simulate the whole event: group stage, Winners and Losers rounds, and the match-point finals. Until then, "Random draw" shows what a typical draw looks like. Format assumed: the Split 2 Playoffs format.</p>
+  <p class="mute">Put the 40 teams into the four groups once they are announced, then simulate the whole event: group stage, Winners and Losers rounds, and the match-point finals. Until then, "Random draw" shows what a typical draw looks like. Format and map order assumed: the Split 2 Playoffs. Shared landing spots are applied map by map, and if "Update ratings" is on in the live tracker, games you've entered this event count too.</p>
   <div class="ctl"><button class="btn" id="g-rand">Random draw</button><button class="btn" id="g-clear">Clear groups</button><button class="btn p" id="g-sim">Simulate the event</button><span class="msg" id="g-msg" role="status"></span></div>
   <div class="tiles" id="g-tiles"></div>
   <div class="ctl"><div class="w"><label for="g-match">Send a group matchup to the live tracker</label><select id="g-match"><option>A vs B</option><option>C vs D</option><option>B vs D</option><option>A vs C</option><option>B vs C</option><option>A vs D</option></select></div><button class="btn" id="g-send">Load into tracker</button></div>
@@ -142,7 +144,7 @@ a{color:var(--bar)}
   <div class="scroll"><table id="mt"></table></div>
 </section>
 
-<p class="mute small" style="padding-bottom:28px">How the rating works: it is the points per game we expect from a team in a Championship lobby, worked out from each game's full finishing order across Year 5 Champs finals, Year 6 Playoffs, Split 2 Pro League and LCQ finals. Teams with thin records are pulled toward the average for their region, and teams with no LAN record are marked down. A gap of half a point per game is small. Rosters and renames are not tracked, and names are as listed on apexlegendsstatus.com. Scoring: 12/9/7/5/4/3/3/2/2/2/1×5 placement points, +1 per kill.</p>
+<p class="mute small" style="padding-bottom:28px">How the rating works: it is the points per game we expect from a team in a Championship lobby, worked out from each game's full finishing order across Year 5 Champs finals, Year 6 Playoffs, Split 2 Pro League and LCQ finals. Teams with thin records are pulled toward the average for their region, and teams with no LAN record are marked down. A gap of half a point per game is small. Part of each rating follows the players, so roster moves count, and teams that usually share a landing spot with another team in the lobby get a penalty on that map. Names are as listed on apexlegendsstatus.com. Scoring: 12/9/7/5/4/3/3/2/2/2/1×5 placement points, +1 per kill.</p>
 </div>
 
 <script>
@@ -168,24 +170,55 @@ show(location.hash.slice(1));
 
 // ---------- live tracker ----------
 const KEY = 'champsDeskV1';
-let S = {lobby: byS.slice(0, 20).map(t => t.team), pts: {}, hist: [], mode: 'mp', thr: 50, left: 6, topk: 10};
+let S = {lobby: byS.slice(0, 20).map(t => t.team), pts: {}, hist: [], mode: 'mp', thr: 50, left: 6, topk: 10, map: 'Storm Point', upd: true, log: []};
 try { const j = JSON.parse(localStorage.getItem(KEY)); if (j && Array.isArray(j.lobby)) { j.lobby = j.lobby.filter(t => FT[t]); S = Object.assign(S, j); } } catch (e) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+if (!Array.isArray(S.log)) S.log = [];
 const P = t => S.pts[t] || 0;
+const MAPS4 = ["Storm Point", "World's Edge", "E-District", "Olympus"], BC = D.v3.clash, PPS = D.meta.pps, ROTF = D.v3.rot.finals;
+const nextMap = m => { const i = ROTF.indexOf(m); return i < 0 ? m : ROTF[(i + 1) % ROTF.length]; };
+const mapAfter = (m, k) => { const i = ROTF.indexOf(m); return i < 0 ? m : ROTF[(i + k) % ROTF.length]; };
+function sharedIn(lobby, map){ const by = {}, out = {};
+  lobby.forEach(t => { const sp = (FT[t] && FT[t].spots || {})[map]; if (sp) (by[sp] = by[sp] || []).push(t); });
+  Object.entries(by).forEach(([sp, ts]) => { if (ts.length > 1) ts.forEach(t => out[t] = {spot: sp, with: ts.filter(x => x !== t)}); });
+  return out; }
+const FORM_SD = 0.1;
+function liveTheta(){
+  const th0 = Object.fromEntries(F.map(t => [t.team, t.s]));
+  if (!S.upd || !S.log.length) return th0;
+  const th = {...th0};
+  for (let it = 0; it < 30; it++){
+    const g = {}, h = {};
+    F.forEach(t => { const sd = Math.sqrt((t.sd || 0.1) ** 2 + FORM_SD ** 2); g[t.team] = -(th[t.team] - th0[t.team]) / (sd * sd); h[t.team] = -1 / (sd * sd); });
+    for (const G of S.log){ const o = G.o.filter(t => FT[t]), n = o.length; if (n < 2) continue; const cl = sharedIn(o, G.m);
+      const u = o.map(t => th[t] + (cl[t] ? BC : 0)), mx = Math.max(...u), e = u.map(v => Math.exp(v - mx)), suf = new Array(n); let s = 0;
+      for (let i = n - 1; i >= 0; i--){ s += e[i]; suf[i] = s; }
+      let a1 = 0, a2 = 0;
+      for (let k = 0; k < n; k++){ if (k < n - 1){ a1 += 1 / suf[k]; a2 += 1 / (suf[k] * suf[k]); } const t = o[k];
+        g[t] += (k < n - 1 ? 1 : 0) - e[k] * a1; h[t] -= e[k] * a1 - e[k] * e[k] * a2; } }
+    let step = 0; F.forEach(t => { const d = -g[t.team] / h[t.team]; th[t.team] += d; step = Math.max(step, Math.abs(d)); });
+    if (step < 1e-6) break;
+  }
+  return th;
+}
+let TH = liveTheta();
+// FORM_SD: how far a team's level can move between events on top of what we're unsure about (judgment: about 0.4 points a game).
 const gumbel = () => -Math.log(-Math.log(Math.random() || 1e-12));
 function pois(mu){ const L = Math.exp(-mu); let k = 0, p = 1; do { k++; p *= Math.random(); } while (p > L); return k - 1; }
 function simulate(n){
-  const L = S.lobby, N = L.length, th = L.map(t => FT[t].s), ks = L.map(t => FT[t].ks), base = L.map(P);
+  const L = S.lobby, N = L.length, th = L.map(t => TH[t]), ks = L.map(t => FT[t].ks), base = L.map(P);
   const win = new Array(N).fill(0), ex = new Array(N).fill(0), idx = [...Array(N).keys()]; let glen = 0;
-  const play = tot => { const z = th.map(v => v + gumbel()); idx.sort((a, b) => z[b] - z[a]);
+  const CL = Object.fromEntries(MAPS4.map(m => { const c = sharedIn(L, m); return [m, L.map(t => c[t] ? BC : 0)]; }));
+  let gi = 0;
+  const play = tot => { const cl = CL[mapAfter(S.map, gi++)] || CL[S.map], z = th.map((v, i) => v + cl[i] + gumbel()); idx.sort((a, b) => z[b] - z[a]);
     const first = idx[0], was = tot[first]; for (let r = 0; r < N; r++){ const t = idx[r]; tot[t] += PTS[r + 1] + pois(KB[Math.min(r + 1, 20)] * Math.exp(ks[t])); } return [first, was]; };
-  for (let s = 0; s < n; s++){ const tot = base.slice();
+  for (let s = 0; s < n; s++){ const tot = base.slice(); gi = 0;
     if (S.mode === 'mp'){ for (let g = 0; g < 40; g++){ const [f, was] = play(tot); glen++; if (was >= S.thr){ win[f]++; break; } } }
     else { for (let g = 0; g < S.left; g++) play(tot);
       const r = idx.slice().sort((a, b) => tot[b] - tot[a] || Math.random() - .5); for (let k = 0; k < Math.min(S.topk, N); k++) win[r[k]]++; tot.forEach((v, i) => ex[i] += v); } }
   return {p: Object.fromEntries(L.map((t, i) => [t, win[i] / n])), ex: Object.fromEntries(L.map((t, i) => [t, ex[i] / n])), glen: glen / n};
 }
-function nextWin(){ const e = S.lobby.map(t => Math.exp(FT[t].s)), sum = e.reduce((a, b) => a + b, 0); return Object.fromEntries(S.lobby.map((t, i) => [t, e[i] / sum])); }
+function nextWin(){ const c = sharedIn(S.lobby, S.map), e = S.lobby.map(t => Math.exp(TH[t] + (c[t] ? BC : 0))), sum = e.reduce((a, b) => a + b, 0); return Object.fromEntries(S.lobby.map((t, i) => [t, e[i] / sum])); }
 function renderChips(){
   $('#chips').innerHTML = [...F].sort((a, b) => a.team.localeCompare(b.team)).map(t => `<button type="button" aria-pressed="${S.lobby.includes(t.team)}" data-team="${esc(t.team)}">${esc(t.team)}</button>`).join('');
   $('#chips').querySelectorAll('button').forEach(b => b.onclick = () => { const t = b.dataset.team, i = S.lobby.indexOf(t);
@@ -196,13 +229,15 @@ function renderChips(){
 let entry = {};
 function renderLive(){
   const mp = S.mode === 'mp'; $('#c-thr').hidden = !mp; $('#c-left').hidden = mp; $('#c-topk').hidden = mp;
-  $('#mode').value = S.mode; $('#thr').value = S.thr; $('#left').value = S.left; $('#topk').value = S.topk;
+  $('#mode').value = S.mode; $('#thr').value = S.thr; $('#left').value = S.left; $('#topk').value = S.topk; $('#nmap').value = S.map; $('#upd').checked = S.upd;
+  TH = liveTheta(); $('#upd-n').textContent = S.log.length ? ` ${S.log.length} game${S.log.length === 1 ? '' : 's'} this event` : '';
+  const SH = sharedIn(S.lobby, S.map);
   const N = S.lobby.length;
   if (N < 2){ $('#lt').innerHTML = '<tr><td class="l mute">Pick at least two teams in "Choose the lobby".</td></tr>'; $('#tp').innerHTML = ''; return; }
   const sim = simulate(3000), nw = nextWin();
   const rows = [...S.lobby].sort((a, b) => P(b) - P(a) || sim.p[b] - sim.p[a]);
   const pmax = Math.max(.01, ...rows.map(t => sim.p[t]));
-  $('#lt').innerHTML = `<tr><th>#</th><th class="l">Team</th><th>Points</th><th>Place</th><th>Kills</th><th class="l">${mp ? 'Win the finals' : 'Advance'}</th><th>${mp ? 'Wins next game' : 'Projected pts'}</th><th class="l">Status</th></tr>` +
+  $('#lt').innerHTML = `<tr><th>#</th><th class="l">Team</th><th>Points</th><th>Place</th><th>Kills</th><th class="l">${mp ? 'Win the finals' : 'Advance'}</th><th>${mp ? 'Wins next game' : 'Projected pts'}</th><th title="Change in the team's rating from games entered this event, in points per game">Form</th><th class="l">Status</th></tr>` +
     rows.map((t, i) => { const on = mp && P(t) >= S.thr, need = S.thr - P(t), e = entry[t] || {};
       return `<tr><td>${i + 1}</td><td class="l">${esc(t)} <span class="tag">${esc(FT[t].region)}</span></td>
       <td><input type="number" min="0" max="400" value="${P(t)}" data-k="pts" data-team="${esc(t)}" aria-label="Points for ${esc(t)}"></td>
@@ -210,7 +245,8 @@ function renderLive(){
       <td><input type="number" min="0" max="40" value="${e.k ?? ''}" data-k="k" data-team="${esc(t)}" aria-label="Kills for ${esc(t)}"></td>
       <td class="l"><span class="pb"><i style="width:${(100 * sim.p[t] / pmax).toFixed(1)}%"></i></span>${pct(sim.p[t], 1)}</td>
       <td>${mp ? pct(nw[t], 1) : sim.ex[t].toFixed(0)}</td>
-      <td class="l">${mp ? (on ? '<span class="mp">MATCH POINT</span>' : `<span class="mute">needs ${need}</span>`) : (i < S.topk ? 'in' : '<span class="mute">out</span>')}</td></tr>`; }).join('');
+      <td>${(() => { const d = (TH[t] - FT[t].s) * PPS; return Math.abs(d) < 0.05 ? '<span class="mute">–</span>' : `<span title="rating ${d > 0 ? 'up' : 'down'} ${Math.abs(d).toFixed(2)} pts/game">${d > 0 ? '▲' : '▼'} ${Math.abs(d).toFixed(1)}</span>`; })()}</td>
+      <td class="l">${mp ? (on ? '<span class="mp">MATCH POINT</span>' : `<span class="mute">needs ${need}</span>`) : (i < S.topk ? 'in' : '<span class="mute">out</span>')}${SH[t] ? ` <span class="tag" title="Usually lands at ${esc(SH[t].spot)} on ${esc(S.map)}, like ${esc(SH[t].with.join(', '))}">shares spot</span>` : ''}</td></tr>`; }).join('');
   $('#lt').querySelectorAll('input').forEach(inp => inp.onchange = () => { const t = inp.dataset.team, k = inp.dataset.k, v = inp.value === '' ? null : Math.max(0, Math.round(+inp.value));
     if (k === 'pts'){ S.pts[t] = v || 0; save(); setTimeout(renderLive, 0); } else { (entry[t] = entry[t] || {})[k] = v; } });
   const elig = rows.filter(t => P(t) >= S.thr), fav = rows.reduce((a, b) => sim.p[b] > sim.p[a] ? b : a);
@@ -223,7 +259,7 @@ function renderLive(){
   const tp = [];
   if (mp){
     if (!elig.length){ const close = rows.filter(t => S.thr - P(t) <= 21 && P(t) > 0);
-      tp.push(S.hist.length || rows.some(t => P(t)) ? `No one is on match point yet. ${close.length} team${close.length === 1 ? '' : 's'} could get there with one big game (within 21 points).` : `Scores are level. On ratings alone, ${esc(fav)} leads at ${pct(sim.p[fav], 1)}; pure luck would give each team ${pct(1 / N, 1)}.`); }
+      tp.push(S.hist.length || rows.some(t => P(t)) ? (close.length ? `No one is on match point yet. ${close.length} team${close.length === 1 ? '' : 's'} could get there with one big game (within 21 points).` : 'No one is on match point yet, and nobody is within one big game (21 points) of it.') : `Scores are level. On ratings alone, ${esc(fav)} leads at ${pct(sim.p[fav], 1)}; pure luck would give each team ${pct(1 / N, 1)}.`); }
     else { tp.push(`${elig.length} team${elig.length === 1 ? ' is' : 's are'} on match point: ${elig.map(esc).join(', ')}. There is a ${pct(elig.reduce((a, t) => a + nw[t], 0))} chance ${elig.length === 1 ? 'it wins' : 'one of them wins'} the next game and ends it.`);
       const lead = rows[0]; if (sim.p[lead] < sim.p[fav]) tp.push(`${esc(lead)} leads on points, but ${esc(fav)} has the better title chance (${pct(sim.p[fav])} vs ${pct(sim.p[lead])}).`); }
     tp.push(`From here the model expects about ${sim.glen.toFixed(1)} more game${sim.glen < 1.5 ? '' : 's'}.`);
@@ -234,6 +270,12 @@ function renderLive(){
     if (bub.length) tp.push(`On the bubble: ${bub.map(t => `${esc(t)} (${pct(sim.p[t])})`).join(', ')}.`);
     const safe = rows.filter(t => sim.p[t] >= .95); if (safe.length) tp.push(`Effectively through: ${safe.map(esc).join(', ')}.`);
   }
+  const pairs = {}; Object.entries(SH).forEach(([t, v]) => { (pairs[v.spot] = pairs[v.spot] || new Set()).add(t); });
+  Object.entries(pairs).forEach(([sp, ts]) => tp.push(`On ${esc(S.map)}, ${[...ts].map(esc).join(' and ')} ${ts.size === 2 ? 'both' : 'all'} usually land at ${esc(sp)}. Sharing a spot has cost teams about ${Math.abs(D.v3.pts_clash).toFixed(1)} points a game.`));
+  if (S.upd && S.log.length){ const mv = rows.map(t => [t, (TH[t] - FT[t].s) * PPS]).sort((a, b) => b[1] - a[1]);
+    if (mv[0][1] >= 0.1) tp.push(`Biggest riser this event: ${esc(mv[0][0])}, rating up ${mv[0][1].toFixed(1)} points a game from the ${S.log.length} game${S.log.length === 1 ? '' : 's'} entered.`);
+    const lo = mv[mv.length - 1]; if (lo[1] <= -0.1) tp.push(`Biggest faller: ${esc(lo[0])}, down ${Math.abs(lo[1]).toFixed(1)}.`); }
+  if (mp && elig.length) tp.push(`History says match point doesn't make teams win more: in past finals, teams on match point won ${D.mp_all.wins} of ${D.mp_all.games} games, about what their ratings predicted (${D.mp_all.expected.toFixed(1)}).`);
   const noLan = rows.filter(t => FT[t].nolan); if (noLan.length) tp.push(`No LAN record in the data for ${noLan.map(esc).join(', ')}: rated on online regional play and marked down for it.`);
   $('#tp').innerHTML = tp.map(x => `<li>${x}</li>`).join('');
 }
@@ -243,10 +285,16 @@ $('#b-add').onclick = () => { const N = S.lobby.length, seen = new Set(); let ba
   if (bad){ $('#msg').textContent = bad; return; }
   const g = {}; S.lobby.forEach(t => { g[t] = PTS[Math.min(entry[t].p, 20)] + (entry[t].k || 0); S.pts[t] = P(t) + g[t]; });
   const w = S.lobby.find(t => entry[t].p === 1), wasMP = S.mode === 'mp' && S.pts[w] - g[w] >= S.thr;
-  S.hist.push(g); if (S.mode === 'series' && S.left > 0) S.left--; entry = {};
+  S.hist.push(g); S.log.push({o: [...S.lobby].sort((a, b) => entry[a].p - entry[b].p), m: S.map}); S.map = nextMap(S.map);
+  if (S.mode === 'series' && S.left > 0) S.left--; entry = {};
   $('#msg').textContent = wasMP ? `${w} won from match point: that is the title.` : `Game ${S.hist.length} added.`; renderAll(); };
-$('#b-undo').onclick = () => { const g = S.hist.pop(); if (!g){ $('#msg').textContent = 'No game to undo.'; return; } Object.keys(g).forEach(t => S.pts[t] = Math.max(0, P(t) - g[t])); if (S.mode === 'series') S.left++; $('#msg').textContent = 'Last game removed.'; renderAll(); };
+$('#b-undo').onclick = () => { const g = S.hist.pop(); if (!g){ $('#msg').textContent = 'No game to undo.'; return; } Object.keys(g).forEach(t => S.pts[t] = Math.max(0, P(t) - g[t])); if (S.mode === 'series') S.left++;
+  const lg = S.log.pop(); if (lg) S.map = lg.m; $('#msg').textContent = 'Last game removed.'; renderAll(); };
 $('#b-reset').onclick = () => { S.pts = {}; S.hist = []; entry = {}; $('#msg').textContent = 'Scores cleared.'; renderAll(); };
+$('#b-clrlog').onclick = () => { S.log = []; $('#msg').textContent = 'Event history cleared: ratings are back to their pre-event values.'; renderAll(); };
+$('#nmap').innerHTML = MAPS4.map(m => `<option>${esc(m)}</option>`).join('');
+$('#nmap').onchange = e => { S.map = e.target.value; renderAll(); };
+$('#upd').onchange = e => { S.upd = e.target.checked; renderAll(); };
 $('#b-top20').onclick = () => { S.lobby = byS.slice(0, 20).map(t => t.team); S.hist = []; renderAll(); };
 $('#b-none').onclick = () => { S.lobby = []; S.hist = []; renderAll(); };
 $('#mode').onchange = e => { S.mode = e.target.value; renderAll(); };
@@ -268,15 +316,25 @@ function profile(name){
   else if (kr <= 5 && pr <= 5) notes.push(`Top five in the field for both kills per game and average placement.`);
   if (t.nolan) notes.push('No LAN record in the data. The rating comes from online regional play and is marked down, because first-time LAN teams at the last Playoffs scored well below their regional form.');
   else if (t.g < 40) notes.push(`Only ${t.g} games in the data, so the rating is pulled toward average.`);
+  const sw = t.sw || {label: 'Typical', top3: 0, bottom: 0}, bu = t.bu, mpr = t.mp;
+  const lst = a => a.length <= 1 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+  const roster = !bu ? ['–', 'no roster data'] : !bu.had_s1 ? ['New team', 'no Split 1 games under this name'] : !bu.new_from.length ? ['All 3 back', 'same three players as Split 1'] :
+    [`${bu.returning} of 3 back`, 'new: ' + lst(bu.new_from.map(x => x ? 'from ' + esc(x) : 'new to Pro League'))];
+  const quick = [[sw.label, `top 3 in ${pct(sw.top3)} of games, 14th or worse in ${pct(sw.bottom)}`], roster,
+    mpr ? [`${mpr.wins} of ${mpr.games}`, `games won on match point (rating expects ${mpr.expected.toFixed(1)})`] : ['–', 'never on match point in a final'],
+    [t.cp.length ? `${t.cp.length} map${t.cp.length === 1 ? '' : 's'}` : 'None', t.cp.length ? 'with a landing spot shared with another Champs team' : 'no shared landing spots']];
+  t.cp.forEach(c => notes.push(`${esc(c.map)}: usually lands at ${esc(c.spot)}, same as ${lst(c.with_.map(esc))}.`));
+  if (t.plain != null && Math.abs(t.pw - t.plain) >= 0.002) notes.push(`If nobody moves spots, the overlaps ${t.pw < t.plain ? 'cost' : 'add'} about ${(100 * Math.abs(t.pw - t.plain)).toFixed(1)} points of title chance.`);
   $('#profile').innerHTML = `<div class="card" id="p-card"><h2>${esc(t.team)} <span class="tag">${esc(t.region)}</span> <span class="tag">${t.path === 'LCQ' ? 'via LCQ' : 'via points'}</span></h2>
     <div class="tiles"><div class="tile"><b>${pct(t.pw, 1)}</b><span>title odds (${ord(rankOf(t, 'pw'))} of 40)</span></div><div class="tile"><b>${pct(t.pf)}</b><span>reach the finals</span></div>
     <div class="tile"><b>${t.pow.toFixed(1)}</b><span>rating: expected points per game (${ord(t.fr)} of 40, likely ${t.plo.toFixed(1)}–${t.phi.toFixed(1)}; field average ${D.meta.avg.toFixed(1)})</span></div><div class="tile"><b>${t.ppg.toFixed(1)}</b><span>actual points per game so far (${ord(rankOf(t, 'ppg'))})</span></div>
     <div class="tile"><b>${t.kpg.toFixed(1)}</b><span>kills per game (${ord(kr)})</span></div><div class="tile"><b>${t.w}</b><span>game wins in ${t.g} games (${t.lg} at LAN)</span></div></div>
+    <h3>Quick read</h3><div class="tiles">${quick.map(([b, s]) => `<div class="tile"><b style="font-size:20px">${b}</b><span>${s}</span></div>`).join('')}</div>
     <ul class="tp">${notes.map(n => `<li>${n}</li>`).join('')}</ul>
     <h3>Results by event</h3><div class="scroll"><table><tr><th class="l">Event</th><th>Games</th><th>Pts/game</th><th>Avg place</th><th>Wins</th><th>Kills/game</th></tr>${histRows(t)}</table></div>
     <h3>Fighting stats, per game</h3><div class="scroll"><table><tr><th class="l">Measured at</th><th>Games</th><th>Kills</th><th>Knocks</th><th>Assists</th><th>Damage</th><th>Dealt ÷ taken</th><th>Revives</th></tr>${[['lan', 'Split 2 Playoffs (LAN)'], ['pl', 'Split 2 Pro League']].map(([k, lab]) => { const d = t.deep[k]; return d ? `<tr><td class="l">${lab}</td><td>${d.games}</td><td>${d.kills.toFixed(1)}</td><td>${d.knocks.toFixed(1)}</td><td>${d.assists.toFixed(1)}</td><td>${d.dmg.toLocaleString()}</td><td>${d.ratio.toFixed(2)}</td><td>${d.rez.toFixed(1)}</td></tr>` : `<tr><td class="l">${lab}</td><td colspan="7" class="l mute">did not play</td></tr>`; }).join('')}</table></div>
     ${t.tl ? `<h3>Legends and comps</h3><p>${t.tl.legends.map(l => `${esc(l[0])} ${l[1]}%`).join(' · ')}</p><p class="mute">Top comps: ${(t.tl.comps || []).map(c => `${esc(c[0])} (${c[1]}% of games, avg place ${c[2].toFixed(1)})`).join('; ')}. Measured at: ${esc(t.tl.src)}.</p>` : ''}
-    ${Object.keys(t.maps).length ? `<h3>Points per game by map</h3><div class="scroll"><table><tr>${Object.keys(t.maps).map(m => `<th>${esc(m)}</th>`).join('')}</tr><tr>${Object.values(t.maps).map(v => `<td>${v[1].toFixed(1)} <span class="mute small">(${v[0]} games)</span></td>`).join('')}</tr></table></div><p class="small mute">Across all teams, map-to-map differences are no bigger than chance, so don't read much into these.</p>` : ''}
+    ${Object.keys(t.maps).length ? `<h3>Points per game by map</h3><div class="scroll"><table><tr>${Object.keys(t.maps).map(m => `<th>${esc(m)}</th>`).join('')}</tr><tr>${Object.values(t.maps).map(v => `<td>${v[1].toFixed(1)} <span class="mute small">(${v[0]} games)</span></td>`).join('')}</tr></table></div><p class="small mute">Map-to-map differences are mostly luck: giving each team a separate rating per map made predictions worse, so don't read much into these.</p>` : ''}
     ${t.players.length ? `<h3>Players, per game (${esc(t.players[0].src)})</h3><div class="scroll"><table><tr><th class="l">Player</th><th>Games</th><th>Kills</th><th>Knocks</th><th>Assists</th><th>Damage</th><th>Dealt ÷ taken</th></tr>${[...t.players].sort((a, b) => b.dmg - a.dmg).map(p => `<tr><td class="l">${esc(p.player)}</td><td>${p.games}</td><td>${p.kills.toFixed(2)}</td><td>${p.knocks.toFixed(2)}</td><td>${p.assists.toFixed(2)}</td><td>${p.dmg.toLocaleString()}</td><td>${p.ratio.toFixed(2)}</td></tr>`).join('')}</table></div><p class="small mute">Rosters change often. Check these names against the Championship roster before using them on air.</p>` : ''}</div>`;
 }
 let selTeam = null;
@@ -285,9 +343,9 @@ function renderField(){
   const val = (t, k) => k === 'dmg' ? (t.deep.pl ? t.deep.pl.dmg : 0) : t[k];
   const rows = F.filter(t => !reg || t.region === reg).sort((a, b) => k === 'team' ? a.team.localeCompare(b.team) : k === 'ap' ? a.ap - b.ap : val(b, k) - val(a, k));
   const pm = Math.max(...F.map(t => t.pw));
-  $('#ft').innerHTML = `<tr><th>#</th><th class="l">Team</th><th class="l">Region</th><th class="l">Path</th><th class="l">Title odds</th><th>Finals</th><th>Rating</th><th>Actual pts</th><th>Kills</th><th>Damage</th><th>Avg place</th><th>Wins</th><th>Games</th><th>LAN</th></tr>` +
+  $('#ft').innerHTML = `<tr><th>#</th><th class="l">Team</th><th class="l">Region</th><th class="l">Path</th><th class="l">Title odds</th><th>Finals</th><th>Rating</th><th>Actual pts</th><th>Kills</th><th>Damage</th><th>Avg place</th><th>Wins</th><th>Games</th><th>LAN</th><th class="l">Style</th></tr>` +
     rows.map((t, i) => `<tr class="click${t.team === selTeam ? ' sel' : ''}" data-team="${esc(t.team)}" tabindex="0"><td>${i + 1}</td><td class="l">${esc(t.team)}</td><td class="l"><span class="tag">${esc(t.region)}</span></td><td class="l">${t.path}</td>
-      <td class="l"><span class="pb"><i style="width:${(100 * t.pw / pm).toFixed(1)}%"></i></span>${pct(t.pw, 1)}</td><td>${pct(t.pf)}</td><td>${t.pow.toFixed(1)}</td><td>${t.ppg.toFixed(1)}</td><td>${t.kpg.toFixed(1)}</td><td>${t.deep.pl ? t.deep.pl.dmg.toLocaleString() : '–'}</td><td>${t.ap.toFixed(1)}</td><td>${t.w}</td><td>${t.g}</td><td>${t.lg}</td></tr>`).join('');
+      <td class="l"><span class="pb"><i style="width:${(100 * t.pw / pm).toFixed(1)}%"></i></span>${pct(t.pw, 1)}</td><td>${pct(t.pf)}</td><td>${t.pow.toFixed(1)}</td><td>${t.ppg.toFixed(1)}</td><td>${t.kpg.toFixed(1)}</td><td>${t.deep.pl ? t.deep.pl.dmg.toLocaleString() : '–'}</td><td>${t.ap.toFixed(1)}</td><td>${t.w}</td><td>${t.g}</td><td>${t.lg}</td><td class="l">${t.sw ? esc(t.sw.label) : ''}</td></tr>`).join('');
   $('#ft').querySelectorAll('tr.click').forEach(r => { const go = () => { selTeam = r.dataset.team; profile(selTeam); renderField(); $('#p-card').scrollIntoView({block: 'nearest', behavior: 'smooth'}); };
     r.onclick = go; r.onkeydown = e => { if (e.key === 'Enter') go(); }; });
 }
@@ -341,20 +399,25 @@ let GRES = null;
 const gsave = () => { try { localStorage.setItem(GK, JSON.stringify(GR)); } catch (e) {} };
 const gcount = () => { const c = {A: 0, B: 0, C: 0, D: 0}; F.forEach(t => { if (GR[t.team]) c[GR[t.team]]++; }); return c; };
 function simEvent(n){
-  const idx = Object.fromEntries(F.map((t, i) => [t.team, i])), th = F.map(t => t.s), ks = F.map(t => t.ks), N = F.length;
+  TH = liveTheta();
+  const idx = Object.fromEntries(F.map((t, i) => [t.team, i])), th = F.map(t => TH[t.team]), ks = F.map(t => t.ks), N = F.length;
   const grp = {A: [], B: [], C: [], D: []}; F.forEach((t, i) => grp[GR[t.team]].push(i));
   const top20 = new Array(N).fill(0), fin = new Array(N).fill(0), win = new Array(N).fill(0);
-  const game = (lob, tot) => { const z = lob.map(i => th[i] + gumbel()), o = lob.map((_, k) => k).sort((a, b) => z[b] - z[a]);
+  const clv = (lob, m) => { const c = sharedIn(lob.map(i => F[i].team), m); return lob.map(i => c[F[i].team] ? BC : 0); };
+  const game = (lob, tot, cl) => { const z = lob.map((i, k) => th[i] + cl[k] + gumbel()), o = lob.map((_, k) => k).sort((a, b) => z[b] - z[a]);
     const first = lob[o[0]], was = tot[first]; o.forEach((k, r) => { const i = lob[k]; tot[i] += PTS[r + 1] + pois(KB[r + 1] * Math.exp(ks[i])); }); return [first, was]; };
-  const series = (lob, g) => { const tot = new Array(N).fill(0); for (let k = 0; k < g; k++) game(lob, tot); return lob.slice().sort((a, b) => tot[b] - tot[a] || Math.random() - .5); };
+  const series = (lob, maps) => { const tot = new Array(N).fill(0), C = {}; maps.forEach(m => C[m] = C[m] || clv(lob, m)); maps.forEach(m => game(lob, tot, C[m])); return lob.slice().sort((a, b) => tot[b] - tot[a] || Math.random() - .5); };
+  const RG = D.v3.rot_groups, RO = D.v3.rot;
+  const glob = [['A', 'B'], ['C', 'D'], ['B', 'D'], ['A', 'C'], ['B', 'C'], ['A', 'D']].map(([a, b], k) => { const lob = grp[a].concat(grp[b]), C = {}; RG[k].forEach(m => C[m] = C[m] || clv(lob, m)); return [lob, RG[k], C]; });
   for (let s = 0; s < n; s++){
     const tot = new Array(N).fill(0);
-    for (const [a, b] of [['A', 'B'], ['C', 'D'], ['B', 'D'], ['A', 'C'], ['B', 'C'], ['A', 'D']]){ const lob = grp[a].concat(grp[b]); for (let k = 0; k < 6; k++) game(lob, tot); }
+    for (const [lob, maps, C] of glob) for (const m of maps) game(lob, tot, C[m]);
     const all = [...Array(N).keys()].sort((a, b) => tot[b] - tot[a] || Math.random() - .5);
     all.slice(0, 20).forEach(i => top20[i]++);
-    const wr = series(all.slice(0, 20), 6), lr1 = series(all.slice(20), 6), lr2 = series(wr.slice(10).concat(lr1.slice(0, 10)), 6);
+    const wr = series(all.slice(0, 20), RO.wr), lr1 = series(all.slice(20), RO.lr1), lr2 = series(wr.slice(10).concat(lr1.slice(0, 10)), RO.lr2);
     const f = wr.slice(0, 10).concat(lr2.slice(0, 10)); f.forEach(i => fin[i]++);
-    const ft = new Array(N).fill(0); for (let g = 0; g < 40; g++){ const [first, was] = game(f, ft); if (was >= 50){ win[first]++; break; } }
+    const ft = new Array(N).fill(0), FC = {}; RO.finals.forEach(m => FC[m] = FC[m] || clv(f, m));
+    for (let g = 0; g < 40; g++){ const [first, was] = game(f, ft, FC[RO.finals[g % RO.finals.length]]); if (was >= 50){ win[first]++; break; } }
   }
   return Object.fromEntries(F.map((t, i) => [t.team, {top20: top20[i] / n, fin: fin[i] / n, win: win[i] / n}]));
 }

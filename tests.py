@@ -61,4 +61,32 @@ mu = np.exp(base2[df.placement.values] + df.team.map(ks2).values)
 gap = (pd.Series(mu).groupby(df.placement.values).mean() - df.groupby("placement").kills.mean()).abs().max()
 check("kills model reproduces average kills at every placement", gap < 0.05, f"max gap {gap:.3f} kills")
 check("kills model reproduces total kills", abs(mu.sum() - df.kills.sum()) / df.kills.sum() < 0.002, f"model {mu.sum():.0f} vs data {df.kills.sum()}")
+
+# 5. model v3 (players, shared spot, match point)
+import model3 as M3, features as FE
+_, stg = load(); d3 = FE.attach(df, stg)
+check("every game row has a roster of player ids", (d3.roster.map(len) > 0).mean() > 0.99, f"{(d3.roster.map(len) > 0).mean():.1%}")
+check("Split 2 Playoffs LAN rows are linked to online player ids", d3[d3.stage.str.startswith("Y6S2_PLAYOFFS")].roster.map(lambda r: r[0].startswith("O:")).mean() > 0.9)
+fz = d3[d3.stage.str.endswith("FINALS")]
+check("every finals ends with a win by a team that started the game on match point",
+      all(g[g.game == g.game.max()].query("placement == 1").mp.iloc[0] == 1 for st_, g in fz.groupby("stage") if st_ != "PL_EMEA_FINALS"))
+check("nobody is on match point in game 1 of a finals", fz[fz.game == 1].mp.sum() == 0)
+check("a shared landing spot needs both teams in the same lobby", all(
+    len(set(g[g.clash == 1].team)) != 1 for _, g in d3[d3.clash == 1].groupby("game_id")))
+small = d3[d3.stage.isin(["Y6S1_PLAYOFFS_FINALS", "Y6S2_PLAYOFFS_FINALS", "PL_NA_FINALS"])]
+tm = sorted(small.team.unique()); pl3 = sorted({p for r in small.roster for p in r})
+P = M3.prepare(small, tm, pl3, {t: "g" for t in tm}, sorted(small["map"].unique()))
+kw = dict(sig_team=0.3, sig_player=0.2, sig_map=0.1, fit_beta=(True, True))
+F = M3.fit(P, **kw)
+x = F["x"] + rng.normal(0, 0.05, len(F["x"]))
+def obj(xx):  # same objective as model3.fit, recomputed independently via utilities()
+    F2 = dict(F); nT, nM = P["nT"], P["nM"]; nP = P["nP"]
+    d_, mu_ = xx[:nT], xx[nT:nT + 1]; p_ = xx[nT + 1:nT + 1 + nP]; m_ = xx[nT + 1 + nP:nT + 1 + nP + nT * nM]; b_ = xx[-2:]
+    F2.update(team=d_ + mu_[0], player=dict(zip(pl3, p_)), map=m_.reshape(nT, nM), beta=dict(clash=b_[0], mp=b_[1]))
+    return -M3.loglik(F2, small) + (d_ ** 2).sum() / (2 * .09) + mu_[0] ** 2 / 2 + (p_ ** 2).sum() / (2 * .04) + (m_ ** 2).sum() / (2 * .01) + (b_ ** 2).sum() / 2
+gn = approx_fprime(F["x"], obj, 1e-6)
+check("v3 fit sits at the optimum of its objective (checked by an independent calculation)", np.abs(gn).max() < 5e-3, f"max |grad| {np.abs(gn).max():.1e}")
+check("v3 with players/maps/effects switched off equals the v2 fit", (lambda F0: max(abs(F0["team"][i] - (lambda f: f[t])(M.fit_pl(small, sigma=0.3, groups={u: "g" for u in tm}))) for i, t in enumerate(tm)) < 2e-3)(
+      M3.fit(P, sig_team=0.3, fit_beta=(False, False))))
+
 print("\nALL MATHS CHECKS PASS" if ok else "\nSOME CHECKS FAILED")

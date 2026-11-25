@@ -30,3 +30,13 @@ confirmed by the totals cross-check). Requires numpy, scipy, pandas.
 3. `python3 update.py scrape1.json scrape2.json ...` merges the blocks, rebuilds data/scrims.csv,
    runs the maths checks, refits, and rebuilds out/apex_model.html and out/broadcast.html.
    out/update_report.txt says what changed. Nothing is rebuilt if a check fails.
+
+## Model v3 (25 Nov 2026)
+`model3.py` extends the team ratings with: player strengths (ratings follow players; ids from `data/deep/rosters_drops.txt`,
+LAN and online id systems linked through each team's same-split roster), a penalty for sharing a landing spot with another
+team in the game, and a match-point effect (used when fitting ratings, not in the title odds: teams on match point win no
+more often than their rating says). `features.py` builds those columns. `backtest3.py` scores each idea on held-out games
+(results in `out/backtest3.json`); team-by-map ratings and wider spreads for boom-or-bust teams (`swing.py`, `swing_check.py`)
+made predictions worse and are shown as information only. Champs landing spots: `data/deep/champs_drops.txt`
+(`scrape/als_champs_drops.js`). Rosters/drops per stage: `scrape/als_rosters_drops.js`.
+The broadcast desk's live tracker updates ratings from games entered during the event and applies shared-spot penalties by map.

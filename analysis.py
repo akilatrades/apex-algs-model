@@ -1,5 +1,10 @@
 """Fit the model and write every number the two pages use -> out/results.json
 
+Model v3 (see model3.py) = v2 plus: players (ratings follow players across teams), a penalty for landing on a spot
+shared with another team, and a match-point effect. Each piece was kept only because it predicted held-out games
+better (backtest3.py). Map-by-map team strength and boom-or-bust were tested too and made predictions worse, so they are
+reported as information, not used in the odds.
+
 Model (v2):
   * Team strength: Plackett-Luce on each game's full finishing order. Each team is shrunk toward the mean of its
     own group (region x "has LAN games in the data"), not toward one global mean.
@@ -14,10 +19,16 @@ from scipy.optimize import minimize_scalar
 from scipy.stats import f as fdist
 from load import load, PLACE_PTS
 import model as M
+import model3 as M3
+import features as FE
+import swing as SW
 import deep
+from backtest3 import run_fit, groups as groups3, players_of
 
 rng = np.random.default_rng(42)
 df, stages = load(include_scrims=True)
+df = FE.attach(df, stages)
+KW3 = dict(sig_team=0.15, sig_player=0.20, fit_beta=(True, True))     # chosen in backtest3.py
 REG = {"NA": "Americas", "EMEA": "EMEA", "APN": "APAC North", "APS": "APAC South"}
 SIGMA = 0.15
 
@@ -77,49 +88,94 @@ def with_beta(st, b, who):
     return {t: v - (b if t in who else 0) for t, v in st.items()}
 
 
-opt = minimize_scalar(lambda b: -M.pl_loglik(test, with_beta({t: st_bt.get(t, 0) for t in set(test.team)}, b, debut)), bounds=(-0.5, 1), method="bounded")
-BETA = float(opt.x)
-bg = {g: d for g, d in test.groupby("game_id")}; tg = test.game_id.unique(); bb = []
+def ll_rows(d, ucol="u"):
+    """Plackett-Luce log-likelihood from a per-row utility column."""
+    ll = 0.0
+    for _, g in d.groupby("game_id"):
+        u = g.sort_values("placement")[ucol].to_numpy(); mx = u.max(); suf = np.cumsum(np.exp(u - mx)[::-1])[::-1]
+        ll += u[:-1].sum() - (np.log(suf[:-1]) + mx).sum()
+    return ll
+
+
+def pairwise_rows(d, ucol="u"):
+    hit = tot = 0
+    for _, g in d.groupby("game_id"):
+        s = g[ucol].values; p = g.placement.values
+        ds = s[:, None] - s[None, :]; dp = p[:, None] - p[None, :]; m = ds > 1e-9
+        hit += (dp[m] < 0).sum(); tot += m.sum()
+    return hit / tot
+
+
+nT = test.game_id.nunique()
+# previous model (v2), kept for the before/after comparison
+opt2 = minimize_scalar(lambda b: -M.pl_loglik(test, with_beta({t: st_bt.get(t, 0) for t in set(test.team)}, b, debut)), bounds=(-0.5, 1), method="bounded")
+st_prev = with_beta({t: st_bt.get(t, 0) for t in set(test.team)}, float(opt2.x), debut)
+# model v3 on the same split
+F_bt = run_fit(train, prev_lan | set(test.team), team_region, **KW3)
+tu = test.copy(); tu["u0"] = M3.utilities(F_bt, tu); tu["deb"] = tu.team.isin(debut).astype(float)
+ll_b = lambda d, b: ll_rows(d.assign(u=d.u0 - b * d.deb))
+BETA = float(minimize_scalar(lambda b: -ll_b(tu, b), bounds=(-0.5, 1), method="bounded").x)
+bg = {g: d for g, d in tu.groupby("game_id")}; tg = tu.game_id.unique(); bb = []
 for _ in range(200):
     d = pd.concat([bg[g].assign(game_id=f"{g}_{i}") for i, g in enumerate(rng.choice(tg, len(tg)))])
-    bb.append(minimize_scalar(lambda b: -M.pl_loglik(d, with_beta({t: st_bt.get(t, 0) for t in set(d.team)}, b, debut)), bounds=(-0.5, 1), method="bounded").x)
+    bb.append(minimize_scalar(lambda b: -ll_b(d, b), bounds=(-0.5, 1), method="bounded").x)
 BETA_SD = float(np.std(bb))
-st_v2 = with_beta({t: st_bt.get(t, 0) for t in set(test.team)}, BETA, debut)
-nT = test.game_id.nunique()
+tu["u"] = tu.u0 - BETA * tu.deb
 act = test.groupby("team").points.mean()
-pred = pd.Series(st_v2)[act.index]
+pred = tu.groupby("team").u.mean()[act.index]
 thirds = []
 order = pred.sort_values(ascending=False).index
 for name, chunk in zip(["Top third (model's best 13)", "Middle third", "Bottom third (model's worst 13)"], [order[:13], order[13:27], order[27:]]):
     thirds.append(dict(label=name, n=len(chunk), actual_ppg=float(act[chunk].mean())))
 pl = df[df.source == "pro_league"].copy(); pl["day"] = pl.stage.str.extract(r"_D(\d)")[0].astype(float)
 pl_tr, pl_te = pl[pl.day <= 6], pl[(pl.day >= 7) | pl.stage.str.endswith("FINALS")]
+trainB = df[df.source.isin(["lan", "pro_league", "pl_s1"]) & ((df.order < 2.5) | df.game_id.isin(pl_tr.game_id))]
+F_pl = run_fit(trainB, set(trainB[trainB.source == "lan"].team), team_region, **KW3)
+pu = pl_te.copy(); pu["u"] = M3.utilities(F_pl, pu)
+bt3 = json.load(open("out/backtest3.json")) if os.path.exists("out/backtest3.json") else []
 backtest = dict(
     n_games=int(nT), n_debut=len(debut),
-    acc_v2=float(pairwise(test, st_v2)), acc_old=float(pairwise(test, st_flat)),
-    gain_v2=float((M.pl_loglik(test, st_v2) - uni_ll(test)) / nT), gain_old=float((M.pl_loglik(test, st_flat) - uni_ll(test)) / nT),
-    acc_pl=float(pairwise(pl_te, M.fit_pl(pl_tr, sigma=SIGMA))), n_pl=int(pl_te.game_id.nunique()),
+    acc_v2=float(pairwise_rows(tu)), acc_old=float(pairwise(test, st_flat)), acc_prev=float(pairwise(test, st_prev)),
+    gain_v2=float((ll_rows(tu) - uni_ll(test)) / nT), gain_old=float((M.pl_loglik(test, st_flat) - uni_ll(test)) / nT),
+    gain_prev=float((M.pl_loglik(test, st_prev) - uni_ll(test)) / nT),
+    acc_pl=float(pairwise_rows(pu)), n_pl=int(pl_te.game_id.nunique()), gain_pl=float((ll_rows(pu) - uni_ll(pl_te)) / pl_te.game_id.nunique()),
     s1_trials=s1_trials, s1_weight=S1W, debut_actual=float(act[list(debut)].mean()), returning_actual=float(act.drop(list(debut)).mean()), thirds=thirds,
-    beta=BETA, beta_lo=float(np.percentile(bb, 10)), beta_hi=float(np.percentile(bb, 90)))
+    beta=BETA, beta_lo=float(np.percentile(bb, 10)), beta_hi=float(np.percentile(bb, 90)), trials=bt3,
+    swing_check=json.load(open("out/swing_check.json")) if os.path.exists("out/swing_check.json") else None)
 
-# ---------------- final fit on all games ----------------
+# ---------------- final fit on all games (model v3) ----------------
 lan_teams = set(df[df.source == "lan"].team)
-G = groups_for(df.team.unique(), lan_teams)
-strength, gmeans = M.fit_pl(df, sigma=SIGMA, groups=G, return_groups=True)
+teams_sorted = sorted(df.team.unique())
+ti = {t: i for i, t in enumerate(teams_sorted)}
+PLAYERS = players_of(df)
+G = groups3(teams_sorted, lan_teams, team_region)
+P3 = M3.prepare(df, teams_sorted, PLAYERS, G, [])
+F3 = M3.fit(P3, **KW3)
+assert F3["ok"]
+B_CLASH, B_MP = float(F3["beta"]["clash"]), float(F3["beta"]["mp"])
+latest = {t: FE.latest_roster(t, df) for t in teams_sorted}
+
+
+def team_strength(F, t):
+    """Strength for a team's next game: team part + average of its current players."""
+    ps = [F["player"].get(p, 0.0) for p in latest[t]]
+    return float(F["team"][ti[t]] + (np.mean(ps) if ps else 0.0))
+
+
+strength = {t: team_strength(F3, t) for t in teams_sorted}
+gmeans = F3["group"]
 base, kskill = M.fit_kills(df, sigma=0.15)
-teams_sorted = sorted(strength)
 by_gid = {g: d for g, d in df.groupby("game_id")}; gids = df.game_id.unique()
 NB = 100
 boot = np.zeros((NB, len(teams_sorted)))
 for b in range(NB):
     d = pd.concat([by_gid[g].assign(game_id=f"{g}_b{i}") for i, g in enumerate(rng.choice(gids, len(gids)))])
-    s = M.fit_pl(d, sigma=SIGMA, groups=G, teams=teams_sorted)
-    boot[b] = [s[t] for t in teams_sorted]
+    Fb = M3.fit(M3.prepare(d, teams_sorted, PLAYERS, G, []), x0=F3["x"], **KW3)
+    boot[b] = [team_strength(Fb, t) for t in teams_sorted]
 no_lan = np.array([t not in lan_teams for t in teams_sorted])
 beta_draw = rng.normal(BETA, BETA_SD, NB)
 boot_lan = boot - beta_draw[:, None] * no_lan[None, :]                 # LAN-scale strength draws
 lan_strength = {t: strength[t] - (BETA if t not in lan_teams else 0) for t in teams_sorted}
-ti = {t: i for i, t in enumerate(teams_sorted)}
 
 CHAMPS = ["AG GLOBAL", "Alliance", "Aurora", "Crazy Thieves", "DINOS", "ENTER FORCE.36", "ForFun Esports", "Forged Wolves",
           "GaiminGladiators", "Geekay Esports", "Gen.G Citadel", "KINOTROPE CLUB", "NinjasInPyjamas", "NRG", "PVISION", "PXX",
@@ -155,43 +211,80 @@ for _, r in agg.iterrows():
     rows.append(dict(team=t, region=team_region.get(t, "Other"), games=int(r.games), lan_games=int(r.lan_games), ppg=float(r.ppg),
                      avg_place=float(r.avg_place), wins=int(r.wins), kpg=float(r.kpg), strength=float(th), raw_strength=float(strength[t]),
                      kill_skill=float(kskill[t]), no_lan=bool(t not in lan_teams), power=p, win_game=w,
-                     power_lo=p + f_pts(lo) - f_pts(th), power_hi=p + f_pts(hi) - f_pts(th), in_field=t in CHAMPS))
+                     power_lo=p + f_pts(lo) - f_pts(th), power_hi=p + f_pts(hi) - f_pts(th), in_field=t in CHAMPS, sd=float(boot_lan[:, i].std())))
 teams_out = sorted(rows, key=lambda r: -r["power"])
 avg_power = float(np.mean([r["power"] for r in rows if r["in_field"]]))
 
 
 # ---------------- Championship forecast (uncertainty in ratings included) ----------------
-def champs_forecast(n=8000, seed=11):
+MAP_LIST = ["Storm Point", "World's Edge", "E-District", "Olympus"]
+STG = {x["stage"]: x["maps"] for x in stages}
+ROT = dict(groups=[STG[f"Y6S2_PLAYOFFS_GRP_{k}"] for k in ["AvB", "CvD", "BvD", "AvC", "BvC", "AvD"]],
+           wr=STG["Y6S2_PLAYOFFS_WR1"], lr1=STG["Y6S2_PLAYOFFS_LR1"], lr2=STG["Y6S2_PLAYOFFS_LR2"],
+           finals=STG["Y6S2_PLAYOFFS_FINALS"][:8])                    # finals cycle SP OL ED WE WE ED OL SP, repeated
+DROPS = FE.champs_drops()
+SPOT_NAMES = sorted({v for d in DROPS.values() for v in d.values()})
+SPOT = np.full((len(CHAMPS), len(MAP_LIST)), -1)
+for k, t in enumerate(CHAMPS):
+    for j, m in enumerate(MAP_LIST):
+        if m in DROPS.get(t, {}):
+            SPOT[k, j] = SPOT_NAMES.index(DROPS[t][m]) + 1000 * j
+
+
+def clash_mask(lobby, mapname):
+    """(n, L) array of lobby team indices -> True where the team's usual spot on this map is also another lobby team's."""
+    sp = SPOT[lobby, MAP_LIST.index(mapname)]
+    eq = (sp[:, :, None] == sp[:, None, :]) & (sp[:, :, None] >= 0)
+    return eq.sum(2) > 1
+
+
+def clash_partners():
+    out = {}
+    for k, t in enumerate(CHAMPS):
+        for j, m in enumerate(MAP_LIST):
+            if SPOT[k, j] < 0: continue
+            others = [CHAMPS[q] for q in range(len(CHAMPS)) if q != k and SPOT[q, j] == SPOT[k, j]]
+            if others: out.setdefault(t, []).append(dict(map=m, spot=DROPS[t][m], with_=others))
+    return out
+
+
+def champs_forecast(n=8000, seed=11, use_clash=True, use_mp=True):
     """Y6S2 Playoffs format: 4 groups of 10, round robin (6 series x 6 games) -> top 20 to Winners Round, bottom 20 to Losers R1
     -> WR bottom 10 + LR1 top 10 play Losers R2 -> WR top 10 + LR2 top 10 in Match Point Finals (50 pts, then win a game).
+    Maps follow the Split 2 Playoffs rotation. Teams whose usual landing spot is shared with another team in the lobby get the
+    fitted shared-spot penalty for that game; in the finals, teams on match point get the fitted match-point effect.
     Each simulation draws one bootstrap set of ratings, so rating uncertainty flows into the odds."""
     r = np.random.default_rng(seed); S = len(CHAMPS)
     TH = boot_lan[r.integers(0, NB, n)][:, fidx]                       # (n, 40) strength draw per simulation
     ks = np.array([kskill[t] for t in CHAMPS]); rows_ = np.arange(n)[:, None]
+    bc = B_CLASH if use_clash else 0.0; bm = B_MP if use_mp else 0.0
 
-    def series(lobby, games):
+    def series(lobby, maps):
         pts = np.zeros(lobby.shape); th = np.take_along_axis(TH, lobby, 1)
-        for _ in range(games):
+        for m in maps:
+            u = th + bc * clash_mask(lobby, m)
             place = np.empty(lobby.shape, int)
-            place[rows_, np.argsort(-(th + r.gumbel(size=lobby.shape)), 1)] = np.arange(1, lobby.shape[1] + 1)
+            place[rows_, np.argsort(-(u + r.gumbel(size=lobby.shape)), 1)] = np.arange(1, lobby.shape[1] + 1)
             pts += M.PTS[place] + r.poisson(np.exp(base[place] + ks[lobby]))
         return pts
 
     ranked = lambda lobby, pts: np.take_along_axis(lobby, np.argsort(-(pts + r.random(pts.shape) * 1e-3), 1), 1)
     perm = np.argsort(r.random((n, S)), 1); grp = [perm[:, i * 10:(i + 1) * 10] for i in range(4)]
     tot = np.zeros((n, S))
-    for a, b in [(0, 1), (2, 3), (1, 3), (0, 2), (1, 2), (0, 3)]:
-        lob = np.concatenate([grp[a], grp[b]], 1); np.add.at(tot, (rows_, lob), series(lob, 6))
+    for (a, b), maps in zip([(0, 1), (2, 3), (1, 3), (0, 2), (1, 2), (0, 3)], ROT["groups"]):
+        lob = np.concatenate([grp[a], grp[b]], 1); np.add.at(tot, (rows_, lob), series(lob, maps))
     allr = ranked(np.tile(np.arange(S), (n, 1)), tot)
-    wr_r, lr1_r = ranked(allr[:, :20], series(allr[:, :20], 6)), ranked(allr[:, 20:], series(allr[:, 20:], 6))
+    wr_r, lr1_r = ranked(allr[:, :20], series(allr[:, :20], ROT["wr"])), ranked(allr[:, 20:], series(allr[:, 20:], ROT["lr1"]))
     lr2 = np.concatenate([wr_r[:, 10:], lr1_r[:, :10]], 1)
-    fin = np.concatenate([wr_r[:, :10], ranked(lr2, series(lr2, 6))[:, :10]], 1)
+    fin = np.concatenate([wr_r[:, :10], ranked(lr2, series(lr2, ROT["lr2"]))[:, :10]], 1)
     made = np.bincount(fin.ravel(), minlength=S); wins = np.zeros(S); totf = np.zeros(fin.shape); alive = np.ones(n, bool)
     thf = np.take_along_axis(TH, fin, 1)
-    for _ in range(40):
+    for gno in range(40):
         i = np.where(alive)[0]
         if not len(i): break
-        lob = fin[i]; order = np.argsort(-(thf[i] + r.gumbel(size=lob.shape)), 1)
+        lob = fin[i]; m = ROT["finals"][gno % len(ROT["finals"])]
+        u = thf[i] + bc * clash_mask(lob, m) + bm * (totf[i] >= 50)
+        order = np.argsort(-(u + r.gumbel(size=lob.shape)), 1)
         place = np.empty(lob.shape, int); place[np.arange(len(i))[:, None], order] = np.arange(1, 21)
         first = order[:, 0]; elig = totf[i, first] >= 50
         np.add.at(wins, lob[np.arange(len(i)), first][elig], 1)
@@ -201,7 +294,7 @@ def champs_forecast(n=8000, seed=11):
     return {t: dict(p_finals=float(made[k] / n), p_win=float(wins[k] / n)) for k, t in enumerate(CHAMPS)}
 
 
-champs = champs_forecast()
+champs = champs_forecast(use_mp=False)        # match point: placement effect is real, but no extra wins (see mp_all) -> not in the title odds
 for r in teams_out:
     if r["in_field"]:
         r.update(champs[r["team"]]); r["path"] = "LCQ" if r["team"] in LCQ_QUAL else "Points"
@@ -231,6 +324,81 @@ scr = df[df.source == "scrim"]
 scrims = [dict(team=t, games=int(len(g)), ppg=round(float(g.points.mean()), 2), wins=int((g.placement == 1).sum()), kpg=round(float(g.kills.mean()), 2))
           for t, g in scr.groupby("team")] if len(scr) else []
 scrims.sort(key=lambda r: -r["ppg"])
+
+# ---------------- v3 extras: boom-or-bust, match point, rosters, shared spots, calibration ----------------
+official = df[df.source != "scrim"].copy()
+official["u"] = M3.utilities(F3, official)
+zt, tau2 = SW.shrink(SW.team_z2(official, n=300))
+TAU = float(np.sqrt(tau2))
+halves = []
+for rep in range(3):                                                    # does swing carry over? random split-half check
+    hh = set(rng.choice(gids, len(gids) // 2, replace=False))
+    a_ = SW.team_z2(official[official.game_id.isin(hh)], n=150, seed=rep); b_ = SW.team_z2(official[~official.game_id.isin(hh)], n=150, seed=rep + 9)
+    j_ = a_.join(b_, lsuffix="_a", rsuffix="_b").dropna(); j_ = j_[(j_.n_a >= 20) & (j_.n_b >= 20)]
+    halves.append(float(np.corrcoef(j_.m_a, j_.m_b)[0, 1]))
+top3 = official.groupby("team").placement.apply(lambda x: float((x <= 3).mean())); bot = official.groupby("team").placement.apply(lambda x: float((x >= 14).mean()))
+zf = zt.loc[[t for t in CHAMPS if t in zt.index]]                      # labels compare each team with the rest of the Champs field
+CENTER = float(zf.excess.mean()); SPREAD = float(zf.excess.std())
+swing = {t: dict(label=SW.label(r.excess, SPREAD, CENTER), excess=round(float(r.excess), 3), n=int(r.n), top3=round(top3[t], 3), bottom=round(bot[t], 3))
+         for t, r in zt.iterrows()}
+
+# match point: every finals game a team started on 50+
+fz = official[official.stage.str.endswith("FINALS")].copy()
+fz["p_first"] = fz.groupby("game_id").u.transform(lambda u: np.exp(u - B_MP * 0) / np.exp(u).sum())
+fz["u_nomp"] = fz.u - B_MP * fz.mp
+fz["p_nomp"] = fz.groupby("game_id").u_nomp.transform(lambda u: np.exp(u) / np.exp(u).sum())
+on = fz[fz.mp == 1]
+mp_all = dict(games=int(len(on)), wins=int((on.placement == 1).sum()), expected=round(float(on.p_nomp.sum()), 2),
+              finals=int(fz.stage.nunique()), beta=B_MP, odds=float(np.exp(B_MP) - 1))
+mp_team = {t: dict(games=int(len(g)), wins=int((g.placement == 1).sum()), expected=round(float(g.p_nomp.sum()), 2),
+                   finals=int(g.stage.nunique())) for t, g in on.groupby("team")}
+
+# rosters: who is back from Split 1, where newcomers came from
+o_hist = df[df.roster.map(lambda r: bool(r) and r[0].startswith("O:"))]
+
+
+def built_from(t):
+    now = set(latest[t])
+    if not now or not next(iter(now)).startswith("O:"):
+        return None
+    s1 = df[df.team.isin([t, t + " (S1 roster)"]) & (df.order < 2.0) & df.roster.map(lambda r: bool(r) and r[0].startswith("O:"))]
+    s1set = set(s1.roster.iloc[-1]) if len(s1) else set()
+    new = []
+    own = df[df.team.isin([t, t + " (S1 roster)"]) & (df.order < 2.0)].roster.explode()
+    s1set |= set(own.dropna()) & now                      # anyone who played for this team in Split 1 counts as returning
+    for p in sorted(now - s1set):
+        prev = o_hist[(o_hist.team != t) & (o_hist.order < 2.5) & o_hist.roster.map(lambda r: p in r)]
+        new.append(prev.groupby("team").size().idxmax().replace(" (S1 roster)", "") if len(prev) else None)
+    return dict(returning=len(now & s1set), new_from=new, had_s1=bool(len(s1)))
+
+
+built = {t: built_from(t) for t in CHAMPS}
+partners = clash_partners()
+champs_plain = champs_forecast(n=8000, seed=11, use_clash=False, use_mp=False)   # same draws as the main forecast, minus shared spots
+
+
+def calib(d, ucol="u", n=3000, seed=21):
+    """Predicted chance of winning the game / finishing top 5 vs what happened, in bins."""
+    rr = np.random.default_rng(seed); rows = []
+    for _, g in d.groupby("game_id"):
+        u = g[ucol].to_numpy(); L = len(u)
+        z = u[None, :] + rr.gumbel(size=(n, L)); pl_ = np.empty((n, L), int); pl_[np.arange(n)[:, None], np.argsort(-z, 1)] = np.arange(1, L + 1)
+        rows.append(pd.DataFrame(dict(pw=np.exp(u) / np.exp(u).sum(), p5=(pl_ <= 5).mean(0), w=(g.placement.to_numpy() == 1), t5=(g.placement.to_numpy() <= 5))))
+    return pd.concat(rows)
+
+
+def bins(r, k=5):
+    out = {}
+    for col, hit in [("pw", "w"), ("p5", "t5")]:
+        r = r.assign(bin=pd.qcut(r[col].rank(method="first"), k, labels=False))
+        out[col] = [dict(said=float(g[col].mean()), happened=float(g[hit].mean()), n=int(len(g)),
+                         se=float(np.sqrt(g[col].mean() * (1 - g[col].mean()) / len(g)))) for _, g in r.groupby("bin")]
+    return out
+
+
+cal_rows = pd.concat([calib(tu), calib(pu)])
+calibration = dict(all=bins(cal_rows), n_games=int(nT + pl_te.game_id.nunique()), n_lan=int(nT), n_pl=int(pl_te.game_id.nunique()),
+                   brier_win=float(((cal_rows.pw - cal_rows.w) ** 2).mean()), brier_win_luck=float(((0.05 - cal_rows.w) ** 2).mean()))
 
 # ---------------- deep stats ----------------
 dt = deep.teams()
@@ -266,7 +434,12 @@ out = dict(
     backtest=backtest, kill_base=[float(np.exp(base[p])) for p in range(1, 21)], place_pts=[PLACE_PTS.get(p, 0) for p in range(1, 21)],
     deep_teams=deep_teams, links=links, legends=legends, comps=deep.comps(), players=players, lcq_qual=LCQ_QUAL,
     guns=deep.guns(), poi=deep.poi(), team_legends=deep.team_legends(), team_maps=team_maps, map_ratio=map_ratio, scrims=scrims,
-    group_means={k: round(v, 3) for k, v in gmeans.items()},
+    group_means={k: round(float(v), 3) for k, v in gmeans.items()},
+    v3=dict(clash=B_CLASH, mp=B_MP, pts_clash=float(B_CLASH * (f_pts(0.45) - f_pts(0.05)) / 0.4), clash_odds=float(np.exp(B_CLASH) - 1),
+            sig_player=KW3["sig_player"], n_players=len(PLAYERS), n_clash_rows=int(official.clash.sum()), tau_swing=TAU, swing_halves=halves,
+            rot={k: v for k, v in ROT.items() if k != "groups"}, rot_groups=ROT["groups"]),
+    swing=swing, mp_all=mp_all, mp_team=mp_team, built=built, clash_partners=partners, calibration=calibration,
+    champs_plain={t: round(v["p_win"], 4) for t, v in champs_plain.items()},
 )
 os.makedirs("out", exist_ok=True)
 json.dump(out, open("out/results.json", "w"))

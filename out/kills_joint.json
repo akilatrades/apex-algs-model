@@ -1,0 +1,20 @@
+{
+ "lan": {
+  "games": 63,
+  "var_over_mean_train": 1.767,
+  "nb_r": 3.65,
+  "nb_gain": 1.9482,
+  "style_gain_sd0.05": 0.0042,
+  "style_gain_sd0.1": -0.0036,
+  "style_gain_sd0.2": -0.0159
+ },
+ "pl": {
+  "games": 105,
+  "var_over_mean_train": 1.754,
+  "nb_r": 3.7,
+  "nb_gain": 2.02,
+  "style_gain_sd0.05": -0.0048,
+  "style_gain_sd0.1": -0.0154,
+  "style_gain_sd0.2": -0.0405
+ }
+}

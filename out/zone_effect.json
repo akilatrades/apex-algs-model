@@ -1,0 +1,29 @@
+{
+ "d_end": {
+  "beta": 0.035,
+  "beta_sd": 0.012,
+  "fit_games": 174,
+  "lan_games": 63,
+  "lan_gain": 0.0295,
+  "pl_games": 71,
+  "pl_gain": 0.0755
+ },
+ "d_r2": {
+  "beta": 0.032,
+  "beta_sd": 0.013,
+  "fit_games": 174,
+  "lan_games": 63,
+  "lan_gain": 0.0171,
+  "pl_games": 71,
+  "pl_gain": 0.0665
+ },
+ "d_r1": {
+  "beta": 0.038,
+  "beta_sd": 0.017,
+  "fit_games": 174,
+  "lan_games": 63,
+  "lan_gain": 0.0134,
+  "pl_games": 71,
+  "pl_gain": 0.0555
+ }
+}

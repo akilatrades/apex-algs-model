@@ -47,3 +47,9 @@ are known (kernel-weighted past games). Data: placement.gg's public ring archive
 `scrape/placement_rings.js`; 6,042 games on current ring settings, ~420 tagged ALGS Year 6) on the frame of the
 apexlegendsstatus.com landing-spot outlines (`data/rings/poi_outlines.txt`). Held-out check in `out/rings_check.json`:
 after ring 2 the likeliest spot is right 63-82% of the time and the top three 97-99%. Credit placement.gg on anything public.
+
+## Zone, kills, scrim weight, prediction ledger (25 Nov 2026)
+- `zone_effect.py` / `zone_backtest.py`: links 308 ALGS games (apexlegendsstatus game ids, `data/rings/als_game_ids.txt`) to their ring sequences (`data/rings/algs_tagged.txt`, placement.gg) and every team's landing spot (`data/rings/als_game_drops.txt`). Landing closer to the zone helps; the effect sizes are in `out/zone_effect.json`. The Champs sim draws a final zone per game ("zone luck", centred so it does not double count ratings); the Broadcast Desk applies ring 1 / ring 2 to "Wins next game".
+- `kills_joint.py`: kills are lumpier than Poisson (negative binomial, r ≈ 3.7), now used in all sims. A per-team "early vs late kills" slope did not help.
+- `scrim_check.py`: tests the scrim weight automatically once 60 scrim games exist (nightly).
+- `ledger.py`: locks the Champs odds on the first nightly run on/after 26 Jan 2027 (`data/ledger/y6_champs.json`, never edited after) and scores them once `data/ledger/y6_champs_results.txt` exists.

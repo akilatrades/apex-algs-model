@@ -218,6 +218,14 @@ a{color:var(--teal)}hr{border:0;border-top:1px solid var(--line);margin:0}
 </section>
 <hr>
 
+<section class="band" id="ledger">
+  <h2>Our locked Champs picks</h2>
+  <p id="lg-text"></p>
+  <div class="scroll"><table id="lg-table"></table></div>
+  <p class="small mute" id="lg-scrim"></p>
+</section>
+<hr>
+
 <section class="band" id="calib">
   <h2>Did we get it right?</h2>
   <p>Before trusting a percentage, check it. We rated teams using only earlier games, then looked at <span id="cb-n"></span> games the model hadn't seen: the Split 2 Playoffs and the second half of Pro League. We sorted every team-game by how likely we said something was, split them into five equal groups, and counted how often it actually happened.</p>
@@ -307,7 +315,10 @@ $('#rk-show').onchange = drawRank; $('#rk-reg').onchange = drawRank; drawRank();
 const lobby = [...F].sort((a, b) => b.power - a.power).slice(0, 20);
 $('#s-team').innerHTML = lobby.map(t => `<option>${esc(t.team)}</option>`).join('');
 const gum = () => -Math.log(-Math.log(Math.random() || 1e-12));
-function pois(mu){ const L = Math.exp(-mu); let k = 0, p = 1; do { k++; p *= Math.random(); } while (p > L); return k - 1; }
+function pois0(mu){ const L = Math.exp(-mu); let k = 0, p = 1; do { k++; p *= Math.random(); } while (p > L); return k - 1; }
+function gam(a){ const d = a - 1/3, c = 1/Math.sqrt(9*d); for(;;){ let x, v; do { const u1 = Math.random(), u2 = Math.random(); x = Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2); v = 1 + c*x; } while (v <= 0); v = v*v*v; const u = Math.random(); if (Math.log(u) < 0.5*x*x + d - d*v + d*Math.log(v)) return d*v; } }
+const KILL_R = (D.meta && D.meta.kill_r) || 3.7;   // kills are lumpy: some games a team finds three fights, some none
+function pois(mu){ return pois0(mu * gam(KILL_R) / KILL_R); }
 function sim(){
   const w = +$('#s-skill').value, thr = +$('#s-thr').value, bt = $('#s-team').value, boost = +$('#s-boost').value / M.pts_per_strength, n = 3000, N = 20;
   const th = lobby.map(t => w * t.strength + (t.team === bt ? boost : 0)), ks = lobby.map(t => w * t.kill_skill), win = new Array(N).fill(0), idx = [...Array(N).keys()]; let games = 0;
@@ -453,8 +464,21 @@ $('#fixes').innerHTML = [
   `<strong>Match point is learned, not guessed.</strong> On match point, teams finish higher than their rating says, probably by playing safe. But they win the game itself no more often: ${D.mp_all.wins} wins from ${D.mp_all.games} tries in ${D.mp_all.finals} finals, against ${D.mp_all.expected.toFixed(1)} expected from their ratings. So no team gets a match-point bonus in the title odds.`,
   `<strong>Boom-or-bust labels.</strong> Each team is marked Steady, Typical or Boom or bust from how much its finishes swing compared with its rating. It only weakly repeats from one set of games to the next, so it's a label, not part of the odds.`,
   `<strong>A "did we get it right?" check</strong> on ${D.calibration.n_games} games the model hadn't seen. The new model scores ${pct((B.gain_v2 - B.gain_prev) / B.gain_prev)} better than the last one at LAN.`,
+  ...(D.zone_model && D.zone_model.fit ? [`<strong>The zone is in the model.</strong> We matched ${D.zone_model.fit.d_end.fit_games + D.zone_model.fit.d_end.lan_games + D.zone_model.fit.d_end.pl_games} ALGS games to where their rings went. Teams whose landing spot is close to the final zone do finish higher: the closest fifth averaged ${D.zone_model.quint[0].toFixed(1)} in the finishing order, the furthest fifth ${D.zone_model.quint[4].toFixed(1)}. In the Champs odds, every simulated game now draws a final zone from that map's history, so a team can get lucky or unlucky with the zone. On the Broadcast Desk, set ring 1 or ring 2 on the Zone tab and "Wins next game" adjusts.`] : []),
+  ...(D.meta.kill_r ? [`<strong>Kills are lumpier than we assumed.</strong> Some games a team finds three fights, some games none. The odds now allow for that, which spreads points out a little and gives long shots slightly more hope.`] : []),
+  ...(D.form_drift ? [`<strong>How much can a team change at a LAN?</strong> We measured it on the Split 2 Playoffs: a team's real level moved by about ${(D.form_drift['Split 2 Playoffs (LAN)'].sd_shift * D.meta.pts_per_strength).toFixed(1)} points a game from its rating. The live tracker now uses that measured amount when it updates ratings during an event.`] : []),
+  ...(D.win_sharp ? [`<strong>Are favourites under-rated?</strong> We tested backing favourites to win games more often. It didn't help on games it hadn't seen, so the odds stay as they are.`] : []),
   `<strong>Still counted from before:</strong> ${M.n_games} games (${src.lan} at LAN, ${src.pro_league + src.pl_s1} Pro League over both splits, ${src.lcq} LCQ finals, ${src.scrim || 0} scrims). Teams are matched across name changes by their players, and teams with no LAN record get a small deduction.`].map(x => `<li>${x}</li>`).join('');
 $('#c-tot').textContent = M.totals_checked;
+{ const L = D.ledger || {}, SC = D.scrim_check;
+  const dl = new Date(L.lock_on + 'T12:00:00Z').toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric'});
+  if (!L.locked) { $('#lg-text').innerHTML = `On ${esc(dl)}, the night before Champs starts, the model will lock its title odds and save them where they can't be changed. After the event we'll score those locked picks against what happened, so you can see how good it really is. Until then, the odds on this page keep updating with new scrims.`; $('#lg-table').innerHTML = ''; }
+  else { const sc = L.score;
+    $('#lg-text').innerHTML = `Locked ${esc(new Date(L.locked_at).toUTCString().slice(5, 22))} UTC (fingerprint ${esc(L.fingerprint)}). These are the odds the model gave before a single Champs game was played.` +
+      (sc ? ` <strong>Result:</strong> ${esc(sc.winner)} won. We gave them ${pct(sc.winner_p, 1)}, ${sc.winner_vs_even}× the chance if every team were equal; they were our number ${sc.winner_rank} pick.` + (sc.finals_k ? ` ${sc.finals_hits} of our top ${sc.finals_k} made the final.` : '') : ' Scores will appear here after the event.');
+    $('#lg-table').innerHTML = `<tr><th class="l">Team</th><th>Reach the final</th><th>Win the title</th></tr>` + L.top.map(t => `<tr><td class="l">${esc(t.team)}</td><td>${pct(t.p_finals)}</td><td>${pct(t.p_win, 1)}</td></tr>`).join(''); }
+  if (SC) $('#lg-scrim').textContent = SC.status === 'waiting' ? `Scrims count half as much as official games. Once there are ${SC.need} scrim games (we have ${SC.games}), the model will test whether that's the right amount, using newer scrims it hasn't seen.`
+    : `Scrim weight check on ${SC.test_games} newer scrim games: the data prefers counting a scrim as ${SC.best} of an official game (we use ${SC.in_use}).`; }
 $('#dk-scrims').textContent = `How teams have been practising lately, beyond ${(src.scrim || 0)} scrim games.`;
 { const TR = B.trials || [], base = TR.find(r => r.config.startsWith('Before')), sc = B.swing_check;
   const rel = (v, b) => { const d = (v - b) / b; return Math.abs(d) < 0.005 ? 'Same' : (d > 0 ? 'Better' : 'Worse') + ` (${d > 0 ? '+' : '−'}${Math.round(100 * Math.abs(d))}%)`; };
@@ -463,6 +487,14 @@ $('#dk-scrims').textContent = `How teams have been practising lately, beyond ${(
   const keep = {'+ team strength by map': 'No', '+ ratings follow players': 'Yes', '+ shared landing spot': 'Yes', '+ match point': 'In ratings only', 'New model (players + spot + match point)': 'Yes'};
   const rows = TR.filter(r => r !== base).map(r => [what[r.config] || r.config, rel(r.lan_gain, base.lan_gain), rel(r.pl_gain, base.pl_gain), keep[r.config]]);
   if (sc) rows.splice(1, 0, ['Wider swings for boom-or-bust teams', sc.lan_gain < 0 ? 'Worse' : 'Better', sc.pl_gain < 0 ? 'Worse' : 'Better', 'Label only']);
+  const nm = TR.find(r => r.config.startsWith('New model')), Z = D.zone_model && D.zone_model.fit, K = D.kills_model && D.kills_model.check, WS = D.win_sharp;
+  if (nm && Z){ const z = (k, w) => rel(nm[w + '_gain'] + Z[k][w + '_gain'], nm[w + '_gain']);
+    rows.push(['Landing near ring 1 (known soon after the drop)', z('d_r1', 'lan'), z('d_r1', 'pl'), 'Live tracker']);
+    rows.push(['Landing near ring 2 (known mid-game)', z('d_r2', 'lan'), z('d_r2', 'pl'), 'Live tracker']);
+    rows.push(['Landing near where the zone ends (only known after)', z('d_end', 'lan'), z('d_end', 'pl'), 'As zone luck']); }
+  if (WS) rows.push(['Backing favourites to win games more often', Math.abs(WS.lan_ll_after - WS.lan_ll_before) < 0.5 ? 'Same' : (WS.lan_ll_after > WS.lan_ll_before ? 'Better' : 'Worse'), 'Fitted here', 'No']);
+  if (K) rows.push(['Lumpy kills (some games three fights, some none)', 'Kills ' + (K.lan.nb_gain > 0 ? 'better' : 'worse'), 'Kills ' + (K.pl.nb_gain > 0 ? 'better' : 'worse'), 'Yes']);
+  if (K) rows.push(['Teams that get their kills early vs late', K.lan['style_gain_sd0.05'] > 0.01 ? 'Better' : 'Same', (K.pl['style_gain_sd0.05'] ?? 0) > 0.01 ? 'Better' : 'Same', 'No']);
   $('#tried').innerHTML = `<tr><th class="l">Idea</th><th class="l">At LAN</th><th class="l">In Pro League</th><th class="l">Kept?</th></tr>` +
     rows.map(r => `<tr><td class="l" style="white-space:normal">${esc(r[0])}</td><td class="l">${r[1]}</td><td class="l">${r[2]}</td><td class="l"><span class="verdict ${r[3] === 'No' || r[3] === 'Label only' ? 'n' : 'y'}">${r[3]}</span></td></tr>`).join(''); }
 }

@@ -121,6 +121,7 @@ a{color:var(--bar)}
 <section id="zone">
   <h2>Where will the zone end?</h2>
   <p class="mute">Pick the map, then click where ring 1 is centred (or choose the nearest landing spot), then ring 2. The list shows where games that started that way finished, and which Champs teams usually land there. Shading = where final zones ended (darker = more often). Built from <span id="z-n"></span> recorded games on current ring settings (placement.gg).</p>
+  <p class="mute">This map follows "Next game's map" on the Live tracker. Once you place ring 1 or ring 2 here, "Wins next game" there gives a small boost to teams who usually land close to the ring.</p>
   <div id="zw"></div>
 </section>
 
@@ -189,7 +190,7 @@ function sharedIn(lobby, map){ const by = {}, out = {};
   lobby.forEach(t => { const sp = (FT[t] && FT[t].spots || {})[map]; if (sp) (by[sp] = by[sp] || []).push(t); });
   Object.entries(by).forEach(([sp, ts]) => { if (ts.length > 1) ts.forEach(t => out[t] = {spot: sp, with: ts.filter(x => x !== t)}); });
   return out; }
-const FORM_SD = 0.1;
+const FORM_SD = D.meta.form_sd ?? 0.056;
 function liveTheta(){
   const th0 = Object.fromEntries(F.map(t => [t.team, t.s]));
   if (!S.upd || !S.log.length) return th0;
@@ -209,9 +210,12 @@ function liveTheta(){
   return th;
 }
 let TH = liveTheta();
-// FORM_SD: how far a team's level can move between events on top of what we're unsure about (judgment: about 0.4 points a game).
+// FORM_SD: how far a team's level moves at a LAN beyond our rating uncertainty. Measured on the Split 2 Playoffs (form_drift.py).
 const gumbel = () => -Math.log(-Math.log(Math.random() || 1e-12));
-function pois(mu){ const L = Math.exp(-mu); let k = 0, p = 1; do { k++; p *= Math.random(); } while (p > L); return k - 1; }
+function pois0(mu){ const L = Math.exp(-mu); let k = 0, p = 1; do { k++; p *= Math.random(); } while (p > L); return k - 1; }
+function gam(a){ const d = a - 1/3, c = 1/Math.sqrt(9*d); for(;;){ let x, v; do { const u1 = Math.random(), u2 = Math.random(); x = Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2); v = 1 + c*x; } while (v <= 0); v = v*v*v; const u = Math.random(); if (Math.log(u) < 0.5*x*x + d - d*v + d*Math.log(v)) return d*v; } }
+const KILL_R = (D.meta && D.meta.kill_r) || 3.7;   // kills are lumpy: some games a team finds three fights, some none
+function pois(mu){ return pois0(mu * gam(KILL_R) / KILL_R); }
 function simulate(n){
   const L = S.lobby, N = L.length, th = L.map(t => TH[t]), ks = L.map(t => FT[t].ks), base = L.map(P);
   const win = new Array(N).fill(0), ex = new Array(N).fill(0), idx = [...Array(N).keys()]; let glen = 0;
@@ -225,7 +229,14 @@ function simulate(n){
       const r = idx.slice().sort((a, b) => tot[b] - tot[a] || Math.random() - .5); for (let k = 0; k < Math.min(S.topk, N); k++) win[r[k]]++; tot.forEach((v, i) => ex[i] += v); } }
   return {p: Object.fromEntries(L.map((t, i) => [t, win[i] / n])), ex: Object.fromEntries(L.map((t, i) => [t, ex[i] / n])), glen: glen / n};
 }
-function nextWin(){ const c = sharedIn(S.lobby, S.map), e = S.lobby.map(t => Math.exp(TH[t] + (c[t] ? BC : 0))), sum = e.reduce((a, b) => a + b, 0); return Object.fromEntries(S.lobby.map((t, i) => [t, e[i] / sum])); }
+// Zone: when ring 1 / ring 2 are set on the Zone tab for this map, teams whose usual spot is closer to the ring than the
+// lobby average get a small boost for the next game (measured on past ALGS games, zone_backtest.py).
+let ZR = null;
+function zoneX(lobby){ if (!ZR || ZR.map !== S.map || !ZR.r1) return null; const c = ZR.r2 || ZR.r1, b = (D.meta.zone || {})[ZR.r2 ? 'r2' : 'r1'] || 0;
+  const d = lobby.map(t => { const sp = (FT[t] && FT[t].spots || {})[S.map], q = sp && ZR.cent[sp]; return q ? Math.hypot(q[0] - c[0], q[1] - c[1]) : null; });
+  const ok = d.filter(v => v != null); if (ok.length < 2) return null; const m = ok.reduce((a, v) => a + v, 0) / ok.length;
+  return {b, d, x: d.map(v => v == null ? 0 : (m - v) / 0.1)}; }
+function nextWin(){ const c = sharedIn(S.lobby, S.map), z = zoneX(S.lobby), e = S.lobby.map((t, i) => Math.exp(TH[t] + (c[t] ? BC : 0) + (z ? z.b * z.x[i] : 0))), sum = e.reduce((a, b) => a + b, 0); return Object.fromEntries(S.lobby.map((t, i) => [t, e[i] / sum])); }
 function renderChips(){
   $('#chips').innerHTML = [...F].sort((a, b) => a.team.localeCompare(b.team)).map(t => `<button type="button" aria-pressed="${S.lobby.includes(t.team)}" data-team="${esc(t.team)}">${esc(t.team)}</button>`).join('');
   $('#chips').querySelectorAll('button').forEach(b => b.onclick = () => { const t = b.dataset.team, i = S.lobby.indexOf(t);
@@ -277,6 +288,8 @@ function renderLive(){
     if (bub.length) tp.push(`On the bubble: ${bub.map(t => `${esc(t)} (${pct(sim.p[t])})`).join(', ')}.`);
     const safe = rows.filter(t => sim.p[t] >= .95); if (safe.length) tp.push(`Effectively through: ${safe.map(esc).join(', ')}.`);
   }
+  { const z = zoneX(S.lobby); if (z){ const o = S.lobby.map((t, i) => [t, z.d[i]]).filter(r => r[1] != null).sort((a, b) => a[1] - b[1]);
+    tp.push(`Zone (${ZR.r2 ? 'ring 2' : 'ring 1'} set on the Zone tab): teams who usually land closest are ${o.slice(0, 3).map(r => esc(r[0])).join(', ')}; furthest away are ${o.slice(-2).map(r => esc(r[0])).join(' and ')}. "Wins next game" includes this. It is a small edge: for the closest team here that is worth about ${(z.b * Math.max(...z.x) * PPS).toFixed(1)} points next game.`); } }
   const pairs = {}; Object.entries(SH).forEach(([t, v]) => { (pairs[v.spot] = pairs[v.spot] || new Set()).add(t); });
   Object.entries(pairs).forEach(([sp, ts]) => tp.push(`On ${esc(S.map)}, ${[...ts].map(esc).join(' and ')} ${ts.size === 2 ? 'both' : 'all'} usually land at ${esc(sp)}. Sharing a spot has cost teams about ${Math.abs(D.v3.pts_clash).toFixed(1)} points a game.`));
   if (S.upd && S.log.length){ const mv = rows.map(t => [t, (TH[t] - FT[t].s) * PPS]).sort((a, b) => b[1] - a[1]);
@@ -450,9 +463,9 @@ renderGroups();
 $('#m-reg').onchange = renderMissed; $('#m-min').onchange = renderMissed;
 
 renderAll(); renderField(); renderCmp(); renderMissed();
-{ const zw = ZoneWidget(document.getElementById('zw'), D.zone, {teams: Object.fromEntries(F.map(t => [t.team, t.spots || {}]))});
+{ const zw = ZoneWidget(document.getElementById('zw'), D.zone, {teams: Object.fromEntries(F.map(t => [t.team, t.spots || {}])), onRings: r => { ZR = r; if (typeof renderLive === 'function' && $('#lt')) renderLive(); }});
   $('#z-n').textContent = Object.values(D.zone.maps).reduce((a, m) => a + m.n, 0).toLocaleString();
-  $('#nmap').addEventListener('change', e => zw.setMap(e.target.value)); }
+  $('#nmap').addEventListener('change', e => zw.setMap(e.target.value)); zw.setMap(S.map); }
 }
 </script>
 </body></html>

@@ -63,7 +63,13 @@ def main(paths):
     report.append("re-check next run: " + (", ".join(B.recheck_keys()) or "none"))
 
     report.append(run(["tests.py"]).strip().splitlines()[-1])
+    run(["scrim_check.py"])
+    sc = json.loads((OUT / "scrim_check.json").read_text())
+    report.append(f"scrim weight check: waiting ({sc['games']} of {sc['need']} games)" if sc["status"] == "waiting"
+                  else f"scrim weight check: data prefers weight {sc['best']} (in use {sc['in_use']})" + ("" if sc["agrees"] else "  <- consider changing scrims.SCRIM_WEIGHT"))
     run(["analysis.py"])
+    import ledger
+    report += ledger.auto()
     run(["build_page.py"])
     run(["build_broadcast.py"])
 

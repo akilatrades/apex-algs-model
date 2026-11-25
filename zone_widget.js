@@ -126,6 +126,7 @@ function ZoneWidget(root, ZD, opt) {
       list.map(([s, p]) => `<div class="zw-row"><span class="zn">${esc(s)}</span><span class="zb"><i style="width:${(100 * p / mx).toFixed(1)}%"></i></span><span class="zv">${pct(p)}</span></div>${tm[s] ? `<div class="zw-teams">Lands here: ${tm[s].map(esc).join(', ')}</div>` : ''}`).join('');
     $('.zw-foot').innerHTML = `How sure? Tested on past games it hadn't seen: after ring 1 the top spot was right ${pct(ck.r1_top1)} of the time and the top three ${pct(ck.r1_top3)}; after ring 2, ${pct(ck.top1)} and ${pct(ck.top3)}. From map history alone it would be ${pct(ck.top1_base)} and ${pct(ck.top3_base)}. Ring data: ${esc(ZD.source)} (${d.n.toLocaleString()} recorded games on current ring settings, ${(ZD.maps[S.map].algs ? ZD.maps[S.map].algs.split(',').length : 0)} of them ALGS). Landing-spot outlines: apexlegendsstatus.com.`;
     $('.zw-r1sel').value = ''; $('.zw-r2sel').value = '';
+    if (opt.onRings) opt.onRings({map: S.map, r1: S.r1, r2: S.r2, cent: d.cent});
   }
   svg.addEventListener('click', e => { const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY; const q = p.matrixTransform(svg.getScreenCTM().inverse()); place([Math.max(0, Math.min(1, q.x)), Math.max(0, Math.min(1, q.y))]); });
   $('.zw-mapsel').onchange = e => { S.map = e.target.value; S.r1 = S.r2 = null; fillSel(); draw(); };

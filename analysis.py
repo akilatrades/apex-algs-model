@@ -14,6 +14,7 @@ Model (v2):
   * Ratings are reported in plain units: expected points per game in a Championship lobby.
 """
 import json, os, numpy as np, pandas as pd
+from pathlib import Path
 from math import lgamma
 from scipy.optimize import minimize_scalar
 from scipy.stats import f as fdist
@@ -165,6 +166,16 @@ def team_strength(F, t):
 strength = {t: team_strength(F3, t) for t in teams_sorted}
 gmeans = F3["group"]
 base, kskill = M.fit_kills(df, sigma=0.15)
+# kills are lumpier than a plain count (some games a team finds three fights, some none): negative binomial, see kills_joint.py
+from kills_joint import nb_ll as _nbll
+from scipy.optimize import minimize_scalar as _ms
+_mu = np.exp(base[df.placement.values] + df.team.map(kskill).fillna(0).values)
+KILL_R = float(np.exp(_ms(lambda lr: -_nbll(df.kills.values, _mu, np.exp(lr)), bounds=(-1, 6), method="bounded").x))
+
+
+def kdraw(rng, mu):
+    """kills: count with lumpiness (gamma-mixed Poisson = negative binomial, shape KILL_R)"""
+    return rng.poisson(mu * rng.gamma(KILL_R, 1 / KILL_R, np.shape(mu)))
 by_gid = {g: d for g, d in df.groupby("game_id")}; gids = df.game_id.unique()
 NB = 100
 boot = np.zeros((NB, len(teams_sorted)))
@@ -194,7 +205,7 @@ def power(theta, ks, n=6000):
     pick = np.argsort(rng.random((n, len(CHAMPS))), 1)[:, :19]
     z = np.concatenate([np.full((n, 1), theta), others[pick]], 1) + rng.gumbel(size=(n, 20))
     place = 1 + (z[:, 1:] > z[:, :1]).sum(1)
-    pts = M.PTS[place] + rng.poisson(np.exp(base[place] + ks))
+    pts = M.PTS[place] + kdraw(rng, np.exp(base[place] + ks))
     return float(pts.mean()), float((place == 1).mean())
 
 
@@ -231,6 +242,36 @@ for k, t in enumerate(CHAMPS):
             SPOT[k, j] = SPOT_NAMES.index(DROPS[t][m]) + 1000 * j
 
 
+# ---- zone: distance from each team's usual spot to where past ALGS final zones ended (placement.gg, see zone_effect.py) ----
+import json as _json, rings as _RG
+ZONE = _json.load(open("out/zone_effect.json")) if Path("out/zone_effect.json").exists() else None
+B_ZONE = ZONE["d_end"]["beta"] if ZONE else 0.0
+_RD, _PO = _RG.load(), _RG.outlines()
+ZD = {}            # map -> (k past end zones, 40 teams) distances, nan if spot unknown
+for j, m in enumerate(MAP_LIST):
+    ends = _RD[m]["end"][_RD[m]["algs"]] if _RD[m]["algs"].sum() >= 50 else _RD[m]["end"]
+    cen = {n: p.mean(0) for n, p in _PO[m]}
+    c = np.array([cen.get(DROPS.get(t, {}).get(m), (np.nan, np.nan)) for t in CHAMPS])
+    ZD[m] = np.hypot(ends[:, None, 0] - c[None, :, 0], ends[:, None, 1] - c[None, :, 1])
+
+
+def zone_x(lobby, mapname, r):
+    """Per simulated game: draw a final zone from this map's ALGS history; x = how much closer than the lobby average the
+    team's spot is (per 10% of map width), minus what that team gets on average -> zone luck only, no double counting."""
+    D = ZD[mapname]; d = D[r.integers(0, len(D), len(lobby))[:, None], lobby]; dbar = np.nanmean(D, 0)[lobby]
+    x = (np.nanmean(d, 1, keepdims=True) - d) - (np.nanmean(dbar, 1, keepdims=True) - dbar)
+    return np.nan_to_num(x / 0.1)
+
+
+def zone_pull(t):
+    """How often the zone ends close (within 15% of the map width) to this team's usual spot, per map."""
+    k = CHAMPS.index(t); o = {}
+    for m in MAP_LIST:
+        col = ZD[m][:, k]
+        if not np.isnan(col).all(): o[m] = round(float((col < 0.15).mean()), 3)
+    return o
+
+
 def clash_mask(lobby, mapname):
     """(n, L) array of lobby team indices -> True where the team's usual spot on this map is also another lobby team's."""
     sp = SPOT[lobby, MAP_LIST.index(mapname)]
@@ -248,7 +289,7 @@ def clash_partners():
     return out
 
 
-def champs_forecast(n=8000, seed=11, use_clash=True, use_mp=True):
+def champs_forecast(n=8000, seed=11, use_clash=True, use_mp=True, use_zone=True):
     """Y6S2 Playoffs format: 4 groups of 10, round robin (6 series x 6 games) -> top 20 to Winners Round, bottom 20 to Losers R1
     -> WR bottom 10 + LR1 top 10 play Losers R2 -> WR top 10 + LR2 top 10 in Match Point Finals (50 pts, then win a game).
     Maps follow the Split 2 Playoffs rotation. Teams whose usual landing spot is shared with another team in the lobby get the
@@ -257,15 +298,15 @@ def champs_forecast(n=8000, seed=11, use_clash=True, use_mp=True):
     r = np.random.default_rng(seed); S = len(CHAMPS)
     TH = boot_lan[r.integers(0, NB, n)][:, fidx]                       # (n, 40) strength draw per simulation
     ks = np.array([kskill[t] for t in CHAMPS]); rows_ = np.arange(n)[:, None]
-    bc = B_CLASH if use_clash else 0.0; bm = B_MP if use_mp else 0.0
+    bc = B_CLASH if use_clash else 0.0; bm = B_MP if use_mp else 0.0; bz = B_ZONE if use_zone else 0.0
 
     def series(lobby, maps):
         pts = np.zeros(lobby.shape); th = np.take_along_axis(TH, lobby, 1)
         for m in maps:
-            u = th + bc * clash_mask(lobby, m)
+            u = th + bc * clash_mask(lobby, m) + bz * zone_x(lobby, m, r)
             place = np.empty(lobby.shape, int)
             place[rows_, np.argsort(-(u + r.gumbel(size=lobby.shape)), 1)] = np.arange(1, lobby.shape[1] + 1)
-            pts += M.PTS[place] + r.poisson(np.exp(base[place] + ks[lobby]))
+            pts += M.PTS[place] + kdraw(r, np.exp(base[place] + ks[lobby]))
         return pts
 
     ranked = lambda lobby, pts: np.take_along_axis(lobby, np.argsort(-(pts + r.random(pts.shape) * 1e-3), 1), 1)
@@ -283,12 +324,12 @@ def champs_forecast(n=8000, seed=11, use_clash=True, use_mp=True):
         i = np.where(alive)[0]
         if not len(i): break
         lob = fin[i]; m = ROT["finals"][gno % len(ROT["finals"])]
-        u = thf[i] + bc * clash_mask(lob, m) + bm * (totf[i] >= 50)
+        u = thf[i] + bc * clash_mask(lob, m) + bm * (totf[i] >= 50) + bz * zone_x(lob, m, r)
         order = np.argsort(-(u + r.gumbel(size=lob.shape)), 1)
         place = np.empty(lob.shape, int); place[np.arange(len(i))[:, None], order] = np.arange(1, 21)
         first = order[:, 0]; elig = totf[i, first] >= 50
         np.add.at(wins, lob[np.arange(len(i)), first][elig], 1)
-        totf[i] += M.PTS[place] + r.poisson(np.exp(base[place] + ks[lob]))
+        totf[i] += M.PTS[place] + kdraw(r, np.exp(base[place] + ks[lob]))
         alive[i[elig]] = False
     assert abs(wins.sum() - n) < 1 and made.sum() == 20 * n               # every simulation has exactly one champion, 20 finalists
     return {t: dict(p_finals=float(made[k] / n), p_win=float(wins[k] / n)) for k, t in enumerate(CHAMPS)}
@@ -426,7 +467,13 @@ n_chk, bad_chk, _ = deep.crosscheck()
 
 src = df.groupby("source").game_id.nunique().to_dict()
 out = dict(
-    meta=dict(n_games=int(df.game_id.nunique()), n_teams=int(df.team.nunique()), by_source=src, fetched="2026-11-24", sigma=SIGMA,
+    win_sharp=json.load(open('out/win_sharpness.json')) if os.path.exists('out/win_sharpness.json') else None,
+    form_drift=json.load(open('out/form_drift.json')) if os.path.exists('out/form_drift.json') else None,
+    scrim_check=json.load(open('out/scrim_check.json')) if os.path.exists('out/scrim_check.json') else None,
+    kills_model=dict(r=KILL_R, check=json.load(open('out/kills_joint.json')) if os.path.exists('out/kills_joint.json') else None),
+    zone_model=dict(beta=B_ZONE, quint=__import__('zone_effect').quintiles(), fit=ZONE, pull={t: zone_pull(t) for t in CHAMPS},
+                    spot_dist={m: [None if np.isnan(v) else round(float(v), 3) for v in np.nanmean(ZD[m], 0)] for m in MAP_LIST}),
+    meta=dict(kill_r=KILL_R, b_zone=B_ZONE, n_games=int(df.game_id.nunique()), n_teams=int(df.team.nunique()), by_source=src, fetched="2026-11-24", sigma=SIGMA,
               beta=BETA, avg_power=avg_power, pts_per_strength=float((f_pts(0.45) - f_pts(0.05)) / 0.4), icc_lan=icc_lan, icc_pl=icc_pl, F_lan=F_lan, F_pl=F_pl,
               totals_checked=n_chk, totals_bad=len(bad_chk), n_no_lan_field=int(sum(r["no_lan"] for r in teams_out if r["in_field"])),
               stages=[dict(stage=s["stage"], url=s["url"], games=len(s["maps"])) for s in stages]),

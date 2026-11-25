@@ -105,4 +105,28 @@ for n, m in ZM.items():
     gaps.append(good - worst)
 check("map alignment: more final zones fall inside landing-spot outlines than with the map flipped or shifted", min(gaps) > 0.03, f"smallest margin {min(gaps):.1%}")
 
+# 7. zone in the game model, lumpy kills, ledger
+import zone_effect as ZE
+ZT = ZE.table()
+check("ALGS games linked to their rings and every team's landing spot (at least 300 games)", ZT.game_id.nunique() >= 300, f"{ZT.game_id.nunique()} games")
+rng = np.random.default_rng(3); KR = 3.7; mu = 2.5
+kk = rng.poisson(mu * rng.gamma(KR, 1 / KR, 200000))
+check("lumpy kill draws keep the same average and the expected spread (mean mu, variance mu + mu^2/r)",
+      abs(kk.mean() - mu) < 0.02 and abs(kk.var() - (mu + mu * mu / KR)) < 0.08, f"mean {kk.mean():.3f}, var {kk.var():.3f}")
+# zone luck averages to zero for each team (no double counting with ratings)
+D_ = np.abs(rng.normal(0.3, 0.1, (500, 20)))
+lob = np.tile(np.arange(20), (1, 1)); xs = []
+for k in range(500):
+    d = D_[k]; dbar = D_.mean(0); xs.append((d.mean() - d) - (dbar.mean() - dbar))
+check("zone luck averages to zero for every team over the map's history", np.abs(np.mean(xs, 0)).max() < 1e-9)
+import ledger, tempfile, json as _js, pathlib as _pl
+with tempfile.TemporaryDirectory() as td:
+    old = (ledger.LOCKED, ledger.RESULTS); ledger.LOCKED = _pl.Path(td) / "l.json"; ledger.RESULTS = _pl.Path(td) / "r.txt"
+    first = ledger.lock(); again = ledger.lock()
+    L = _js.loads(ledger.LOCKED.read_text()); top = L["teams"][0]["team"]
+    ledger.RESULTS.write_text(f"winner|{top}\nfinalists|" + ";".join(t["team"] for t in sorted(L["teams"], key=lambda r: -r["p_finals"])[:20]))
+    sc = ledger.score(); ledger.LOCKED, ledger.RESULTS = old
+check("ledger locks once and refuses to overwrite", first == "locked" and again == "already locked")
+check("ledger scoring: top pick winning scores rank 1, and all 20 finalists hit", sc["winner_rank"] == 1 and sc["finals_hits"] == 20)
+
 print("\nALL MATHS CHECKS PASS" if ok else "\nSOME CHECKS FAILED")

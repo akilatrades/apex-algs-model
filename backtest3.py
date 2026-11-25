@@ -66,6 +66,8 @@ CONFIGS = {   # label shown on the page -> settings
     "+ match point":                     dict(sig_team=0.15, fit_beta=(False, True)),
     "New model (players + spot + match point)": dict(sig_team=0.15, sig_player=0.20, fit_beta=(True, True)),
 }
+SPREAD_TRIALS = {f"spread {s}": dict(sig_team=s, sig_player=p, fit_beta=(True, True))
+                 for s, p in [(0.2, 0.2), (0.25, 0.2), (0.3, 0.2), (0.25, 0.3), (0.35, 0.25)]}
 
 if __name__ == "__main__":
     t0 = time.time()
@@ -81,13 +83,15 @@ if __name__ == "__main__":
     testB = pl[(day >= 7) | pl.stage.str.endswith("FINALS")]
     trainB = df[use & ((df.order < 2.5) | ((df.source == "pro_league") & df.game_id.isin(pl[day <= 6].game_id)))]
     lanB = set(trainB[trainB.source == "lan"].team)
+    ALL = {**CONFIGS, **SPREAD_TRIALS}
     only = sys.argv[1:] or list(CONFIGS)
     res = []
     for name in only:
-        kw = CONFIGS[name]
+        kw = ALL[name]
         FA = run_fit(trainA, lanA, reg, **kw); gA, bA = score(FA, testA, debut)
         FB = run_fit(trainB, lanB, reg, **kw); gB, _ = score(FB, testB)
         r = dict(config=name, lan_gain=round(gA, 4), pl_gain=round(gB, 4), beta_debut=round(float(bA), 3),
                  clash=round(float(FA["beta"]["clash"]), 3), mp=round(float(FA["beta"]["mp"]), 3), ok=FA["ok"] and FB["ok"])
         res.append(r); print(r, f"{time.time() - t0:.0f}s", flush=True)
-    json.dump(res, open("out/backtest3.json", "w"), indent=1)
+    if not sys.argv[1:]:
+        json.dump(res, open("out/backtest3.json", "w"), indent=1)

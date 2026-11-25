@@ -5,6 +5,11 @@ from load import load
 import features as FE
 R = json.load(open("out/results.json"))
 DROPS = FE.champs_drops()
+# How far a team's level moves at a LAN beyond our own rating uncertainty, measured in form_drift.py
+import numpy as _np
+_lan = json.load(open("out/form_drift.json"))["Split 2 Playoffs (LAN)"]["sd_shift"]
+_boot = _np.mean([t["sd"] ** 2 for t in R["teams"] if t["in_field"]])
+FORM_SD = round(float(_np.sqrt(max(0.0, _lan ** 2 - _boot))), 4)
 df, stages = load(include_scrims=True)
 T = {t["team"]: t for t in R["teams"]}
 field = [t["team"] for t in R["teams"] if t["in_field"]]
@@ -48,7 +53,9 @@ missed = [row(t["team"]) for t in R["teams"] if t["team"] in recent and t["team"
 for m in missed:
     for k in ["players", "hist", "fin", "tl", "maps", "sw", "mp", "bu", "cp", "spots", "plain"]: m.pop(k)
 data = dict(field=F, missed=missed, h2h=h2h, kb=R["kill_base"], pts=R["place_pts"], champions=champions, legends=R["legends"], comps=R["comps"], guns=R["guns"], poi=R["poi"],
-            meta=dict(games=R["meta"]["n_games"], avg=R["meta"]["avg_power"], fetched=R["meta"]["fetched"], pps=R["meta"]["pts_per_strength"]),
+            meta=dict(games=R["meta"]["n_games"], avg=R["meta"]["avg_power"], fetched=R["meta"]["fetched"], pps=R["meta"]["pts_per_strength"],
+                      form_sd=FORM_SD, kill_r=R["meta"].get("kill_r"),
+                      zone={k: R["zone_model"]["fit"]["d_" + k]["beta"] for k in ("r1", "r2", "end")} if R.get("zone_model", {}).get("fit") else {}),
             zone=__import__("rings").page_data(),
             v3=dict(clash=R["v3"]["clash"], pts_clash=R["v3"]["pts_clash"], rot=R["v3"]["rot"], rot_groups=R["v3"]["rot_groups"]), mp_all=R["mp_all"])
 js = json.dumps(data, separators=(",", ":")).replace("</", "<\\/")

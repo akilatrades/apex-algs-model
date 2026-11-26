@@ -204,7 +204,7 @@ a{color:var(--teal)}hr{border:0;border-top:1px solid var(--line);margin:0}
 <section class="band grid2" id="scrims">
   <div>
     <h2>Championship scrims so far</h2>
-    <p class="mute">Practice games from the Eternal Esports Club "Year 6 Champs" scrim season (two blocks, 12 games, 24 Nov). They count half as much as official games. Too few to read much into yet.</p>
+    <p class="mute">Practice games from the Eternal Esports Club "Year 6 Champs" scrim season (<span id="sc-games"></span> games so far). They count half as much as official games, and too few have been played to read much into yet.</p>
     <div class="rows" id="scrimrows"></div>
   </div>
   <div>
@@ -289,6 +289,7 @@ const hov = (el, fn) => { el.onmousemove = e => showTip(e, fn()); el.onmouseleav
 // ---- headline ----
 const byWin = [...F].sort((a, b) => b.p_win - a.p_win), f1 = byWin[0], f2 = byWin[1];
 $('#m-games').textContent = M.n_games - (M.by_source.scrim || 0);
+$('#sc-games').textContent = M.by_source.scrim || 0;
 $('#headline').textContent = `${f1.team} and ${f2.team} lead a wide-open Championship`;
 $('#lead').textContent = `No team has better than about a 1-in-${Math.round(1 / f1.p_win)} chance of the title. Forty teams are going to Sapporo, so pure luck would give each a 1-in-40 chance. The favourites are only about ${(f1.p_win / 0.025).toFixed(1)} times likelier than that. Anyone in the top half can win it.`;
 $('#k1').textContent = pct(f1.p_win, 1); $('#k1t').textContent = `${f1.team}'s chance to win Champs, the best of any team. If it were pure luck, every team would have 2.5%.`;

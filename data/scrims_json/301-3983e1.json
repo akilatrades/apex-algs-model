@@ -1,0 +1,534 @@
+{
+ "key": "301-3983e1",
+ "url": "/lobbies/301/3983e1",
+ "title": "C vs D",
+ "date": "Nov 25, 2026",
+ "games": [
+  {
+   "game": 1,
+   "map": "World's Edge"
+  },
+  {
+   "game": 2,
+   "map": "World's Edge"
+  },
+  {
+   "game": 3,
+   "map": "World's Edge"
+  },
+  {
+   "game": 4,
+   "map": "E-District"
+  },
+  {
+   "game": 5,
+   "map": "E-District"
+  },
+  {
+   "game": 6,
+   "map": "E-District"
+  }
+ ],
+ "rows": [
+  {
+   "rank": 1,
+   "total": 96,
+   "group": "C",
+   "team": "S8UL",
+   "raw": "S8ULS8UL",
+   "kills": 46,
+   "damage": 25885,
+   "placements": [
+    1,
+    1,
+    10,
+    4,
+    3,
+    1
+   ],
+   "points": [
+    25,
+    25,
+    3,
+    9,
+    13,
+    21
+   ]
+  },
+  {
+   "rank": 2,
+   "total": 60,
+   "group": "C",
+   "team": "Falcons",
+   "raw": "FalconsFLCN",
+   "kills": 32,
+   "damage": 21199,
+   "placements": [
+    8,
+    2,
+    5,
+    15,
+    4,
+    3
+   ],
+   "points": [
+    4,
+    19,
+    9,
+    4,
+    12,
+    12
+   ]
+  },
+  {
+   "rank": 3,
+   "total": 57,
+   "group": "C",
+   "team": "Team Liquid",
+   "raw": "Team LiquidTL",
+   "kills": 31,
+   "damage": 18361,
+   "placements": [
+    2,
+    13,
+    9,
+    6,
+    9,
+    2
+   ],
+   "points": [
+    14,
+    1,
+    7,
+    13,
+    4,
+    18
+   ]
+  },
+  {
+   "rank": 4,
+   "total": 53,
+   "group": "A",
+   "team": "Crazy Thieves",
+   "raw": "Crazy Thieves100T",
+   "kills": 36,
+   "damage": 18556,
+   "placements": [
+    10,
+    8,
+    3,
+    19,
+    6,
+    7
+   ],
+   "points": [
+    13,
+    8,
+    9,
+    0,
+    9,
+    14
+   ]
+  },
+  {
+   "rank": 5,
+   "total": 46,
+   "group": "D",
+   "team": "Geekay Esports",
+   "raw": "Geekay EsportsGK",
+   "kills": 29,
+   "damage": 11765,
+   "placements": [
+    19,
+    10,
+    16,
+    14,
+    1,
+    10
+   ],
+   "points": [
+    0,
+    8,
+    3,
+    6,
+    24,
+    5
+   ]
+  },
+  {
+   "rank": 6,
+   "total": 44,
+   "group": "A",
+   "team": "Rex Regum Qeon",
+   "raw": "Rex Regum QeonRRQ",
+   "kills": 19,
+   "damage": 15202,
+   "placements": [
+    5,
+    7,
+    11,
+    1,
+    5,
+    13
+   ],
+   "points": [
+    10,
+    4,
+    1,
+    17,
+    8,
+    4
+   ]
+  },
+  {
+   "rank": 7,
+   "total": 41,
+   "group": "D",
+   "team": "Alliance",
+   "raw": "AllianceALL",
+   "kills": 19,
+   "damage": 15767,
+   "placements": [
+    4,
+    17,
+    2,
+    5,
+    7,
+    15
+   ],
+   "points": [
+    9,
+    1,
+    15,
+    7,
+    6,
+    3
+   ]
+  },
+  {
+   "rank": 8,
+   "total": 40,
+   "group": "D",
+   "team": "ZETA DIVISION",
+   "raw": "ZETA DIVISIONZETA",
+   "kills": 22,
+   "damage": 12044,
+   "placements": [
+    16,
+    5,
+    4,
+    9,
+    8,
+    4
+   ],
+   "points": [
+    4,
+    6,
+    14,
+    3,
+    7,
+    6
+   ]
+  },
+  {
+   "rank": 9,
+   "total": 36,
+   "group": "A",
+   "team": "TOP",
+   "raw": "TOPTOP",
+   "kills": 20,
+   "damage": 13770,
+   "placements": [
+    14,
+    15,
+    1,
+    12,
+    12,
+    19
+   ],
+   "points": [
+    1,
+    1,
+    29,
+    3,
+    1,
+    1
+   ]
+  },
+  {
+   "rank": 10,
+   "total": 34,
+   "group": "C",
+   "team": "Gaimin Gladiators",
+   "raw": "Gaimin GladiatorsGG",
+   "kills": 15,
+   "damage": 11433,
+   "placements": [
+    20,
+    3,
+    17,
+    10,
+    2,
+    12
+   ],
+   "points": [
+    1,
+    9,
+    0,
+    6,
+    17,
+    1
+   ]
+  },
+  {
+   "rank": 11,
+   "total": 32,
+   "group": "A",
+   "team": "NRG",
+   "raw": "NRGNRG",
+   "kills": 26,
+   "damage": 10904,
+   "placements": [
+    6,
+    11,
+    13,
+    17,
+    11,
+    18
+   ],
+   "points": [
+    9,
+    12,
+    5,
+    0,
+    5,
+    1
+   ]
+  },
+  {
+   "rank": 12,
+   "total": 25,
+   "group": "B",
+   "team": "DINOS",
+   "raw": "DINOSDINO",
+   "kills": 12,
+   "damage": 8229,
+   "placements": [
+    17,
+    20,
+    12,
+    2,
+    15,
+    9
+   ],
+   "points": [
+    0,
+    0,
+    1,
+    18,
+    4,
+    2
+   ]
+  },
+  {
+   "rank": 13,
+   "total": 24,
+   "group": "D",
+   "team": "Relove Deep Cross Gaming",
+   "raw": "Relove Deep Cross GamingDCG",
+   "kills": 10,
+   "damage": 10601,
+   "placements": [
+    12,
+    14,
+    6,
+    3,
+    16,
+    8
+   ],
+   "points": [
+    1,
+    1,
+    7,
+    12,
+    0,
+    3
+   ]
+  },
+  {
+   "rank": 14,
+   "total": 17,
+   "group": "B",
+   "team": "LEGACY",
+   "raw": "LEGACYLGCY",
+   "kills": 8,
+   "damage": 9300,
+   "placements": [
+    15,
+    12,
+    8,
+    7,
+    13,
+    14
+   ],
+   "points": [
+    1,
+    1,
+    5,
+    7,
+    1,
+    2
+   ]
+  },
+  {
+   "rank": 15,
+   "total": 15,
+   "group": "C",
+   "team": "Stallions",
+   "raw": "StallionsSTAL",
+   "kills": 5,
+   "damage": 7269,
+   "placements": [
+    3,
+    16,
+    18,
+    16,
+    19,
+    6
+   ],
+   "points": [
+    9,
+    0,
+    0,
+    1,
+    0,
+    5
+   ]
+  },
+  {
+   "rank": 16,
+   "total": 15,
+   "group": "D",
+   "team": "5STAR",
+   "raw": "5STAR5S",
+   "kills": 6,
+   "damage": 11029,
+   "placements": [
+    7,
+    4,
+    19,
+    13,
+    18,
+    17
+   ],
+   "points": [
+    5,
+    8,
+    1,
+    1,
+    0,
+    0
+   ]
+  },
+  {
+   "rank": 17,
+   "total": 15,
+   "group": "D",
+   "team": "Sentinels",
+   "raw": "SentinelsSEN",
+   "kills": 6,
+   "damage": 9329,
+   "placements": [
+    9,
+    6,
+    20,
+    20,
+    20,
+    5
+   ],
+   "points": [
+    7,
+    3,
+    0,
+    0,
+    1,
+    4
+   ]
+  },
+  {
+   "rank": 18,
+   "total": 14,
+   "group": "B",
+   "team": "Gen.G Citadel",
+   "raw": "Gen.G CitadelGENG",
+   "kills": 8,
+   "damage": 8175,
+   "placements": [
+    13,
+    19,
+    14,
+    8,
+    14,
+    11
+   ],
+   "points": [
+    2,
+    0,
+    2,
+    2,
+    4,
+    4
+   ]
+  },
+  {
+   "rank": 19,
+   "total": 10,
+   "group": "A",
+   "team": "ForFun Esports",
+   "raw": "ForFun EsportsFFUN",
+   "kills": 5,
+   "damage": 6617,
+   "placements": [
+    18,
+    18,
+    7,
+    18,
+    10,
+    16
+   ],
+   "points": [
+    0,
+    1,
+    6,
+    0,
+    3,
+    0
+   ]
+  },
+  {
+   "rank": 20,
+   "total": 5,
+   "group": null,
+   "team": "REDRAGON",
+   "raw": "REDRAGONRD",
+   "kills": 0,
+   "damage": 3718,
+   "placements": [
+    11,
+    9,
+    15,
+    11,
+    17,
+    20
+   ],
+   "points": [
+    1,
+    2,
+    1,
+    1,
+    0,
+    0
+   ]
+  }
+ ]
+}

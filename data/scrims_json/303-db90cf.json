@@ -1,0 +1,509 @@
+{
+ "key": "303-db90cf",
+ "url": "/lobbies/303/db90cf",
+ "title": "A vs D",
+ "date": "Nov 25, 2026",
+ "games": [
+  {
+   "game": 1,
+   "map": "Storm Point"
+  },
+  {
+   "game": 2,
+   "map": "Storm Point"
+  },
+  {
+   "game": 3,
+   "map": "Storm Point"
+  },
+  {
+   "game": 4,
+   "map": "E-District"
+  },
+  {
+   "game": 5,
+   "map": "E-District"
+  },
+  {
+   "game": 6,
+   "map": "E-District"
+  }
+ ],
+ "rows": [
+  {
+   "rank": 1,
+   "total": 87,
+   "group": "A",
+   "team": "Crazy Thieves",
+   "raw": "Crazy Thieves100T",
+   "kills": 56,
+   "damage": 27809,
+   "placements": [
+    1,
+    11,
+    3,
+    6,
+    3,
+    11
+   ],
+   "points": [
+    24,
+    7,
+    23,
+    10,
+    10,
+    13
+   ]
+  },
+  {
+   "rank": 2,
+   "total": 84,
+   "group": "C",
+   "team": "Falcons",
+   "raw": "FalconsFLCN",
+   "kills": 37,
+   "damage": 24425,
+   "placements": [
+    2,
+    1,
+    13,
+    2,
+    5,
+    1
+   ],
+   "points": [
+    17,
+    19,
+    4,
+    14,
+    8,
+    22
+   ]
+  },
+  {
+   "rank": 3,
+   "total": 50,
+   "group": "D",
+   "team": "Relove Deep Cross Gaming",
+   "raw": "Relove Deep Cross GamingDCG",
+   "kills": 29,
+   "damage": 15651,
+   "placements": [
+    9,
+    5,
+    12,
+    15,
+    1,
+    13
+   ],
+   "points": [
+    2,
+    7,
+    7,
+    4,
+    28,
+    2
+   ]
+  },
+  {
+   "rank": 4,
+   "total": 43,
+   "group": "C",
+   "team": "Team Liquid",
+   "raw": "Team LiquidTL",
+   "kills": 24,
+   "damage": 12142,
+   "placements": [
+    13,
+    2,
+    5,
+    18,
+    8,
+    6
+   ],
+   "points": [
+    1,
+    20,
+    6,
+    0,
+    7,
+    9
+   ]
+  },
+  {
+   "rank": 5,
+   "total": 41,
+   "group": "D",
+   "team": "Alliance",
+   "raw": "AllianceALL",
+   "kills": 17,
+   "damage": 16269,
+   "placements": [
+    4,
+    8,
+    2,
+    14,
+    16,
+    3
+   ],
+   "points": [
+    6,
+    4,
+    18,
+    2,
+    0,
+    11
+   ]
+  },
+  {
+   "rank": 6,
+   "total": 36,
+   "group": "D",
+   "team": "5STAR",
+   "raw": "5STAR5S",
+   "kills": 21,
+   "damage": 15299,
+   "placements": [
+    18,
+    16,
+    14,
+    3,
+    10,
+    4
+   ],
+   "points": [
+    0,
+    3,
+    1,
+    13,
+    6,
+    13
+   ]
+  },
+  {
+   "rank": 7,
+   "total": 35,
+   "group": "A",
+   "team": "TOP",
+   "raw": "TOPTOP",
+   "kills": 16,
+   "damage": 15467,
+   "placements": [
+    14,
+    4,
+    1,
+    16,
+    13,
+    18
+   ],
+   "points": [
+    1,
+    11,
+    22,
+    0,
+    1,
+    0
+   ]
+  },
+  {
+   "rank": 8,
+   "total": 30,
+   "group": "C",
+   "team": "S8UL",
+   "raw": "S8ULS8UL",
+   "kills": 14,
+   "damage": 10003,
+   "placements": [
+    17,
+    14,
+    9,
+    1,
+    19,
+    14
+   ],
+   "points": [
+    3,
+    1,
+    2,
+    23,
+    0,
+    1
+   ]
+  },
+  {
+   "rank": 9,
+   "total": 30,
+   "group": "C",
+   "team": "Stallions",
+   "raw": "StallionsSTAL",
+   "kills": 18,
+   "damage": 13869,
+   "placements": [
+    8,
+    9,
+    10,
+    13,
+    7,
+    8
+   ],
+   "points": [
+    4,
+    5,
+    4,
+    1,
+    13,
+    3
+   ]
+  },
+  {
+   "rank": 10,
+   "total": 30,
+   "group": "A",
+   "team": "NRG",
+   "raw": "NRGNRG",
+   "kills": 13,
+   "damage": 17096,
+   "placements": [
+    11,
+    13,
+    8,
+    5,
+    4,
+    5
+   ],
+   "points": [
+    1,
+    3,
+    2,
+    11,
+    5,
+    8
+   ]
+  },
+  {
+   "rank": 11,
+   "total": 26,
+   "group": null,
+   "team": "REDRAGON",
+   "raw": "REDRAGONRD",
+   "kills": 5,
+   "damage": 11177,
+   "placements": [
+    15,
+    3,
+    11,
+    8,
+    11,
+    2
+   ],
+   "points": [
+    1,
+    7,
+    2,
+    2,
+    2,
+    12
+   ]
+  },
+  {
+   "rank": 12,
+   "total": 25,
+   "group": "B",
+   "team": "DINOS",
+   "raw": "DINOSDINO",
+   "kills": 12,
+   "damage": 9475,
+   "placements": [
+    16,
+    15,
+    19,
+    10,
+    2,
+    12
+   ],
+   "points": [
+    0,
+    3,
+    0,
+    3,
+    18,
+    1
+   ]
+  },
+  {
+   "rank": 13,
+   "total": 24,
+   "group": "D",
+   "team": "Geekay Esports",
+   "raw": "Geekay EsportsGK",
+   "kills": 11,
+   "damage": 8396,
+   "placements": [
+    3,
+    18,
+    7,
+    7,
+    17,
+    19
+   ],
+   "points": [
+    13,
+    0,
+    6,
+    5,
+    0,
+    0
+   ]
+  },
+  {
+   "rank": 14,
+   "total": 24,
+   "group": "A",
+   "team": "ForFun Esports",
+   "raw": "ForFun EsportsFFUN",
+   "kills": 13,
+   "damage": 16774,
+   "placements": [
+    5,
+    7,
+    17,
+    11,
+    12,
+    9
+   ],
+   "points": [
+    8,
+    7,
+    0,
+    4,
+    1,
+    4
+   ]
+  },
+  {
+   "rank": 15,
+   "total": 22,
+   "group": "B",
+   "team": "LEGACY",
+   "raw": "LEGACYLGCY",
+   "kills": 13,
+   "damage": 10535,
+   "placements": [
+    10,
+    19,
+    4,
+    12,
+    15,
+    17
+   ],
+   "points": [
+    8,
+    0,
+    5,
+    5,
+    4,
+    0
+   ]
+  },
+  {
+   "rank": 16,
+   "total": 22,
+   "group": "A",
+   "team": "Rex Regum Qeon",
+   "raw": "Rex Regum QeonRRQ",
+   "kills": 9,
+   "damage": 8961,
+   "placements": [
+    12,
+    6,
+    6,
+    4,
+    14,
+    16
+   ],
+   "points": [
+    4,
+    6,
+    3,
+    7,
+    2,
+    0
+   ]
+  },
+  {
+   "rank": 17,
+   "total": 17,
+   "group": "B",
+   "team": "Gen.G Citadel",
+   "raw": "Gen.G CitadelGENG",
+   "kills": 9,
+   "damage": 8852,
+   "placements": [
+    6,
+    12,
+    16,
+    19,
+    9,
+    10
+   ],
+   "points": [
+    7,
+    3,
+    0,
+    0,
+    2,
+    5
+   ]
+  },
+  {
+   "rank": 18,
+   "total": 13,
+   "group": null,
+   "team": "Darkspire",
+   "raw": "DarkspireDRK",
+   "kills": 4,
+   "damage": 8619,
+   "placements": [
+    19,
+    17,
+    15,
+    9,
+    6,
+    7
+   ],
+   "points": [
+    0,
+    0,
+    1,
+    3,
+    6,
+    3
+   ]
+  },
+  {
+   "rank": 19,
+   "total": 10,
+   "group": "D",
+   "team": "ZETA DIVISION",
+   "raw": "ZETA DIVISIONZETA",
+   "kills": 4,
+   "damage": 3930,
+   "placements": [
+    7,
+    10,
+    18,
+    17,
+    18,
+    15
+   ],
+   "points": [
+    6,
+    2,
+    0,
+    0,
+    0,
+    2
+   ]
+  }
+ ]
+}

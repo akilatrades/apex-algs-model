@@ -9,6 +9,16 @@
     const m = L[i].match(/^Game (\d+)$/);
     if (m && L[i + 2] && /•/.test(L[i + 2])) games.push({ game: +m[1], map: L[i + 1], when: L[i + 2] });
   }
+  if (!games.length) {
+    // Layout from Nov 2026: headers read "G1".."G6"; map is in the game buttons' aria-label,
+    // e.g. "Game 1, World's Edge, won by S8UL" (each button appears twice: mobile + desktop).
+    const seen = new Map();
+    for (const b of main.querySelectorAll('button[aria-label^="Game "]')) {
+      const m = b.getAttribute('aria-label').match(/^Game (\d+), ([^,]+)/);
+      if (m && !seen.has(+m[1])) seen.set(+m[1], { game: +m[1], map: m[2].trim() });
+    }
+    games.push(...[...seen.values()].sort((a, b) => a.game - b.game));
+  }
   const splitName = s => {
     for (let i = s.length - 1; i > 0; i--) {
       const a = s.slice(0, i), b = s.slice(i);

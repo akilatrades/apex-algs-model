@@ -1,8 +1,6 @@
-saved block 301-3983e1
-saved block 303-db90cf
 WARNING new scrim names not matched to ALGS teams (rated on scrims alone): 5STAR, Darkspire, LEGACY, QSM
-scrim games: 12 -> 24 (latest 2026-11-25)
+scrim games: 24 -> 24 (latest 2026-11-25)
 re-check next run: none
 ALL MATHS CHECKS PASS
 scrim weight check: waiting (24 of 60 games)
-Crazy Thieves: Champs win chance 5.9% -> 7.1%
+no team's Champs win chance moved by 1 point or more

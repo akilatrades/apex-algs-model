@@ -289,6 +289,25 @@ def clash_partners():
     return out
 
 
+# ---- real Champs groups, once announced: data/champs_groups.txt, lines "A|Team;Team;..." (10 teams each) ----
+def read_groups():
+    p = Path("data/champs_groups.txt")
+    if not p.exists(): return None
+    g = {}
+    for l in p.read_text().splitlines():
+        if "|" in l and not l.startswith("#"):
+            k, v = l.split("|", 1); g[k.strip()] = [x.strip() for x in v.split(";") if x.strip()]
+    bad = [t for v in g.values() for t in v if t not in CHAMPS]
+    ok = sorted(g) == ["A", "B", "C", "D"] and all(len(v) == 10 for v in g.values()) and not bad and len({t for v in g.values() for t in v}) == 40
+    if not ok:
+        print("WARNING data/champs_groups.txt ignored (needs groups A-D, 10 Champs teams each); unknown names:", bad)
+        return None
+    return g
+
+
+GROUPS = read_groups()
+
+
 def champs_forecast(n=8000, seed=11, use_clash=True, use_mp=True, use_zone=True):
     """Y6S2 Playoffs format: 4 groups of 10, round robin (6 series x 6 games) -> top 20 to Winners Round, bottom 20 to Losers R1
     -> WR bottom 10 + LR1 top 10 play Losers R2 -> WR top 10 + LR2 top 10 in Match Point Finals (50 pts, then win a game).
@@ -310,11 +329,15 @@ def champs_forecast(n=8000, seed=11, use_clash=True, use_mp=True, use_zone=True)
         return pts
 
     ranked = lambda lobby, pts: np.take_along_axis(lobby, np.argsort(-(pts + r.random(pts.shape) * 1e-3), 1), 1)
-    perm = np.argsort(r.random((n, S)), 1); grp = [perm[:, i * 10:(i + 1) * 10] for i in range(4)]
+    if GROUPS:
+        grp = [np.tile(np.array([CHAMPS.index(t) for t in GROUPS[k]]), (n, 1)) for k in "ABCD"]
+    else:
+        perm = np.argsort(r.random((n, S)), 1); grp = [perm[:, i * 10:(i + 1) * 10] for i in range(4)]
     tot = np.zeros((n, S))
     for (a, b), maps in zip([(0, 1), (2, 3), (1, 3), (0, 2), (1, 2), (0, 3)], ROT["groups"]):
         lob = np.concatenate([grp[a], grp[b]], 1); np.add.at(tot, (rows_, lob), series(lob, maps))
     allr = ranked(np.tile(np.arange(S), (n, 1)), tot)
+    top20 = np.bincount(allr[:, :20].ravel(), minlength=S)
     wr_r, lr1_r = ranked(allr[:, :20], series(allr[:, :20], ROT["wr"])), ranked(allr[:, 20:], series(allr[:, 20:], ROT["lr1"]))
     lr2 = np.concatenate([wr_r[:, 10:], lr1_r[:, :10]], 1)
     fin = np.concatenate([wr_r[:, :10], ranked(lr2, series(lr2, ROT["lr2"]))[:, :10]], 1)
@@ -332,13 +355,27 @@ def champs_forecast(n=8000, seed=11, use_clash=True, use_mp=True, use_zone=True)
         totf[i] += M.PTS[place] + kdraw(r, np.exp(base[place] + ks[lob]))
         alive[i[elig]] = False
     assert abs(wins.sum() - n) < 1 and made.sum() == 20 * n               # every simulation has exactly one champion, 20 finalists
-    return {t: dict(p_finals=float(made[k] / n), p_win=float(wins[k] / n)) for k, t in enumerate(CHAMPS)}
+    return {t: dict(p_finals=float(made[k] / n), p_win=float(wins[k] / n), p_top20=float(top20[k] / n)) for k, t in enumerate(CHAMPS)}
 
 
 champs = champs_forecast(use_mp=False)        # match point: placement effect is real, but no extra wins (see mp_all) -> not in the title odds
 for r in teams_out:
     if r["in_field"]:
         r.update(champs[r["team"]]); r["path"] = "LCQ" if r["team"] in LCQ_QUAL else "Points"
+
+# ---------------- legend use per Champs team (Split 2 games), for ban talking points ----------------
+def legend_use():
+    import bans_comps as BCm
+    if not BCm.SRC.exists(): return {}
+    d = BCm.attach(df[df.stage.str.match(r"(PL_|LCQ_|Y6S2_)")], BCm.read())
+    out = {}
+    for t in CHAMPS:
+        g = d[(d.team == t) & d.comp.notna()]
+        if len(g):
+            c = pd.Series([l for comp in g.comp for l in comp]).value_counts() / len(g)
+            out[t] = dict(games=int(len(g)), top=[[k, round(float(v), 2)] for k, v in c.head(5).items()])
+    return out
+
 
 # ---------------- luck vs skill, in plain terms ----------------
 def icc(d):
@@ -467,6 +504,10 @@ n_chk, bad_chk, _ = deep.crosscheck()
 
 src = df.groupby("source").game_id.nunique().to_dict()
 out = dict(
+    bans_comps=json.load(open('out/bans_comps.json')) if os.path.exists('out/bans_comps.json') else None,
+    legend_use=legend_use(),
+    track_record=json.load(open('out/track_record.json')) if os.path.exists('out/track_record.json') else None,
+    groups=dict(announced=bool(GROUPS), teams=GROUPS),
     win_sharp=json.load(open('out/win_sharpness.json')) if os.path.exists('out/win_sharpness.json') else None,
     form_drift=json.load(open('out/form_drift.json')) if os.path.exists('out/form_drift.json') else None,
     scrim_check=json.load(open('out/scrim_check.json')) if os.path.exists('out/scrim_check.json') else None,

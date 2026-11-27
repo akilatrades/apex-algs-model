@@ -52,7 +52,7 @@ recent = set(df[df.stage.str.startswith("PL_") | df.stage.str.startswith("LCQ_")
 missed = [row(t["team"]) for t in R["teams"] if t["team"] in recent and t["team"] not in field]
 for m in missed:
     for k in ["players", "hist", "fin", "tl", "maps", "sw", "mp", "bu", "cp", "spots", "plain"]: m.pop(k)
-data = dict(field=F, missed=missed, h2h=h2h, kb=R["kill_base"], pts=R["place_pts"], champions=champions, legends=R["legends"], comps=R["comps"], guns=R["guns"], poi=R["poi"],
+data = dict(legend_use=R.get("legend_use", {}), field=F, missed=missed, h2h=h2h, kb=R["kill_base"], pts=R["place_pts"], champions=champions, legends=R["legends"], comps=R["comps"], guns=R["guns"], poi=R["poi"],
             meta=dict(games=R["meta"]["n_games"], avg=R["meta"]["avg_power"], fetched=R["meta"]["fetched"], pps=R["meta"]["pts_per_strength"],
                       form_sd=FORM_SD, kill_r=R["meta"].get("kill_r"),
                       zone={k: R["zone_model"]["fit"]["d_" + k]["beta"] for k in ("r1", "r2", "end")} if R.get("zone_model", {}).get("fit") else {}),

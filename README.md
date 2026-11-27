@@ -53,3 +53,8 @@ after ring 2 the likeliest spot is right 63-82% of the time and the top three 97
 - `kills_joint.py`: kills are lumpier than Poisson (negative binomial, r ≈ 3.7), now used in all sims. A per-team "early vs late kills" slope did not help.
 - `scrim_check.py`: tests the scrim weight automatically once 60 scrim games exist (nightly).
 - `ledger.py`: locks the Champs odds on the first nightly run on/after 26 Jan 2027 (`data/ledger/y6_champs.json`, never edited after) and scores them once `data/ledger/y6_champs_results.txt` exists.
+
+## Track record, Champs groups, bans and comps (27 Nov 2026)
+- `track_record.py`: reruns the model as of the day before each past LAN (earlier games only) and compares picks with what happened -> `out/track_record.json`. Split 2 Playoffs: 15 of the top 20 picks reached the final (about 10 expected by chance); the winner (Team Liquid) was our 13th pick.
+- Champs groups: once `data/champs_groups.txt` exists (`A|Team;Team;...` x4, 10 Champs teams each), the Champs sim uses the real groups and the page shows each group with "out of groups" odds. The nightly task writes the file when ALGS publishes the groups.
+- `bans_comps.py` + `data/deep/bans_comps.txt` (scrape/als_bans_comps.js, 665 games): no clear drop when a team's main legend is banned (so no ban penalty); legend picks help within a patch (late Pro League) but not across events (Playoffs), so they are reported but not in the Champs odds. The Broadcast Desk's "Next game's ban" shows which teams in the lobby lean on the banned legend.

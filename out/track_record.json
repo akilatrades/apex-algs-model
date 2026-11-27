@@ -1,0 +1,232 @@
+{
+ "Split 1 Playoffs": {
+  "final": {
+   "teams": 20,
+   "winner": "UNLIMIT",
+   "winner_p": 0.0876,
+   "winner_rank": 5,
+   "even": 0.05,
+   "top": [
+    {
+     "team": "ZETA DIVISION",
+     "p_win": 0.1134,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "REJECT",
+     "p_win": 0.1104,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "S8UL",
+     "p_win": 0.0943,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "ENTER FORCE.36",
+     "p_win": 0.0897,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "UNLIMIT",
+     "p_win": 0.0876,
+     "made_final": true,
+     "won": true
+    },
+    {
+     "team": "Alliance",
+     "p_win": 0.0712,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "Team Falcons",
+     "p_win": 0.0574,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "Team RRQ",
+     "p_win": 0.0563,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "Wolves Esports",
+     "p_win": 0.0462,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "GaiminGladiators",
+     "p_win": 0.0424,
+     "made_final": true,
+     "won": false
+    }
+   ],
+   "note": "final only, with the 20 teams that made it"
+  },
+  "trained_games": 260
+ },
+ "Split 2 Playoffs": {
+  "event": {
+   "teams": 40,
+   "winner": "Team Liquid",
+   "winner_p": 0.0312,
+   "winner_rank": 13,
+   "even": 0.025,
+   "top": [
+    {
+     "team": "Team Falcons",
+     "p_win": 0.0639,
+     "p_finals": 0.7936,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "Team Vision",
+     "p_win": 0.0585,
+     "p_finals": 0.7712,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "Crazy Thieves",
+     "p_win": 0.0578,
+     "p_finals": 0.7661,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "World Wide",
+     "p_win": 0.0544,
+     "p_finals": 0.7426,
+     "made_final": false,
+     "won": false
+    },
+    {
+     "team": "Geekay Esports",
+     "p_win": 0.0534,
+     "p_finals": 0.7376,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "Team RRQ",
+     "p_win": 0.0522,
+     "p_finals": 0.7292,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "Wolves Esports",
+     "p_win": 0.0413,
+     "p_finals": 0.6727,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "ShopifyRebellion",
+     "p_win": 0.0408,
+     "p_finals": 0.6803,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "DINOS",
+     "p_win": 0.0396,
+     "p_finals": 0.6724,
+     "made_final": false,
+     "won": false
+    },
+    {
+     "team": "NinjasInPyjamas",
+     "p_win": 0.0357,
+     "p_finals": 0.6534,
+     "made_final": true,
+     "won": false
+    }
+   ],
+   "finals_hits": 15,
+   "finals_k": 20,
+   "finals_hits_even": 10.0,
+   "brier": 0.1851,
+   "brier_even": 0.25
+  },
+  "final": {
+   "teams": 20,
+   "winner": "Team Liquid",
+   "winner_p": 0.0482,
+   "winner_rank": 11,
+   "even": 0.05,
+   "top": [
+    {
+     "team": "Team Falcons",
+     "p_win": 0.0735,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "Crazy Thieves",
+     "p_win": 0.0729,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "Team Vision",
+     "p_win": 0.0699,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "Geekay Esports",
+     "p_win": 0.0659,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "Team RRQ",
+     "p_win": 0.0659,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "ShopifyRebellion",
+     "p_win": 0.0591,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "Wolves Esports",
+     "p_win": 0.0549,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "NinjasInPyjamas",
+     "p_win": 0.0537,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "Forged Wolves",
+     "p_win": 0.0515,
+     "made_final": true,
+     "won": false
+    },
+    {
+     "team": "REJECT",
+     "p_win": 0.0503,
+     "made_final": true,
+     "won": false
+    }
+   ],
+   "note": "final only, with the 20 teams that made it"
+  },
+  "trained_games": 565
+ }
+}

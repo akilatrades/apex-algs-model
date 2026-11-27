@@ -73,6 +73,7 @@ a{color:var(--bar)}
     <div id="c-left" hidden><label for="left">Games left</label><input id="left" type="number" min="0" max="18" value="6"></div>
     <div id="c-topk" hidden><label for="topk">Teams advancing</label><input id="topk" type="number" min="1" max="19" value="10"></div>
     <div class="w"><label for="nmap">Next game's map</label><select id="nmap"></select></div>
+    <div class="w"><label for="nban">Next game's ban</label><select id="nban"></select></div>
     <div class="w"><label for="upd"><input type="checkbox" id="upd" style="width:auto;min-height:0;margin-right:6px">Update ratings from games entered</label><span class="small mute" id="upd-n"></span></div>
     <button class="btn" id="b-undo">Undo last game</button><button class="btn" id="b-reset">Reset scores</button><button class="btn" id="b-clrlog">Clear event history</button>
   </div>
@@ -247,7 +248,7 @@ function renderChips(){
 let entry = {};
 function renderLive(){
   const mp = S.mode === 'mp'; $('#c-thr').hidden = !mp; $('#c-left').hidden = mp; $('#c-topk').hidden = mp;
-  $('#mode').value = S.mode; $('#thr').value = S.thr; $('#left').value = S.left; $('#topk').value = S.topk; $('#nmap').value = S.map; $('#upd').checked = S.upd;
+  $('#mode').value = S.mode; $('#thr').value = S.thr; $('#left').value = S.left; $('#topk').value = S.topk; $('#nmap').value = S.map; $('#nban').value = S.ban || ''; $('#upd').checked = S.upd;
   TH = liveTheta(); $('#upd-n').textContent = S.log.length ? ` ${S.log.length} game${S.log.length === 1 ? '' : 's'} this event` : '';
   const SH = sharedIn(S.lobby, S.map);
   const N = S.lobby.length;
@@ -290,6 +291,9 @@ function renderLive(){
   }
   { const z = zoneX(S.lobby); if (z){ const o = S.lobby.map((t, i) => [t, z.d[i]]).filter(r => r[1] != null).sort((a, b) => a[1] - b[1]);
     tp.push(`Zone (${ZR.r2 ? 'ring 2' : 'ring 1'} set on the Zone tab): teams who usually land closest are ${o.slice(0, 3).map(r => esc(r[0])).join(', ')}; furthest away are ${o.slice(-2).map(r => esc(r[0])).join(' and ')}. "Wins next game" includes this. It is a small edge: for the closest team here that is worth about ${(z.b * Math.max(...z.x) * PPS).toFixed(1)} points next game.`); } }
+  if (S.ban) { const LU = D.legend_use || {}, hit = S.lobby.map(t => [t, ((LU[t] || {}).top || []).find(r => r[0] === S.ban)]).filter(r => r[1] && r[1][1] >= 0.4).sort((a, b) => b[1][1] - a[1][1]);
+    tp.push(hit.length ? `${esc(S.ban)} is banned. Teams that lean on it most in Split 2: ${hit.slice(0, 4).map(r => `${esc(r[0])} (in ${Math.round(100 * r[1][1])}% of their games)`).join(', ')}. Worth watching what they swap to. In past ALGS games, teams haven't clearly dropped when their main legend was banned, so the odds don't change.`
+                         : `${esc(S.ban)} is banned. None of the teams here played it in more than 40% of their Split 2 games, so it shouldn't shake anyone up much.`); }
   const pairs = {}; Object.entries(SH).forEach(([t, v]) => { (pairs[v.spot] = pairs[v.spot] || new Set()).add(t); });
   Object.entries(pairs).forEach(([sp, ts]) => tp.push(`On ${esc(S.map)}, ${[...ts].map(esc).join(' and ')} ${ts.size === 2 ? 'both' : 'all'} usually land at ${esc(sp)}. Sharing a spot has cost teams about ${Math.abs(D.v3.pts_clash).toFixed(1)} points a game.`));
   if (S.upd && S.log.length){ const mv = rows.map(t => [t, (TH[t] - FT[t].s) * PPS]).sort((a, b) => b[1] - a[1]);
@@ -314,6 +318,9 @@ $('#b-reset').onclick = () => { S.pts = {}; S.hist = []; entry = {}; $('#msg').t
 $('#b-clrlog').onclick = () => { S.log = []; $('#msg').textContent = 'Event history cleared: ratings are back to their pre-event values.'; renderAll(); };
 $('#nmap').innerHTML = MAPS4.map(m => `<option>${esc(m)}</option>`).join('');
 $('#nmap').onchange = e => { S.map = e.target.value; renderAll(); };
+{ const LU = D.legend_use || {}, legs = [...new Set(Object.values(LU).flatMap(v => v.top.map(r => r[0])))].sort();
+  $('#nban').innerHTML = '<option value="">– none / not known –</option>' + legs.map(l => `<option>${esc(l)}</option>`).join('');
+  $('#nban').onchange = e => { S.ban = e.target.value; renderAll(); }; }
 $('#upd').onchange = e => { S.upd = e.target.checked; renderAll(); };
 $('#b-top20').onclick = () => { S.lobby = byS.slice(0, 20).map(t => t.team); S.hist = []; renderAll(); };
 $('#b-none').onclick = () => { S.lobby = []; S.hist = []; renderAll(); };

@@ -172,6 +172,9 @@ a{color:var(--teal)}hr{border:0;border-top:1px solid var(--line);margin:0}
     <p class="mute">How often teams picked each legend.</p>
     <div class="ctl"><div><label for="lg-ev">Event</label><select id="lg-ev"></select></div></div>
     <div class="rows" id="lgrows"></div>
+    <h3>Do legend picks matter, once you account for how good the team is?</h3>
+    <p id="lc-text"></p>
+    <div class="scroll"><table id="lc-table"></table></div>
   </div>
   <div>
     <h2>Most-played team comps at LAN</h2>
@@ -215,6 +218,21 @@ a{color:var(--teal)}hr{border:0;border-top:1px solid var(--line);margin:0}
     <div class="scroll"><table id="tlcomps"></table></div>
     <p class="small mute" id="tlsrc"></p>
   </div>
+</section>
+<hr>
+
+<section class="band" id="groups">
+  <h2>Champs groups</h2>
+  <p id="gr-text"></p>
+  <div class="grid2" id="gr-grid"></div>
+</section>
+<hr>
+
+<section class="band" id="record">
+  <h2>How it did at past events</h2>
+  <p>We reran the model as if it were the day before each past LAN, using only games played before it, and compared its picks with what happened.</p>
+  <div id="tr-body"></div>
+  <p class="small mute">The Year 5 Championship can't be checked: we have no games from before it. These reruns use the model's single best guess of each team's level, without the extra allowance for uncertainty the live odds use, and they leave out the first-LAN adjustment so nothing learned from these events sneaks in.</p>
 </section>
 <hr>
 
@@ -278,6 +296,7 @@ const D = __DATA__;
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pct = (x, d=0) => (100*x).toFixed(d) + '%';
+function ordinal(n){ const v = n % 100, sfx = ['th', 'st', 'nd', 'rd']; return n + (sfx[(v - 20) % 10] || sfx[v] || sfx[0]); }
 const M = D.meta, B = D.backtest, T = D.teams, F = T.filter(t => t.in_field), BY = Object.fromEntries(T.map(t => [t.team, t]));
 const PTS = [0, ...D.place_pts], KB = [0, ...D.kill_base];
 const tip = $('#tip');
@@ -471,6 +490,27 @@ $('#fixes').innerHTML = [
   ...(D.win_sharp ? [`<strong>Are favourites under-rated?</strong> We tested backing favourites to win games more often. It didn't help on games it hadn't seen, so the odds stay as they are.`] : []),
   `<strong>Still counted from before:</strong> ${M.n_games} games (${src.lan} at LAN, ${src.pro_league + src.pl_s1} Pro League over both splits, ${src.lcq} LCQ finals, ${src.scrim || 0} scrims). Teams are matched across name changes by their players, and teams with no LAN record get a small deduction.`].map(x => `<li>${x}</li>`).join('');
 $('#c-tot').textContent = M.totals_checked;
+{ const BCx = D.bans_comps; if (BCx) { const c = BCx.comp.find(r => r.kind === 'legend' && r.sd === 0.05), b = BCx.ban, P = M.pts_per_strength;
+  const sgn = v => (v >= 0 ? '+' : '−') + Math.abs(v * P).toFixed(1);
+  $('#lc-text').innerHTML = `<strong>Comps:</strong> within one patch, a little. Teams on the legends at the top of this list finished slightly higher than their rating said in Split 2 Pro League, and knowing that improved our late-Pro-League predictions. But it did not carry over to the Playoffs LAN, so it isn't in the Champs odds: the patch and meta can change before Champs. ` +
+    `<strong>Bans:</strong> we checked whether teams drop when the legend they play most is banned. Across ${b.fit_games + b.lan_games + b.pl_games} games with a ban, we found no clear drop. Teams seem to adapt, so a ban isn't treated as a penalty.`;
+  const top = c.top.slice(0, 5), bot = c.top.slice(-5).reverse();
+  $('#lc-table').innerHTML = `<tr><th class="l">Helped most</th><th>Points a game</th><th class="l">Helped least</th><th>Points a game</th></tr>` + top.map((r, i) => `<tr><td class="l">${esc(r[0])}</td><td>${sgn(r[1])}</td><td class="l">${esc(bot[i][0])}</td><td>${sgn(bot[i][1])}</td></tr>`).join(''); } }
+{ const Gr = D.groups || {}, byT = Object.fromEntries(D.teams.map(t => [t.team, t]));
+  if (!Gr.announced) { $('#gr-text').textContent = "The groups haven't been announced yet. Until they are, every simulation puts teams into random groups of 10. Once ALGS announces them, the nightly update uses the real groups, and this section shows each group and who each team has to beat."; }
+  else { $('#gr-text').textContent = "The real groups. 'Out of groups' is the chance of finishing in the top 20 of 40 after the group stage, which sends a team to the Winners Round instead of the Losers Round."; 
+    $('#gr-grid').innerHTML = 'ABCD'.split('').map(k => { const ts = Gr.teams[k].map(t => byT[t]).filter(Boolean).sort((a, b) => b.p_top20 - a.p_top20);
+      return `<div><h3>Group ${k}</h3><div class="scroll"><table><tr><th class="l">Team</th><th>Out of groups</th><th>Reach the final</th><th>Win</th></tr>` +
+        ts.map(t => `<tr><td class="l">${esc(t.team)}</td><td>${pct(t.p_top20)}</td><td>${pct(t.p_finals)}</td><td>${pct(t.p_win, 1)}</td></tr>`).join('') +
+        `</table></div><p class="small mute">Strongest rivals here: ${ts.slice(0, 3).map(t => esc(t.team)).join(', ')}.</p></div>`; }).join(''); } }
+{ const TRr = D.track_record; if (TRr) { const yes = b => b ? '✓' : '–';
+  const tbl = (rows, fin) => `<div class="scroll"><table><tr><th class="l">Our pick</th>${fin ? '<th>Reach the final</th>' : ''}<th>Win</th>${fin ? '<th>Made the final?</th>' : ''}<th>Won?</th></tr>` +
+     rows.slice(0, 8).map(t => `<tr><td class="l">${esc(t.team)}</td>${fin ? `<td>${pct(t.p_finals)}</td>` : ''}<td>${pct(t.p_win, 1)}</td>${fin ? `<td>${yes(t.made_final)}</td>` : ''}<td>${yes(t.won)}</td></tr>`).join('') + '</table></div>';
+  const s2 = TRr['Split 2 Playoffs'], s1 = TRr['Split 1 Playoffs'], e = s2.event;
+  $('#tr-body').innerHTML =
+   `<h3>Split 2 Playoffs, whole event (from ${s2.trained_games} earlier games)</h3><p><strong>Reaching the final:</strong> ${e.finals_hits} of our top ${e.finals_k} made it. Picking at random you'd expect about ${Math.round(e.finals_hits_even)}. <strong>Winning:</strong> ${esc(e.winner)} won; we had them ${ordinal(e.winner_rank)} of ${e.teams} at ${pct(e.winner_p, 1)}, a bit above the ${pct(e.even, 1)} every team would get if all were equal.</p>` + tbl(e.top, true) +
+   `<h3>Final day only, with the 20 teams that got there</h3><p><strong>Split 2:</strong> ${esc(s2.final.winner)} won; we had them ${ordinal(s2.final.winner_rank)} of 20 at ${pct(s2.final.winner_p, 1)} (equal chances would be 5%). <strong>Split 1</strong> (from ${s1.trained_games} earlier games): ${esc(s1.final.winner)} won; we had them ${ordinal(s1.final.winner_rank)} of 20 at ${pct(s1.final.winner_p, 1)}.</p>` + tbl(s1.final.top, false) +
+   `<p><strong>What this tells you:</strong> the model is good at telling which teams are strong enough to reach the final. Picking the champion is much harder: even the favourite rarely has more than a 1 in 10 chance on the final day, so expect the winner to come from outside the top few picks most of the time.</p>`; } }
 { const L = D.ledger || {}, SC = D.scrim_check;
   const dl = new Date(L.lock_on + 'T12:00:00Z').toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric'});
   if (!L.locked) { $('#lg-text').innerHTML = `On ${esc(dl)}, the night before Champs starts, the model will lock its title odds and save them where they can't be changed. After the event we'll score those locked picks against what happened, so you can see how good it really is. Until then, the odds on this page keep updating with new scrims.`; $('#lg-table').innerHTML = ''; }
@@ -494,6 +534,10 @@ $('#dk-scrims').textContent = `How teams have been practising lately, beyond ${(
     rows.push(['Landing near ring 2 (known mid-game)', z('d_r2', 'lan'), z('d_r2', 'pl'), 'Live tracker']);
     rows.push(['Landing near where the zone ends (only known after)', z('d_end', 'lan'), z('d_end', 'pl'), 'As zone luck']); }
   if (WS) rows.push(['Backing favourites to win games more often', Math.abs(WS.lan_ll_after - WS.lan_ll_before) < 0.5 ? 'Same' : (WS.lan_ll_after > WS.lan_ll_before ? 'Better' : 'Worse'), 'Fitted here', 'No']);
+  if (D.bans_comps){ const b = D.bans_comps.ban, c = D.bans_comps.comp.find(r => r.kind === 'legend' && r.sd === 0.05), nmA = nm ? nm.lan_gain : 0, nmB = nm ? nm.pl_gain : 0;
+    const tag = (g, base) => Math.abs(g) < 0.005 ? 'Same' : rel(base + g, base);
+    rows.push(['A penalty when a team\'s main legend is banned', tag(b.lan_gain, nmA), tag(b.pl_gain, nmB), 'No']);
+    rows.push(['Legend picks, on top of team strength', tag(c.lan_gain, nmA), tag(c.pl_gain, nmB), 'Not in Champs odds']); }
   if (K) rows.push(['Lumpy kills (some games three fights, some none)', 'Kills ' + (K.lan.nb_gain > 0 ? 'better' : 'worse'), 'Kills ' + (K.pl.nb_gain > 0 ? 'better' : 'worse'), 'Yes']);
   if (K) rows.push(['Teams that get their kills early vs late', K.lan['style_gain_sd0.05'] > 0.01 ? 'Better' : 'Same', (K.pl['style_gain_sd0.05'] ?? 0) > 0.01 ? 'Better' : 'Same', 'No']);
   $('#tried').innerHTML = `<tr><th class="l">Idea</th><th class="l">At LAN</th><th class="l">In Pro League</th><th class="l">Kept?</th></tr>` +

@@ -129,4 +129,16 @@ with tempfile.TemporaryDirectory() as td:
 check("ledger locks once and refuses to overwrite", first == "locked" and again == "already locked")
 check("ledger scoring: top pick winning scores rank 1, and all 20 finalists hit", sc["winner_rank"] == 1 and sc["finals_hits"] == 20)
 
+# 8. track record, groups file, bans/comps parsing
+import track_record as TRK
+_r = np.random.default_rng(1)
+_S = TRK.Sim([f"t{i}" for i in range(20)], lambda t: 0.0, np.full(21, -1.0), {}, seed=2)
+_pw = _S.finals(np.tile(np.arange(20), (4000, 1)))
+check("track-record final simulation crowns exactly one winner each time, and equal teams get about 5% each",
+      abs(_pw.sum() - 1) < 1e-9 and np.abs(_pw - 0.05).max() < 0.015, f"max gap {np.abs(_pw - 0.05).max():.3f}")
+import bans_comps as BCm
+if BCm.SRC.exists():
+    _G = BCm.read()
+    check("bans/comps file: every game lists 3 legends for most teams", np.mean([all(len(c) == 3 for c in g["comps"].values()) for g in _G.values()]) > 0.95, f"{len(_G)} games")
+
 print("\nALL MATHS CHECKS PASS" if ok else "\nSOME CHECKS FAILED")
